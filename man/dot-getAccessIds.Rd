@@ -7,15 +7,14 @@
 .getAccessIds(object_id)
 }
 \arguments{
-\item{record_id}{BEDbase record id}
+\item{object_id}{BEDbase object id}
 }
 \value{
-a vector available access_ids
+a vector with available access_ids
 }
 \description{
 Note: omits 'local' option
 }
 \examples{
-object_id <- .getObjectId("421d2128e183424fcc6a74269bae7934")
-access_id <- getAccessIds(object_id)
+.getAccessIds("bed.421d2128e183424fcc6a74269bae7934.bedfile")
 }
