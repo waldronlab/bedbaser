@@ -19,4 +19,5 @@ Get metadata
 }
 \examples{
 getMetadata("421d2128e183424fcc6a74269bae7934")
+
 }

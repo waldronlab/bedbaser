@@ -4,18 +4,22 @@
 \alias{downloadBedFile}
 \title{Download BED file}
 \usage{
-downloadBedFile(record_id, destfile, access_id = "http")
+downloadBedFile(record_id, destdir, access_id = "http")
 }
 \arguments{
 \item{record_id}{BEDbase record id}
 
-\item{destfile}{directory and path to save the file}
+\item{destdir}{directory to save the file}
 
 \item{access_id}{Download protocol. "Local" access_id is removed.}
+}
+\value{
+file path
 }
 \description{
 Download BED file
 }
 \examples{
 filepath <-downloadBedFile("421d2128e183424fcc6a74269bae7934", "/tmp")
+
 }

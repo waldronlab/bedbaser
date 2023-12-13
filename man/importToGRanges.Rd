@@ -9,9 +9,13 @@ importToGRanges(record_id)
 \arguments{
 \item{record_id}{BEDbase record id}
 }
+\value{
+a GRanges object
+}
 \description{
 Download BED file associated with record_id and create a GRanges object
 }
 \examples{
 grobj <- importToGRanges("421d2128e183424fcc6a74269bae7934")
+
 }

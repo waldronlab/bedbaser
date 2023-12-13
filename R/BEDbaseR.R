@@ -10,10 +10,12 @@
 #'
 #' @examples
 #' getMetadata("421d2128e183424fcc6a74269bae7934")
+#'
+#' @export
 getMetadata <- function(identifier, record_type=c("bed", "bedset", "objects"))
 {
     record_type <- match.arg(record_type)
-    url <- glue("{.BEDBaseBaseUrl}/{record_type}/{identifier}")
+    url <- glue("{BEDBaseBaseUrl}/{record_type}/{identifier}")
     if (record_type != "objects") {
         url <- glue("{url}/metadata")
     }
@@ -23,24 +25,28 @@ getMetadata <- function(identifier, record_type=c("bed", "bedset", "objects"))
 #' Download BED file
 #'
 #' @param record_id BEDbase record id
-#' @param destfile directory and path to save the file
+#' @param destdir directory to save the file
 #' @param access_id Download protocol. "Local" access_id is removed.
 #'
 #' @importFrom glue glue
-#' @importFrom httr2 req_perform resp_body_json
+#' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom stringr str_split_1
 #' @importFrom utils download.file tail
 #'
+#' @returns file path
+#'
 #' @examples
 #' filepath <-downloadBedFile("421d2128e183424fcc6a74269bae7934", "/tmp")
-downloadBedFile <- function(record_id, destfile, access_id="http")
+#'
+#' @export
+downloadBedFile <- function(record_id, destdir, access_id="http")
 {
-    object_id <- .getObjectId(record_id)
-    stopifnot(access_id %in% .getAccessIds(object_id))
-    url <- glue("{.BEDBaseBaseUrl}/objects/{object_id}/access/{access_id}")
+    object_id <- getObjectId(record_id)
+    stopifnot(access_id %in% getAccessIds(object_id))
+    url <- glue("{BEDBaseBaseUrl}/objects/{object_id}/access/{access_id}")
     download_url <- req_perform(request(url)) |> resp_body_json()
     filename <- tail(str_split_1(download_url, "/"), n=1)
-    filepath <- glue("{destfile}/{filename}")
+    filepath <- file.path(destdir, filename)
     download.file(download_url, filepath)
     filepath
 }
@@ -51,10 +57,14 @@ downloadBedFile <- function(record_id, destfile, access_id="http")
 #'
 #' @importFrom rtracklayer import.bed
 #'
+#' @returns a GRanges object
+#'
 #' @examples
 #' grobj <- importToGRanges("421d2128e183424fcc6a74269bae7934")
+#'
+#' @export
 importToGRanges <- function(record_id)
 {
-    bedfile <- downloadBedFile(record_id, destfile="/tmp")
+    bedfile <- downloadBedFile(record_id, destdir=tempdir())
     import.bed(bedfile)
 }
