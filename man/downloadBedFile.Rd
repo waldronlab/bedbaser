@@ -21,5 +21,9 @@ Download BED file
 }
 \examples{
 filepath <-downloadBedFile("421d2128e183424fcc6a74269bae7934", "/tmp")
+filepath <-downloadBedFile("ce9f6e8adf5779edb632245a166b92bd", "/tmp")
+zebrafish <-downloadBedFile("eec93c0649bfc2fc90cdc9fca3f52588", "/tmp")
+filepath <-downloadBedFile("e6cd0dbb252be66f8c2bdb0d23ed431c", "/tmp")
+telomere <-downloadBedFile("b56d842d5727f1cfaaccb0bdc1bba6ad", "/tmp")
 
 }

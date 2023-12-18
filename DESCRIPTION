@@ -12,9 +12,11 @@ Imports:
     glue,
     httr2,
     rtracklayer,
+    R.utils,
     stringr,
     utils
 Suggests:
+    BiocStyle,
     knitr
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
