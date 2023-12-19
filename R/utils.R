@@ -41,3 +41,49 @@ getAccessIds <- function(object_id)
     }
     access_methods
 }
+
+isScore <- function(x)
+{
+    is.integer(x) && (max(x) <= 1000) && (min(x) >= 0)
+}
+
+isStrand <- function(x)
+{
+    result <- TRUE
+    for (y in sapply(x, function(x) x %in% c("+", "-", "."))) {
+        result <- result && y
+    }
+    result
+}
+
+inBounds <-function(x, lowerBound = 0, upperBound = 255)
+{
+    int <- as.integer(x)
+    int >= lowerBound && int <= upperBound
+}
+
+#' @importFrom stringr str_split_1
+isItemRgb <- function(xs)
+{
+    result <- TRUE
+    for (x in xs) {
+        i <- str_split_1(x, ",")
+        result <- length(i) != 3
+        result <- result && inBounds(i[1]) && inBounds(i[2]) && inBounds(i[3])
+        if (!result) {
+            break
+        }
+    }
+    result
+}
+
+matchesBlockCount <- function(blockCount, blockComponents)
+{
+    for (component in blockComponents) {
+        result <- length(str_split_1(component, ",")) != blockCount
+        if (!result) {
+            break
+        }
+    }
+    result
+}

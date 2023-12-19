@@ -1,0 +1,88 @@
+---
+title: BEDBaseR
+author:
+- name: J Wokaty
+  affiliation: 
+  - CUNY School of Public Health
+  email: jennifer.wokaty@sph.cuny.edu
+- name: Levi Waldron, PhD
+  affiliation: 
+  - Graduate School of Public Health and Health Policy, City University of New
+    York, New York, NY, U.S.A.
+  email: levi.waldron@sph.cuny.edu
+package: BEDbaseR
+output: 
+  BiocStyle::html_document
+vignette: >
+  %\VignetteIndexEntry{BEDbaseR}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}  
+---
+
+```{r library, include=FALSE}
+library(BEDbaseR)
+```
+
+BEDbaseR is an R client for the BEDbase API available at api.bedbase.org.
+
+See available BED files with
+
+```{r listRecords}
+records <- listRecords("bed")
+```
+
+Download a BED file by its record identifier
+
+```{r downloadBedFile}
+# "GSM6856752_S1_H3K27ac_peaks"
+record_id <- records$records[[1]]$record_identifier
+filepath <- downloadBedFile(record_id, tempdir())
+```
+
+Ideally, we should be able to import with `r Biocpkg("rtracklayer")` to create
+a GRanges object; however, the BEDfiles are in varying formats:
+
+```{r importBed, eval=FALSE}
+> import.bed(filepath)
+# Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
+#   scan() expected 'an integer', got '0.9887082'
+```
+
+First try to use rtracklayer to import the BED file; however, if the BED file is
+not in the format of the 3 required columns and 9 optional columns, we could try
+to put it in a data.frame then arrange it into a GRanges object:
+```{r fileToGRanges}
+# Currently only using the 3 required columns, need to include more columns
+gro <- fileToGRanges(filepath)
+gro
+```
+
+Note: We could also do
+```{r, eval=FALSE}
+importToGRanges(record_id)
+```
+
+To Do:
+
+* Import/include more of the optional columns into the GRanges object (See https://learn.gencore.bio.nyu.edu/ngs-file-formats/bed-format/)
+* How to include nonstandard columns?
+
+```
+# hg19_UCSC_telomere.bed.gz
+chr1	0	10000	10001	*	585	1	N	10000	telomere	no
+chr1	249240621	249250621	10001	*	2486	2302	N	10000	telomere	no
+chr2	0	10000	10001	*	585	1	N	10000	telomere	no
+chr2	243189373	243199373	10001	*	2440	2027	N	10000	telomere	no
+chr3	0	10000	10001	*	585	1	N	10000	telomere	no
+chr3	198012430	198022430	10001	*	2095	1733	N	10000	telomere	no
+chr4	0	10000	10001	*	585	1	N	10000	telomere	no
+chr4	191144276	191154276	10001	*	2043	1658	N	10000	telomere	no
+```
+
+Development: https://github.com/users/jwokaty
+
+Project Board: https://github.com/users/jwokaty/projects/4/views/1
+
+```{r sessionInfo}
+sessionInfo()
+```   

@@ -88,7 +88,7 @@ downloadBedFile <- function(record_id, destdir, access_id="http")
 #' @returns a GRanges object
 #'
 #' @examples
-#' grobj <- fileToGRanges("421d2128e183424fcc6a74269bae7934")
+#' grobj <- fileToGRanges(filepath)
 #'
 #' @export
 fileToGRanges <- function(filepath)
@@ -97,13 +97,70 @@ fileToGRanges <- function(filepath)
         import(filepath, format = "bed")
         ,
         error = function(e) {
-          df <- read.table(filepath)
-          columns <- length(df)
-          stopifnot("File missing required columns" = columns >= 3)
-          GRanges(df[, 1], IRanges(df[, 2], df[, 3]))
+            df <- read.table(filepath)
+            columns <- length(df)
+            stopifnot("File missing required columns" = columns >= 3)
+            hasName <- ifelse(columns >= 4, is.character(df[, 4]), FALSE)
+            hasScore <- ifelse(columns >= 5, isScore(df[, 5]) && hasName, FALSE)
+            hasStrand <- ifelse(columns >= 6, isStrand(df[, 6]) && hasScore, FALSE)
+            hasThickStart <- ifelse(columns >= 7,
+                                    is.integer(df[, 7]) && hasStrand,
+                                    FALSE)
+            hasThickEnd <- ifelse(columns >= 8,
+                                  is.integer(df[, 8]) && hasThickStart,
+                                  FALSE)
+            hasItemRgb <- ifelse(columns >= 9,
+                                 isItemRgb(df[, 9]) && hasThickEnd,
+                                 FALSE)
+            hasBlockCount <- ifelse(columns >= 10,
+                                    is.integer(df[, 10]) && hasItemRgb,
+                                    FALSE)
+            hasBlockSizes <- ifelse(columns >= 11,
+                                    matchesBlockCount(df[, 10], df[, 11]) && hasBlockCount,
+                                    FALSE)
+            hasBlockStarts <- ifelse(columns >= 12,
+                                     matchesBlockCount(df[, 10], df[, 12]) && hasBlockSizes,
+                                     FALSE)
+            if (hasBlockStarts) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6],
+                        thick=IRanges(df[, 7], df[, 8]), itemRgb=df[, 9],
+                        blockCount=df[, 10], blockSizes=df[, 11],
+                        blockStarts=df[, 12])
+            } else if (hasBlockSizes) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6],
+                        thick=IRanges(df[, 7], df[, 8]), itemRgb=df[, 9],
+                        blockCount=df[, 10], blockSizes=df[, 11])
+            } else if (hasBlockCount) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6],
+                        thick=IRanges(df[, 7], df[, 8]), itemRgb=df[, 9],
+                        blockCount=df[, 10])
+            } else if (hasItemRgb) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6],
+                        thick=IRanges(df[, 7], df[, 8]), itemRgb=df[, 9])
+            } else if (hasThickEnd) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6],
+                        thick=IRanges(df[, 7], df[, 8]))
+            } else if (hasThickStart) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6], thick=IRanges(df[, 7]))
+            } else if (hasStrand) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5], strand=df[, 6])
+            } else if (hasScore) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4],
+                        score=df[, 5])
+            } else if (hasName) {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]), name=df[, 4])
+            } else {
+                GRanges(df[, 1], IRanges(df[, 2], df[, 3]))
+            }
         })
 }
-
 
 #' Download BED file associated with record_id and create a GRanges object
 #'
