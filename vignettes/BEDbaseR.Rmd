@@ -27,15 +27,15 @@ BEDbaseR is an R client for the BEDbase API available at api.bedbase.org.
 
 See available BED files with
 
-```{r listRecords}
-records <- listRecords("bed")
+```{r getRecords}
+recs <- getRecords("bed")
 ```
 
 Download a BED file by its record identifier
 
 ```{r downloadBedFile}
 # "GSM6856752_S1_H3K27ac_peaks"
-record_id <- records$records[[1]]$record_identifier
+record_id <- recs[1,1]
 filepath <- downloadBedFile(record_id, tempdir())
 ```
 

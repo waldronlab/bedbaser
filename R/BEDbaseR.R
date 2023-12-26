@@ -1,23 +1,31 @@
-#' List BED or BEDsets
+#' Get BED or BEDsets
 #'
 #' @param record_type bed or bedset
 #'
-#' @returns a list of bed or bedsets
+#' @returns a tibble of bed or bedsets
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
+#' @importFrom tibble as_tibble
 #'
-#' @returns a list with metadata
+#' @returns a tibble of record_identifiers and record names
 #'
 #' @examples
-#' recs <- listRecords("bed")
+#' recs <- getRecords("bed")
 #'
 #' @export
-listRecords <- function(record_type=c("bed", "bedset"))
+getRecords <- function(record_type=c("bed", "bedset"))
 {
     record_type <- match.arg(record_type)
     url <- glue("{BEDBaseBaseUrl}/{record_type}/list")
-    req_perform(request(url)) |> resp_body_json()
+    list_of_records <- req_perform(request(url)) |> resp_body_json()
+    if (length(records)) {
+        cnames <- names(list_of_records$records[[1]])
+        tibble_of_records <- list_of_records$records |>
+            map_dfr(function(x) { set_names(unlist(x), cnames)}) |>
+                as_tibble()
+    }
+    tibble_of_records
 }
 
 #' Get metadata
