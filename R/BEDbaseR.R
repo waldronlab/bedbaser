@@ -2,13 +2,11 @@
 #'
 #' @param record_type bed or bedset
 #'
-#' @returns a tibble of bed or bedsets
-#'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
-#' @importFrom tibble as_tibble
+#' @importFrom tibble tibble as_tibble
 #'
-#' @returns a tibble of record_identifiers and record names
+#' @returns a tibble of record identifiers and record names
 #'
 #' @examples
 #' recs <- getRecords("bed")
@@ -19,6 +17,7 @@ getRecords <- function(record_type=c("bed", "bedset"))
     record_type <- match.arg(record_type)
     url <- glue("{BEDBaseBaseUrl}/{record_type}/list")
     list_of_records <- req_perform(request(url)) |> resp_body_json()
+    tibble_of_records <- tibble()
     if (length(records)) {
         cnames <- names(list_of_records$records[[1]])
         tibble_of_records <- list_of_records$records |>
@@ -30,7 +29,7 @@ getRecords <- function(record_type=c("bed", "bedset"))
 
 #' Get metadata
 #'
-#' @param identifier BEDbase record id or object id
+#' @param id BEDbase record identifier or object identifier
 #' @param record_type bed, bedset, or objects
 #'
 #' @importFrom glue glue
@@ -42,21 +41,40 @@ getRecords <- function(record_type=c("bed", "bedset"))
 #' getMetadata("421d2128e183424fcc6a74269bae7934")
 #'
 #' @export
-getMetadata <- function(identifier, record_type=c("bed", "bedset", "objects"))
+getMetadata <- function(id, record_type=c("bed", "bedset", "objects"))
 {
     record_type <- match.arg(record_type)
-    url <- glue("{BEDBaseBaseUrl}/{record_type}/{identifier}")
+    url <- glue("{BEDBaseBaseUrl}/{record_type}/{id}")
     if (record_type != "objects") {
         url <- glue("{url}/metadata")
     }
     req_perform(request(url)) |> resp_body_json()
 }
 
+#' Get BED record identifiers associated with BEDset
+#'
+#' @param record_id record identifier
+#'
+#' @importFrom tibble as_tibble
+#'
+#' @returns a list of record identifiers
+#'
+#' @examples
+#' getBedsIn("excluderanges")
+#'
+#' @export
+getBedsIn <- function(record_id)
+{
+    url <- glue("{BEDBaseBaseUrl}/bedset/{record_id}/bedfiles")
+    records <- req_perform(request(url)) |> resp_body_json()
+    unlist(records$bedfile_metadata, use.names = FALSE)
+}
+
 #' Download BED file
 #'
-#' @param record_id BEDbase record id
+#' @param record_id BEDbase record identifier
 #' @param destdir directory to save the file
-#' @param access_id Download protocol. "Local" access_id is removed.
+#' @param access_id Download protocol. "Local" access_identifier is removed.
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform request resp_body_json
@@ -170,9 +188,9 @@ fileToGRanges <- function(filepath)
         })
 }
 
-#' Download BED file associated with record_id and create a GRanges object
+#' Download BED file associated with record identifier and create a GRanges object
 #'
-#' @param record_id BEDbase record id
+#' @param record_id BEDbase record identifier
 #'
 #' @returns a GRanges object
 #'

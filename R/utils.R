@@ -4,9 +4,9 @@ BEDBaseBaseUrl <- "https://api.bedbase.org"
 # Note: only record_type = bed, result_id = bedfile?
 #' Construct object identifier
 #'
-#' @param record_id BEDbase record id
+#' @param record_id BEDbase record identifier
 #' @param record_type BEDbase record type
-#' @param result_id BEDbase result id
+#' @param result_id BEDbase result identifier
 #'
 #' @importFrom glue glue
 #'
@@ -19,19 +19,19 @@ getObjectId <- function(record_id, record_type="bed", result_id="bedfile")
     glue("{record_type}.{record_id}.{result_id}")
 }
 
-#' Get valid access ids
+#' Get valid access identifiers
 #'
 #' Note: omits 'local' option
 #'
-#' @param object_id BEDbase object id
+#' @param object_id BEDbase object identifier
 #'
 #' @importFrom httr2 request
 #'
-#' @returns a vector with available access_ids
+#' @returns a vector with available access identifiers
 #'
 #' @examples
 #' getAccessIds("bed.421d2128e183424fcc6a74269bae7934.bedfile")
-getAccessIds <- function(object_id)
+getAccessIds <- function(object_identifier)
 {
     metadata <- getMetadata(object_id, "objects")
     access_methods <- unlist(lapply(metadata$access_methods, `[[`, c('type')))

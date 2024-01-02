@@ -2,15 +2,15 @@
 % Please edit documentation in R/utils.R
 \name{getAccessIds}
 \alias{getAccessIds}
-\title{Get valid access ids}
+\title{Get valid access identifiers}
 \usage{
-getAccessIds(object_id)
+getAccessIds(object_identifier)
 }
 \arguments{
-\item{object_id}{BEDbase object id}
+\item{object_id}{BEDbase object identifier}
 }
 \value{
-a vector with available access_ids
+a vector with available access identifiers
 }
 \description{
 Note: omits 'local' option

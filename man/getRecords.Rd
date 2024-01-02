@@ -10,9 +10,7 @@ getRecords(record_type = c("bed", "bedset"))
 \item{record_type}{bed or bedset}
 }
 \value{
-a tibble of bed or bedsets
-
-a tibble of record_identifiers and record names
+a tibble of record identifiers and record names
 }
 \description{
 Get BED or BEDsets

@@ -7,11 +7,11 @@
 getObjectId(record_id, record_type = "bed", result_id = "bedfile")
 }
 \arguments{
-\item{record_id}{BEDbase record id}
+\item{record_id}{BEDbase record identifier}
 
 \item{record_type}{BEDbase record type}
 
-\item{result_id}{BEDbase result id}
+\item{result_id}{BEDbase result identifier}
 }
 \value{
 String
