@@ -1,9 +1,34 @@
+#' Get metadata
+#'
+#' @param id BEDbase record identifier or object identifier
+#' @param record_type bed, bedset, or objects
+#'
+#' @importFrom glue glue
+#' @importFrom httr2 request req_perform resp_body_json
+#'
+#' @returns a list with metadata
+#'
+#' @examples
+#' getMetadata("421d2128e183424fcc6a74269bae7934", "bed")
+#'
+#' @export
+getMetadata <- function(id, record_type=c("bed", "bedset", "objects"))
+{
+    record_type <- match.arg(record_type)
+    url <- glue("{BEDBaseBaseUrl}/{record_type}/{id}")
+    if (record_type != "objects") {
+        url <- glue("{url}/metadata")
+    }
+    req_perform(request(url)) |> resp_body_json()
+}
+
 #' Get BED or BEDsets
 #'
 #' @param record_type bed or bedset
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
+#' @importFrom purrr map_dfr
 #' @importFrom tibble tibble as_tibble
 #'
 #' @returns a tibble of record identifiers and record names
@@ -21,34 +46,10 @@ getRecords <- function(record_type=c("bed", "bedset"))
     if (length(records)) {
         cnames <- names(list_of_records$records[[1]])
         tibble_of_records <- list_of_records$records |>
-            map_dfr(function(x) { set_names(unlist(x), cnames)}) |>
+            map_dfr(function(x) { set_names(unlist(x), cnames) }) |>
                 as_tibble()
     }
     tibble_of_records
-}
-
-#' Get metadata
-#'
-#' @param id BEDbase record identifier or object identifier
-#' @param record_type bed, bedset, or objects
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_body_json
-#'
-#' @returns a list with metadata
-#'
-#' @examples
-#' getMetadata("421d2128e183424fcc6a74269bae7934")
-#'
-#' @export
-getMetadata <- function(id, record_type=c("bed", "bedset", "objects"))
-{
-    record_type <- match.arg(record_type)
-    url <- glue("{BEDBaseBaseUrl}/{record_type}/{id}")
-    if (record_type != "objects") {
-        url <- glue("{url}/metadata")
-    }
-    req_perform(request(url)) |> resp_body_json()
 }
 
 #' Get BED record identifiers associated with BEDset

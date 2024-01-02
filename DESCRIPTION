@@ -11,6 +11,7 @@ License: Artistic License 2.0
 Imports:
     glue,
     httr2,
+    purrr,
     rtracklayer,
     R.utils,
     stringr,
