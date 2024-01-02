@@ -28,7 +28,7 @@ getMetadata <- function(id, record_type=c("bed", "bedset", "objects"))
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
-#' @importFrom purrr map_dfr
+#' @importFrom purrr map_dfr set_names
 #' @importFrom tibble tibble as_tibble
 #'
 #' @returns a tibble of record identifiers and record names
@@ -43,7 +43,7 @@ getRecords <- function(record_type=c("bed", "bedset"))
     url <- glue("{BEDBaseBaseUrl}/{record_type}/list")
     list_of_records <- req_perform(request(url)) |> resp_body_json()
     tibble_of_records <- tibble()
-    if (length(records)) {
+    if (length(list_of_records)) {
         cnames <- names(list_of_records$records[[1]])
         tibble_of_records <- list_of_records$records |>
             map_dfr(function(x) { set_names(unlist(x), cnames) }) |>

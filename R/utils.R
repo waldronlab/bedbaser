@@ -31,7 +31,7 @@ getObjectId <- function(record_id, record_type="bed", result_id="bedfile")
 #'
 #' @examples
 #' getAccessIds("bed.421d2128e183424fcc6a74269bae7934.bedfile")
-getAccessIds <- function(object_identifier)
+getAccessIds <- function(object_id)
 {
     metadata <- getMetadata(object_id, "objects")
     access_methods <- unlist(lapply(metadata$access_methods, `[[`, c('type')))

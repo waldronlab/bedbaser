@@ -4,7 +4,7 @@
 \alias{getAccessIds}
 \title{Get valid access identifiers}
 \usage{
-getAccessIds(object_identifier)
+getAccessIds(object_id)
 }
 \arguments{
 \item{object_id}{BEDbase object identifier}

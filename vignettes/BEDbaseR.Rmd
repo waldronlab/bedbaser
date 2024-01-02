@@ -23,34 +23,41 @@ vignette: >
 library(BEDbaseR)
 ```
 
-BEDbaseR is an R client for the BEDbase API available at api.bedbase.org.
+BEDbaseR is an R client for the BEDbase API available at api.bedbase.org. BED
+files and BEDsets, collections of BED files, can be accessed by their record
+identifiers.
 
-See available BED files with
+Use  `getRecords()` to show the record identifiers and names of available BED
+files or BEDsets.
 
-```{r getRecords}
-recs <- getRecords("bed")
+```{r getRecords-bed}
+beds <- getRecords("beds")
+beds
 ```
 
-Download a BED file by its record identifier
+```{r getRecords-bedsets}
+bedsets <- getRecords("bedset")
+bedsets
+```
+
+Use `getBedsIn()` to find record identifiers and names of BED files in a BEDset. 
+
+```{r getBedsIn}
+getBedsIn("excluderanges")
+```
+
+Download a BED file by its record identifier:
 
 ```{r downloadBedFile}
 # "GSM6856752_S1_H3K27ac_peaks"
-record_id <- recs[1,1]
+record_id <- beds[1,1]
 filepath <- downloadBedFile(record_id, tempdir())
 ```
 
-Ideally, we should be able to import with `r Biocpkg("rtracklayer")` to create
-a GRanges object; however, the BEDfiles are in varying formats:
+Use `r Biocpkg("rtracklayer")` to import the BED file; however, if the BED file
+is not in the format of the 3 required columns and 9 optional columns, we could
+try to put it in a data.frame then arrange it into a GRanges object:
 
-```{r importBed, eval=FALSE}
-> import.bed(filepath)
-# Error in scan(file = file, what = what, sep = sep, quote = quote, dec = dec,  : 
-#   scan() expected 'an integer', got '0.9887082'
-```
-
-First try to use rtracklayer to import the BED file; however, if the BED file is
-not in the format of the 3 required columns and 9 optional columns, we could try
-to put it in a data.frame then arrange it into a GRanges object:
 ```{r fileToGRanges}
 # Currently only using the 3 required columns, need to include more columns
 gro <- fileToGRanges(filepath)
