@@ -1,20 +1,24 @@
 #' Base URL of BEDbase
-BEDBaseBaseUrl <- "https://api.bedbase.org"
+BEDBASEURL <- "https://api.bedbase.org"
 
-# Note: only record_type = bed, result_id = bedfile?
+#' Base URL of PEPhub
+#PEPHUBURL <- "https://pephub-api.databio.org/api/v1"
+
 #' Construct object identifier
 #'
-#' @param record_id BEDbase record identifier
-#' @param record_type BEDbase record type
-#' @param result_id BEDbase result identifier
+#' Note: only record_type = bed, result_id = bedfile?
+#'
+#' @param record_id character(1) BEDbase record identifier
+#' @param record_type character(1) (default bed) BEDbase record type
+#' @param result_id character(1) (default bedfile) BEDbase result identifier
 #'
 #' @importFrom glue glue
 #'
-#' @returns String
+#' @return String
 #'
 #' @examples
-#' object_id <- getObjectId("eaf9ee97241f300f1c7e76e1f945141f")
-getObjectId <- function(record_id, record_type="bed", result_id="bedfile")
+#' obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")
+make_obj_id <- function(record_id, record_type="bed", result_id="bedfile")
 {
     glue("{record_type}.{record_id}.{result_id}")
 }
@@ -23,17 +27,14 @@ getObjectId <- function(record_id, record_type="bed", result_id="bedfile")
 #'
 #' Note: omits 'local' option
 #'
-#' @param object_id BEDbase object identifier
+#' @param obj_id character(1) BEDbase object record identifier
 #'
-#' @importFrom httr2 request
-#'
-#' @returns a vector with available access identifiers
+#' @return character() available access identifiers
 #'
 #' @examples
-#' getAccessIds("bed.421d2128e183424fcc6a74269bae7934.bedfile")
-getAccessIds <- function(object_id)
-{
-    metadata <- getMetadata(object_id, "objects")
+#' get_access_ids("bed.421d2128e183424fcc6a74269bae7934.bedfile")
+get_access_ids <- function(obj_id) {
+    metadata <- get_metadata(obj_id, "object")
     access_methods <- unlist(lapply(metadata$access_methods, `[[`, c('type')))
     remove_index <- match("local", access_methods)
     if (!is.na(remove_index)) {
@@ -42,48 +43,38 @@ getAccessIds <- function(object_id)
     access_methods
 }
 
-isScore <- function(x)
-{
-    is.integer(x) && (max(x) <= 1000) && (min(x) >= 0)
+#' Query BEDbase API
+#'
+#' Note: The genomes end point error
+#'
+#' @param endpoint character(1) BEDbase API endpoint
+#' @param base_url character(1) (default BEDBASEurl) url
+#' @param quiet logical(1) (default FALSE) suppress message
+#'
+#' @importFrom glue glue
+#' @importFrom httr2 req_perform resp_body_json
+#'
+#' @return a vector or list
+#'
+#' @examples
+#' query_bedbase("bed", "count")
+query_bedbase <- function(endpoint, base_url = BEDBASEURL, quiet = FALSE) {
+    url <- glue("{baseurl}/{endpoint}")
+    if (!quiet)
+        message("Requesting", url, "...")
+    req_perform(request(url)) |>
+        resp_body_json()
 }
 
-isStrand <- function(x)
-{
-    result <- TRUE
-    for (y in sapply(x, function(x) x %in% c("+", "-", "."))) {
-        result <- result && y
-    }
-    result
-}
-
-inBounds <-function(x, lowerBound = 0, upperBound = 255)
-{
-    int <- as.integer(x)
-    int >= lowerBound && int <= upperBound
-}
-
-#' @importFrom stringr str_split_1
-isItemRgb <- function(xs)
-{
-    result <- TRUE
-    for (x in xs) {
-        i <- str_split_1(x, ",")
-        result <- length(i) != 3
-        result <- result && inBounds(i[1]) && inBounds(i[2]) && inBounds(i[3])
-        if (!result) {
-            break
-        }
-    }
-    result
-}
-
-matchesBlockCount <- function(blockCount, blockComponents)
-{
-    for (component in blockComponents) {
-        result <- length(str_split_1(component, ",")) != blockCount
-        if (!result) {
-            break
-        }
-    }
-    result
+#' Get service information
+#'
+#' @importFrom glue glue
+#' @importFrom httr2 req_perform resp_body_json
+#'
+#' @return list() service info, such as version
+#'
+#' @examples
+#' get_service_info()
+get_service_info <- function() {
+    query_bedbase(glue("{BEDBASEURL}/service-info"))
 }

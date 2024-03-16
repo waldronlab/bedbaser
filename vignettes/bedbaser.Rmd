@@ -1,56 +1,59 @@
 ---
-title: BEDBaseR
+title: bedbaser
 author:
 - name: J Wokaty
   affiliation: 
   - CUNY School of Public Health
   email: jennifer.wokaty@sph.cuny.edu
-- name: Levi Waldron, PhD
-  affiliation: 
-  - Graduate School of Public Health and Health Policy, City University of New
-    York, New York, NY, U.S.A.
-  email: levi.waldron@sph.cuny.edu
-package: BEDbaseR
+package: bedbaser
 output: 
   BiocStyle::html_document
 vignette: >
-  %\VignetteIndexEntry{BEDbaseR}
+  %\VignetteIndexEntry{bedbaser}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}  
 ---
 
 ```{r library, include=FALSE}
-library(BEDbaseR)
+library(bedbaser)
 ```
 
-BEDbaseR is an R client for the BEDbase API available at api.bedbase.org. BED
-files and BEDsets, collections of BED files, can be accessed by their record
-identifiers.
+bedbaser is an R client for the BEDbase API available at https://api.bedbase.org.
 
-Use  `getRecords()` to show the record identifiers and names of available BED
-files or BEDsets.
+## Install
 
-```{r getRecords-bed}
-beds <- getRecords("beds")
-beds
+```{r install, eval=FALSE}
+if (!"BiocManager" %in% rownames(installed.packages()))
+    install.packages("BiocManager")
+BiocManager::install("bedbaser", dependencies=TRUE)
 ```
+## Find a BED file or BEDset
 
-```{r getRecords-bedsets}
-bedsets <- getRecords("bedset")
+BED files and BEDsets can be accessed by their record identifiers.
+
+`get_records()` shows the record identifiers and names of available BED files
+or BEDsets.
+
+```{r get_records}
+bedfiles <- get_records("bed")
+bedfiles
+
+bedsets <- get_records("bedset")
 bedsets
 ```
 
-Use `getBedsIn()` to find record identifiers and names of BED files in a BEDset. 
+`get_records_in_set()` returns the record identifiers of BED files in a
+BEDset. 
 
-```{r getBedsIn}
-getBedsIn("excluderanges")
+```{r get_records_in_bedset}
+get_records_in_set("excluderanges")
 ```
 
 Download a BED file by its record identifier:
 
 ```{r downloadBedFile}
 # "GSM6856752_S1_H3K27ac_peaks"
-record_id <- beds[1,1]
+record_id <- bedfiles[[1,1]]
 filepath <- downloadBedFile(record_id, tempdir())
 ```
 
