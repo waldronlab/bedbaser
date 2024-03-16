@@ -2,15 +2,14 @@
 % Please edit documentation in R/utils.R
 \name{make_obj_id}
 \alias{make_obj_id}
-\title{Base URL of PEPhub
-Construct object identifier}
+\title{Construct object identifier}
 \usage{
-make_obj_id(record_id, record_type = "bed", result_id = "bedfile")
+make_obj_id(rec_id, rec_type = "bed", result_id = "bedfile")
 }
 \arguments{
-\item{record_id}{character(1) BEDbase record identifier}
+\item{rec_id}{character(1) BEDbase record identifier}
 
-\item{record_type}{character(1) (default bed) BEDbase record type}
+\item{rec_type}{character(1) (default bed) BEDbase record type}
 
 \item{result_id}{character(1) (default bedfile) BEDbase result identifier}
 }
@@ -18,7 +17,7 @@ make_obj_id(record_id, record_type = "bed", result_id = "bedfile")
 String
 }
 \description{
-Note: only record_type = bed, result_id = bedfile?
+Note: only rec_type = bed, result_id = bedfile?
 }
 \examples{
 obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")

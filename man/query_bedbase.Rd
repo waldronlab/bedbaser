@@ -4,12 +4,10 @@
 \alias{query_bedbase}
 \title{Query BEDbase API}
 \usage{
-query_bedbase(endpoint, base_url = BEDBASEURL, quiet = FALSE)
+query_bedbase(endpoint, quiet = FALSE)
 }
 \arguments{
 \item{endpoint}{character(1) BEDbase API endpoint}
-
-\item{base_url}{character(1) (default BEDBASEurl) url}
 
 \item{quiet}{logical(1) (default FALSE) suppress message}
 }

@@ -1,15 +1,12 @@
 #' Base URL of BEDbase
 BEDBASEURL <- "https://api.bedbase.org"
 
-#' Base URL of PEPhub
-#PEPHUBURL <- "https://pephub-api.databio.org/api/v1"
-
 #' Construct object identifier
 #'
-#' Note: only record_type = bed, result_id = bedfile?
+#' Note: only rec_type = bed, result_id = bedfile?
 #'
-#' @param record_id character(1) BEDbase record identifier
-#' @param record_type character(1) (default bed) BEDbase record type
+#' @param rec_id character(1) BEDbase record identifier
+#' @param rec_type character(1) (default bed) BEDbase record type
 #' @param result_id character(1) (default bedfile) BEDbase result identifier
 #'
 #' @importFrom glue glue
@@ -18,9 +15,9 @@ BEDBASEURL <- "https://api.bedbase.org"
 #'
 #' @examples
 #' obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")
-make_obj_id <- function(record_id, record_type="bed", result_id="bedfile")
+make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 {
-    glue("{record_type}.{record_id}.{result_id}")
+    glue("{rec_type}.{rec_id}.{result_id}")
 }
 
 #' Get valid access identifiers
@@ -48,7 +45,6 @@ get_access_ids <- function(obj_id) {
 #' Note: The genomes end point error
 #'
 #' @param endpoint character(1) BEDbase API endpoint
-#' @param base_url character(1) (default BEDBASEurl) url
 #' @param quiet logical(1) (default FALSE) suppress message
 #'
 #' @importFrom glue glue
@@ -58,8 +54,8 @@ get_access_ids <- function(obj_id) {
 #'
 #' @examples
 #' query_bedbase("bed", "count")
-query_bedbase <- function(endpoint, base_url = BEDBASEURL, quiet = FALSE) {
-    url <- glue("{baseurl}/{endpoint}")
+query_bedbase <- function(endpoint, quiet = FALSE) {
+    url <- glue("{BEDBASEURL}/{endpoint}")
     if (!quiet)
         message("Requesting", url, "...")
     req_perform(request(url)) |>
@@ -68,13 +64,10 @@ query_bedbase <- function(endpoint, base_url = BEDBASEURL, quiet = FALSE) {
 
 #' Get service information
 #'
-#' @importFrom glue glue
-#' @importFrom httr2 req_perform resp_body_json
-#'
 #' @return list() service info, such as version
 #'
 #' @examples
 #' get_service_info()
 get_service_info <- function() {
-    query_bedbase(glue("{BEDBASEURL}/service-info"))
+    query_bedbase("service-info")
 }

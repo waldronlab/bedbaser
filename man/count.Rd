@@ -4,10 +4,10 @@
 \alias{count}
 \title{Count BEDs or BEDsets}
 \usage{
-count(record_type = c("bed", "bedset"))
+count(rec_type = c("bed", "bedset"))
 }
 \arguments{
-\item{record_type}{character(1) bed or bedset}
+\item{rec_type}{character(1) bed or bedset}
 }
 \value{
 integer(1) the number of BEDs or BEDsets available

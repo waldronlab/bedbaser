@@ -4,12 +4,12 @@
 \alias{get_metadata}
 \title{Get metadata for an BED, BEDset, or object}
 \usage{
-get_metadata(id, record_type = c("bed", "bedset", "object"))
+get_metadata(id, rec_type = c("bed", "bedset", "object"))
 }
 \arguments{
 \item{id}{integer(1) record or object identifier}
 
-\item{record_type}{character(1) BED, BEDset, or object}
+\item{rec_type}{character(1) BED, BEDset, or object}
 }
 \value{
 list() metadata

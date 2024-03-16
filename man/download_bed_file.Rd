@@ -5,22 +5,22 @@
 \title{Download BED}
 \usage{
 download_bed_file(
-  record_id,
+  rec_id,
   destdir,
   file_type = c("bytes", "thumbnail"),
-  access_id = "http",
+  acc_id = "http",
   quiet = TRUE
 )
 }
 \arguments{
-\item{record_id}{integer(1) BED record identifier}
+\item{rec_id}{integer(1) BED record identifier}
 
 \item{destdir}{character(1) directory to save the file}
 
 \item{file_type}{character(1) type of file to download, bytes or thumbnail}
 
-\item{access_id}{character(1) (default http) download protocol, "local"
-access_identifier is removed.}
+\item{acc_id}{character(1) (default http) access identifier, "local"
+is removed.}
 
 \item{quiet}{logical(1) (default TRUE) if FALSE, prints message}
 }
