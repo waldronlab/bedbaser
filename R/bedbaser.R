@@ -29,7 +29,7 @@ count <- function(rec_type = c("bed", "bedset")) {
 #' @export
 get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
     rec_type <- match.arg(rec_type)
-    url <- glue("{BEDBASEURL}/{rec_type}/{id}")
+    url <- glue("{rec_type}/{id}")
     if (rec_type != "object")
         url <- glue("{url}/metadata")
     query_bedbase(url)
@@ -41,6 +41,7 @@ get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
 #'
 #' @param rec_type character(1) bed or bedset
 #'
+#' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
 #' @importFrom purrr map_dfr set_names
 #' @importFrom tibble tibble as_tibble
@@ -52,7 +53,7 @@ get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
 #'
 #' @export
 get_records <- function(rec_type = c("bed", "bedset")) {
-    records_list <- query_bedbase(rec_type, "list")
+    records_list <- query_bedbase(glue("{rec_type}/list"))
     records_tibble <- tibble()
     if (length(records_list)) {
         cnames <- names(records_list$records[[1]])
@@ -78,7 +79,7 @@ get_records <- function(rec_type = c("bed", "bedset")) {
 #'
 #' @export
 get_beds_in_bedset <- function(rec_id) {
-    url <- glue("{BEDBASEURL}/bedset/{rec_id}/bedfiles")
+    url <- glue("bedset/{rec_id}/bedfiles")
     records <- query_bedbase(url)
     unlist(records$bedfile_metadata, use.names = FALSE)
 }
@@ -114,7 +115,7 @@ download_bed_file <- function(rec_id,
                               quiet = TRUE) {
     obj_id <- make_obj_id(rec_id)
     stopifnot(access_id %in% get_access_ids(obj_id))
-    url <- glue("{BEDBASEURL}/objects/{obj_id}/access/{acc_id}/{file_type}")
+    url <- glue("objects/{obj_id}/access/{acc_id}/{file_type}")
     download_url <- query_bedbase(url) 
     filename <- tail(str_split_1(download_url, "/"), n=1)
     filepath <- file.path(destdir, filename)
