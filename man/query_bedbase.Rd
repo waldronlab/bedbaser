@@ -9,7 +9,7 @@ query_bedbase(endpoint, quiet = FALSE)
 \arguments{
 \item{endpoint}{character(1) BEDbase API endpoint}
 
-\item{quiet}{logical(1) (default FALSE) suppress message}
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 a vector or list
@@ -18,5 +18,5 @@ a vector or list
 Note: The genomes end point error
 }
 \examples{
-query_bedbase("bed", "count")
+query_bedbase("bed/count")
 }

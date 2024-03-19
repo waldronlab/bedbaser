@@ -4,7 +4,10 @@
 \alias{get_service_info}
 \title{Get service information}
 \usage{
-get_service_info()
+get_service_info(quiet = FALSE)
+}
+\arguments{
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 list() service info, such as version

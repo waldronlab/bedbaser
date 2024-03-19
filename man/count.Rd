@@ -4,10 +4,12 @@
 \alias{count}
 \title{Count BEDs or BEDsets}
 \usage{
-count(rec_type = c("bed", "bedset"))
+count(rec_type = c("bed", "bedset"), quiet = FALSE)
 }
 \arguments{
 \item{rec_type}{character(1) bed or bedset}
+
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 integer(1) the number of BEDs or BEDsets available

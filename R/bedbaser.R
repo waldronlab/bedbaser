@@ -1,6 +1,9 @@
 #' Count BEDs or BEDsets
 #'
 #' @param rec_type character(1) bed or bedset
+#' @param quiet logical(1) (default FALSE) display message
+#'
+#' @importFrom glue glue
 #'
 #' @return integer(1) the number of BEDs or BEDsets available
 #'
@@ -8,15 +11,35 @@
 #' count("bed")
 #'
 #' @export
-count <- function(rec_type = c("bed", "bedset")) {
+count <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
     rec_type <- match.arg(rec_type)
-    query_bedbase(rec_type, "count")
+    query_bedbase(glue("{rec_type}/count"))
+}
+
+#' Get genome assemblies in BEDbase
+#'
+#' @param rec_type character(1) BED, BEDset, or object
+#' @param quiet logical(1) (default FALSE) display message
+#'
+#' @importFrom glue glue
+#' @importFrom httr2 request req_perform resp_body_json
+#'
+#' @return list() metadata
+#'
+#' @examples
+#' get_genomes("bed")
+#'
+#' @export
+get_genomes <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
+    rec_type <- match.arg(rec_type)
+    query_bedbase(glue("{rec_type}/genomes"), quiet)
 }
 
 #' Get metadata for an BED, BEDset, or object
 #'
 #' @param id integer(1) record or object identifier
 #' @param rec_type character(1) BED, BEDset, or object
+#' @param quiet logical(1) (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
@@ -27,12 +50,15 @@ count <- function(rec_type = c("bed", "bedset")) {
 #' get_metadata("421d2128e183424fcc6a74269bae7934", "bed")
 #'
 #' @export
-get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
+get_metadata <- function(id, rec_type = c("bed", "bedset", "object"),
+                         quiet = FALSE) {
     rec_type <- match.arg(rec_type)
+    if (rec_type == "object")
+        rec_type <- "objects"   # End point for an object record is "objects"
     url <- glue("{rec_type}/{id}")
-    if (rec_type != "object")
+    if (rec_type %in% c("bed", "bedset"))
         url <- glue("{url}/metadata")
-    query_bedbase(url)
+    query_bedbase(url, quiet)
 }
 
 #' Get record identifiers and names for BEDs or BEDsets
@@ -40,6 +66,7 @@ get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
 #' Note: Should be paged
 #'
 #' @param rec_type character(1) bed or bedset
+#' @param quiet logical(1) (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
@@ -52,8 +79,8 @@ get_metadata <- function(id, rec_type = c("bed", "bedset", "object")) {
 #' recs <- get_records("bed")
 #'
 #' @export
-get_records <- function(rec_type = c("bed", "bedset")) {
-    records_list <- query_bedbase(glue("{rec_type}/list"))
+get_records <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
+    records_list <- query_bedbase(glue("{rec_type}/list"), quiet)
     records_tibble <- tibble()
     if (length(records_list)) {
         cnames <- names(records_list$records[[1]])
@@ -67,6 +94,7 @@ get_records <- function(rec_type = c("bed", "bedset")) {
 #' Get BEDs associated with BEDset
 #'
 #' @param rec_id integer(1) BEDset record identifier
+#' @param quiet logical(1) (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform request resp_body_json
@@ -78,49 +106,41 @@ get_records <- function(rec_type = c("bed", "bedset")) {
 #' get_beds_in_bedset("excluderanges")
 #'
 #' @export
-get_beds_in_bedset <- function(rec_id) {
-    url <- glue("bedset/{rec_id}/bedfiles")
-    records <- query_bedbase(url)
+get_beds_in_bedset <- function(rec_id, quiet = FALSE) {
+    records <- query_bedbase(glue("bedset/{rec_id}/bedfiles"), quiet)
     unlist(records$bedfile_metadata, use.names = FALSE)
 }
 
-#' Download BED
+#' Download BED or thumbnail
 #'
 #' @param rec_id integer(1) BED record identifier
-#' @param destdir character(1) directory to save the file
 #' @param file_type character(1) type of file to download, bytes or thumbnail
 #' @param acc_id character(1) (default http) access identifier, "local"
 #'     is removed.
-#' @param quiet logical(1) (default TRUE) if FALSE, prints message
+#' @param quiet logical(1) (default FALSE) display message
 #'
+#' @importFrom BiocFileCache bfcrpath
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom stringr str_split_1
 #' @importFrom utils download.file tail
 #'
-#' @return file path
+#' @return character(1) path to file
 #'
 #' @examples
-#' filepath <-download_bed_file("421d2128e183424fcc6a74269bae7934", "/tmp", "bytes")
-#' filepath <-download_bed_file("ce9f6e8adf5779edb632245a166b92bd", "/tmp", "bytes")
-#' zebrafish <-download_bed_file("eec93c0649bfc2fc90cdc9fca3f52588", "/tmp", "bytes")
-#' filepath <-download_bed_file("e6cd0dbb252be66f8c2bdb0d23ed431c", "/tmp", "bytes")
-#' telomere <-download_bed_file("b56d842d5727f1cfaaccb0bdc1bba6ad", "/tmp", "bytes")
+#' telomere <- download_file("80d2b2581bb25fa6b73ec56c11969fb3", "bytes")
 #'
 #' @export
-download_bed_file <- function(rec_id,
-                              destdir,
-                              file_type = c("bytes", "thumbnail"),
-                              acc_id = "http",
-                              quiet = TRUE) {
+download_file <- function(rec_id, file_type = c("bytes", "thumbnail"),
+                          acc_id = "http", quiet = FALSE) {
     obj_id <- make_obj_id(rec_id)
-    stopifnot(access_id %in% get_access_ids(obj_id))
-    url <- glue("objects/{obj_id}/access/{acc_id}/{file_type}")
-    download_url <- query_bedbase(url) 
-    filename <- tail(str_split_1(download_url, "/"), n=1)
-    filepath <- file.path(destdir, filename)
-    download.file(download_url, filepath, quiet = quiet)
-    filepath
+    stopifnot(acc_id %in% get_access_ids(obj_id, TRUE))
+    file_type <- match.arg(file_type)
+    url <- glue("objects/{obj_id}/access/{acc_id}")
+    if (file_type == "thumbnail")
+        url <- glue("{url}/{file_type}")
+    download_url <- query_bedbase(url, quiet) 
+    .download_and_cache(download_url, quiet) 
 }
 
 ##' Create a GRanges object from a BED file

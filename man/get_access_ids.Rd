@@ -4,10 +4,12 @@
 \alias{get_access_ids}
 \title{Get valid access identifiers}
 \usage{
-get_access_ids(obj_id)
+get_access_ids(obj_id, quiet = FALSE)
 }
 \arguments{
 \item{obj_id}{character(1) BEDbase object record identifier}
+
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 character() available access identifiers

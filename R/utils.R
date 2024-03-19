@@ -25,13 +25,14 @@ make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 #' Note: omits 'local' option
 #'
 #' @param obj_id character(1) BEDbase object record identifier
+#' @param quiet logical(1) (default FALSE) display message
 #'
 #' @return character() available access identifiers
 #'
 #' @examples
 #' get_access_ids("bed.421d2128e183424fcc6a74269bae7934.bedfile")
-get_access_ids <- function(obj_id) {
-    metadata <- get_metadata(obj_id, "object")
+get_access_ids <- function(obj_id, quiet = FALSE) {
+    metadata <- get_metadata(obj_id, "object", quiet = FALSE)
     access_methods <- unlist(lapply(metadata$access_methods, `[[`, c('type')))
     remove_index <- match("local", access_methods)
     if (!is.na(remove_index)) {
@@ -45,29 +46,32 @@ get_access_ids <- function(obj_id) {
 #' Note: The genomes end point error
 #'
 #' @param endpoint character(1) BEDbase API endpoint
-#' @param quiet logical(1) (default FALSE) suppress message
+#' @param quiet logical(1) (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform resp_body_json
+#' @importFrom rlang inform
 #'
 #' @return a vector or list
 #'
 #' @examples
-#' query_bedbase("bed", "count")
+#' query_bedbase("bed/count")
 query_bedbase <- function(endpoint, quiet = FALSE) {
     url <- glue("{BEDBASEURL}/{endpoint}")
     if (!quiet)
-        message("Requesting", url, "...")
+        inform(glue("Requesting {url} ..."))
     req_perform(request(url)) |>
         resp_body_json()
 }
 
 #' Get service information
 #'
+#' @param quiet logical(1) (default FALSE) display message
+#'
 #' @return list() service info, such as version
 #'
 #' @examples
 #' get_service_info()
-get_service_info <- function() {
-    query_bedbase("service-info")
+get_service_info <- function(quiet = FALSE) {
+    query_bedbase("service-info", quiet)
 }

@@ -4,10 +4,12 @@
 \alias{get_records}
 \title{Get record identifiers and names for BEDs or BEDsets}
 \usage{
-get_records(rec_type = c("bed", "bedset"))
+get_records(rec_type = c("bed", "bedset"), quiet = FALSE)
 }
 \arguments{
 \item{rec_type}{character(1) bed or bedset}
+
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 a tibble of record identifiers and record names

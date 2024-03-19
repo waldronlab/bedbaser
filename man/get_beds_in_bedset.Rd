@@ -4,10 +4,12 @@
 \alias{get_beds_in_bedset}
 \title{Get BEDs associated with BEDset}
 \usage{
-get_beds_in_bedset(rec_id)
+get_beds_in_bedset(rec_id, quiet = FALSE)
 }
 \arguments{
 \item{rec_id}{integer(1) BEDset record identifier}
+
+\item{quiet}{logical(1) (default FALSE) display message}
 }
 \value{
 list() BED record identifiers
