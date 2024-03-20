@@ -7,9 +7,9 @@
 get_access_ids(obj_id, quiet = FALSE)
 }
 \arguments{
-\item{obj_id}{character(1) BEDbase object record identifier}
+\item{obj_id}{character() BEDbase object record identifier}
 
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
 character() available access identifiers

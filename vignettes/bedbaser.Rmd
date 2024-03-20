@@ -18,9 +18,11 @@ vignette: >
 library(bedbaser)
 ```
 
-bedbaser is an R client for the BEDbase API available at https://api.bedbase.org.
+bedbaser is an R client for the BEDbase [API](https://api.bedbase.org).
 
 ## Install
+
+Install bedbaser using `r CRANpkg("BiocManager")`.
 
 ```{r install, eval=FALSE}
 if (!"BiocManager" %in% rownames(installed.packages()))
@@ -29,89 +31,57 @@ BiocManager::install("bedbaser", dependencies=TRUE)
 ```
 ## Find a BED file or BEDset
 
-BED files and BEDsets can be accessed by their record identifiers.
-
-`get_records()` shows the record identifiers and names of available BED files
-or BEDsets.
+Use `get_records()` to browse available resources in BEDbase. `get_records()`
+will display the record identifiers and names of BED files and BEDsets.
+Record identifiers can be used to access a specific resource.
 
 ```{r get_records}
-bedfiles <- get_records("bed")
-bedfiles
+beds <- get_records("bed")
+beds
 
 bedsets <- get_records("bedset")
 bedsets
 ```
 
-`get_records_in_set()` returns the record identifiers of BED files in a
+### Examine metadata
+
+Use `get_metadata()` to learn more about a BED file or BEDset associated with
+a record identifier.
+
+```{r get_metadata}
+# Telomere
+rec_id <- "80d2b2581bb25fa6b73ec56c11969fb3"
+get_metadata(rec_id)
+```
+
+### Show BED files in BEDset
+
+`get_beds_in_bedset()` returns the record identifiers of BED files in a
 BEDset. 
 
-```{r get_records_in_bedset}
-get_records_in_set("excluderanges")
+```{r get_beds_in_bedset}
+get_beds_in_bedset("excluderanges")
 ```
+
+### Search for a BED file by keyword
+
+Search for BED files by keywords:
+
+```{r search_bedbase, eval=FALSE}
+# Currently not working
+results <- search_bedbase("hg13", limit=20)
+```
+
+## Download a BED file
 
 Download a BED file by its record identifier:
 
 ```{r downloadBedFile}
 # "GSM6856752_S1_H3K27ac_peaks"
-record_id <- bedfiles[[1,1]]
-filepath <- downloadBedFile(record_id, tempdir())
+filepath <- download_file(rec_id, "bytes")
 ```
 
-Use `r Biocpkg("rtracklayer")` to import the BED file; however, if the BED file
-is not in the format of the 3 required columns and 9 optional columns, we could
-try to put it in a data.frame then arrange it into a GRanges object:
-
-```{r fileToGRanges}
-# Currently only using the 3 required columns, need to include more columns
-gro <- fileToGRanges(filepath)
-gro
-```
-
-Note: We could also do
-```{r, eval=FALSE}
-importToGRanges(record_id)
-```
-
-To Do:
-
-* Import/include more of the optional columns into the GRanges object (See https://learn.gencore.bio.nyu.edu/ngs-file-formats/bed-format/)
-* How to include nonstandard columns?
-
-```
-# GSM6856752_S1_H3K27ac_peaks.bed.gz
-chr10	135001	135250	pos1	485	244.4055	0.9887082	11.85219
-chr10	135751	135950	pos2	365	141.9129	1.362891	16.0
-chr10	324251	324400	pos3	83	6.463647	3.682691	16.0
-chr10	329701	329950	pos4	167	37.84343	2.141733	14.67584
-chr10	394101	394550	pos5	898	198.678	2.176283	16.0
-chr10	395301	395800	pos6	498	31.84901	3.966825	16.0
-chr10	396401	396650	pos7	130	10.77274	3.593054	16.0
-chr10	581051	581150	pos8	46	5.308168	3.115348	14.61217
-chr10	625301	626100	pos9	1230	249.7136	2.300312	16.0
-chr10	659601	660500	pos10	953	42.77816	4.47753	16.0
-chr10	664301	664500	pos11	146	9.617266	3.924198	16.0
-chr10	664901	665000	pos12	45	4.309098	3.384467	15.65356
-chr10	665401	665550	pos13	95	17.92264	2.406144	16.0
-chr10	665701	665850	pos14	111	22.07533	2.330053	16.0
-chr10	683601	683850	pos15	180	19.07812	3.238006	16.0
-```
-Or
-
-```
-# hg19_UCSC_telomere.bed.gz
-chr1	0	10000	10001	*	585	1	N	10000	telomere	no
-chr1	249240621	249250621	10001	*	2486	2302	N	10000	telomere	no
-chr2	0	10000	10001	*	585	1	N	10000	telomere	no
-chr2	243189373	243199373	10001	*	2440	2027	N	10000	telomere	no
-chr3	0	10000	10001	*	585	1	N	10000	telomere	no
-chr3	198012430	198022430	10001	*	2095	1733	N	10000	telomere	no
-chr4	0	10000	10001	*	585	1	N	10000	telomere	no
-chr4	191144276	191154276	10001	*	2043	1658	N	10000	telomere	no
-```
-
-Development: https://github.com/users/jwokaty
-
-Project Board: https://github.com/users/jwokaty/projects/4/views/1
+## SessionInfo()f
 
 ```{r sessionInfo}
 sessionInfo()

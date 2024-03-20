@@ -7,9 +7,9 @@
 get_beds_in_bedset(rec_id, quiet = FALSE)
 }
 \arguments{
-\item{rec_id}{integer(1) BEDset record identifier}
+\item{rec_id}{integer() BEDset record identifier}
 
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
 list() BED record identifiers

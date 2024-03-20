@@ -12,17 +12,17 @@ download_file(
 )
 }
 \arguments{
-\item{rec_id}{integer(1) BED record identifier}
+\item{rec_id}{integer() BED record identifier}
 
-\item{file_type}{character(1) type of file to download, bytes or thumbnail}
+\item{file_type}{character() type of file to download, bytes or thumbnail}
 
-\item{acc_id}{character(1) (default http) access identifier, "local"
+\item{acc_id}{character() (default http) access identifier, "local"
 is removed.}
 
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
-character(1) path to file
+character() path to file
 }
 \description{
 Download BED or thumbnail

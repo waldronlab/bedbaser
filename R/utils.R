@@ -5,9 +5,9 @@ BEDBASEURL <- "https://api.bedbase.org"
 #'
 #' Note: only rec_type = bed, result_id = bedfile?
 #'
-#' @param rec_id character(1) BEDbase record identifier
-#' @param rec_type character(1) (default bed) BEDbase record type
-#' @param result_id character(1) (default bedfile) BEDbase result identifier
+#' @param rec_id character() BEDbase record identifier
+#' @param rec_type character() (default bed) BEDbase record type
+#' @param result_id character() (default bedfile) BEDbase result identifier
 #'
 #' @importFrom glue glue
 #'
@@ -24,8 +24,8 @@ make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 #'
 #' Note: omits 'local' option
 #'
-#' @param obj_id character(1) BEDbase object record identifier
-#' @param quiet logical(1) (default FALSE) display message
+#' @param obj_id character() BEDbase object record identifier
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @return character() available access identifiers
 #'
@@ -45,12 +45,12 @@ get_access_ids <- function(obj_id, quiet = FALSE) {
 #'
 #' Note: The genomes end point error
 #'
-#' @param endpoint character(1) BEDbase API endpoint
-#' @param quiet logical(1) (default FALSE) display message
+#' @param endpoint character() BEDbase API endpoint
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform resp_body_json
-#' @importFrom rlang inform
+#' @importFrom rlang inform abort
 #'
 #' @return a vector or list
 #'
@@ -60,13 +60,20 @@ query_bedbase <- function(endpoint, quiet = FALSE) {
     url <- glue("{BEDBASEURL}/{endpoint}")
     if (!quiet)
         inform(glue("Requesting {url} ..."))
-    req_perform(request(url)) |>
-        resp_body_json()
+    tryCatch(
+        error =  function(cnd) {
+            abort("offline", message = "Can't access https://api.bedbase.org")
+        },
+        {
+            req_perform(request(url)) |>
+                resp_body_json()
+        }
+    )
 }
 
 #' Get service information
 #'
-#' @param quiet logical(1) (default FALSE) display message
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @return list() service info, such as version
 #'

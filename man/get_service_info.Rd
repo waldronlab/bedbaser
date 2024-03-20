@@ -7,7 +7,7 @@
 get_service_info(quiet = FALSE)
 }
 \arguments{
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
 list() service info, such as version

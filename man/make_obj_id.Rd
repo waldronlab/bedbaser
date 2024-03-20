@@ -7,11 +7,11 @@
 make_obj_id(rec_id, rec_type = "bed", result_id = "bedfile")
 }
 \arguments{
-\item{rec_id}{character(1) BEDbase record identifier}
+\item{rec_id}{character() BEDbase record identifier}
 
-\item{rec_type}{character(1) (default bed) BEDbase record type}
+\item{rec_type}{character() (default bed) BEDbase record type}
 
-\item{result_id}{character(1) (default bedfile) BEDbase result identifier}
+\item{result_id}{character() (default bedfile) BEDbase result identifier}
 }
 \value{
 String

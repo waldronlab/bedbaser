@@ -19,15 +19,15 @@
 #'
 #' Note: This function is described in BiocFileCache
 #'
-#' @param url character(1) remote resource
-#' @param quiet logical(1) display message
+#' @param url character() remote resource
+#' @param quiet logical() display message
 #'
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfcdownload bfcneedsupdate
 #'     bfcquery bfcrpath
 #' @importFrom glue glue
 #' @importFrom rlang inform
 #'
-#' @return filepath character(1)
+#' @return filepath character()
 #'
 #' @examples
 #' url <- "https://data2.bedbase.org/bed_files/hg38_UCSC_telomere.bed.gz"

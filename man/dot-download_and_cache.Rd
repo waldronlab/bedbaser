@@ -7,12 +7,12 @@
 .download_and_cache(url, quiet = FALSE)
 }
 \arguments{
-\item{url}{character(1) remote resource}
+\item{url}{character() remote resource}
 
-\item{quiet}{logical(1) display message}
+\item{quiet}{logical() display message}
 }
 \value{
-filepath character(1)
+filepath character()
 }
 \description{
 Note: This function is described in BiocFileCache

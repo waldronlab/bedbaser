@@ -1,11 +1,11 @@
 #' Count BEDs or BEDsets
 #'
-#' @param rec_type character(1) bed or bedset
-#' @param quiet logical(1) (default FALSE) display message
+#' @param rec_type character() bed or bedset
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #'
-#' @return integer(1) the number of BEDs or BEDsets available
+#' @return integer() the number of BEDs or BEDsets available
 #'
 #' @examples
 #' count("bed")
@@ -18,8 +18,8 @@ count <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
 
 #' Get genome assemblies in BEDbase
 #'
-#' @param rec_type character(1) BED, BEDset, or object
-#' @param quiet logical(1) (default FALSE) display message
+#' @param rec_type character() BED, BEDset, or object
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
@@ -32,14 +32,21 @@ count <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
 #' @export
 get_genomes <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
     rec_type <- match.arg(rec_type)
-    query_bedbase(glue("{rec_type}/genomes"), quiet)
+    genome_list <- query_bedbase(glue("{rec_type}/genomes"), quiet)
+    genome_tibble <- tibble()
+    if (length(genome_list)) {
+        cnames <- names(genome_list[[1]])
+        genome_tibble <- genome_list |>
+            map_dfr(function(x) { set_names(unlist(x), cnames) })
+    }
+    genome_tibble
 }
 
 #' Get metadata for an BED, BEDset, or object
 #'
-#' @param id integer(1) record or object identifier
-#' @param rec_type character(1) BED, BEDset, or object
-#' @param quiet logical(1) (default FALSE) display message
+#' @param id integer() record or object identifier
+#' @param rec_type character() BED, BEDset, or object
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
@@ -65,8 +72,8 @@ get_metadata <- function(id, rec_type = c("bed", "bedset", "object"),
 #'
 #' Note: Should be paged
 #'
-#' @param rec_type character(1) bed or bedset
-#' @param quiet logical(1) (default FALSE) display message
+#' @param rec_type character() bed or bedset
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 request req_perform resp_body_json
@@ -93,8 +100,8 @@ get_records <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
 
 #' Get BEDs associated with BEDset
 #'
-#' @param rec_id integer(1) BEDset record identifier
-#' @param quiet logical(1) (default FALSE) display message
+#' @param rec_id integer() BEDset record identifier
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom glue glue
 #' @importFrom httr2 req_perform request resp_body_json
@@ -111,13 +118,58 @@ get_beds_in_bedset <- function(rec_id, quiet = FALSE) {
     unlist(records$bedfile_metadata, use.names = FALSE)
 }
 
+#' Search BEDbase
+#'
+#' @param keywords character() keyword to search for
+#' @param limit integer() maximum number of results to include
+#' @param quiet logical() (default FALSE) display message
+#'
+#' @importFrom dplyr bind_rows
+#' @importFrom glue glue
+#' @importFrom httr2 req_perform request resp_body_json
+#' @importFrom tibble as_tibble
+#' @importFrom utils URLencode
+#'
+#' @return tibble() 
+#'
+#' @examples
+#' search_bedbase("excluderanges")
+#'
+#' @export
+search_bedbase <- function(keywords, limit, quiet = FALSE) {
+    encoded_keywords <- URLencode(keywords, reserved = TRUE)
+    url <- glue("search/bed/{encoded_keywords}?limit={limit}")
+    results <- query_bedbase(url, quiet)
+    if (!length(results))
+        return(results)
+    metadata <- tibble()
+    for (result in results) {
+        fmd <- list()
+        for (i in 1:length(result$metadata)) {
+            if (length(result$metadata[[i]]) > 1) {
+                cname <- names(result$metadata[i])
+                cnames <- sapply(names(result$metadata[[i]]), function(y) {
+                    paste(cname, y, sep="_")
+                })
+                names(result$metadata[[i]]) <- c(cnames)
+                submetadata <- unlist(result$metadata[[i]], recursive = TRUE)
+                fmd <- append(fmd, submetadata)
+            } else {
+                fmd <- append(fmd, result$metadata[i])
+            }
+        }
+        bind_rows(metadata, as_tibble(fmd))
+    }
+    metadata
+}
+
 #' Download BED or thumbnail
 #'
-#' @param rec_id integer(1) BED record identifier
-#' @param file_type character(1) type of file to download, bytes or thumbnail
-#' @param acc_id character(1) (default http) access identifier, "local"
+#' @param rec_id integer() BED record identifier
+#' @param file_type character() type of file to download, bytes or thumbnail
+#' @param acc_id character() (default http) access identifier, "local"
 #'     is removed.
-#' @param quiet logical(1) (default FALSE) display message
+#' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom BiocFileCache bfcrpath
 #' @importFrom glue glue
@@ -125,7 +177,7 @@ get_beds_in_bedset <- function(rec_id, quiet = FALSE) {
 #' @importFrom stringr str_split_1
 #' @importFrom utils download.file tail
 #'
-#' @return character(1) path to file
+#' @return character() path to file
 #'
 #' @examples
 #' telomere <- download_file("80d2b2581bb25fa6b73ec56c11969fb3", "bytes")

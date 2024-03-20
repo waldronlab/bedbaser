@@ -10,6 +10,7 @@ BugReports: https://github.com/waldronlab/bedbaser/issues
 License: Artistic License 2.0
 Imports:
     BiocFileCache,
+    dplyr,
     glue,
     httr2,
     purrr,

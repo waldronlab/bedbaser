@@ -7,9 +7,9 @@
 get_records(rec_type = c("bed", "bedset"), quiet = FALSE)
 }
 \arguments{
-\item{rec_type}{character(1) bed or bedset}
+\item{rec_type}{character() bed or bedset}
 
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
 a tibble of record identifiers and record names

@@ -7,9 +7,9 @@
 get_genomes(rec_type = c("bed", "bedset"), quiet = FALSE)
 }
 \arguments{
-\item{rec_type}{character(1) BED, BEDset, or object}
+\item{rec_type}{character() BED, BEDset, or object}
 
-\item{quiet}{logical(1) (default FALSE) display message}
+\item{quiet}{logical() (default FALSE) display message}
 }
 \value{
 list() metadata
