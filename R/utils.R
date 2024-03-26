@@ -1,5 +1,28 @@
-#' Base URL of BEDbase
-BEDBASEURL <- "https://api.bedbase.org"
+#' Get record type
+#'
+#' @param id character() BEDbase identifier
+#'
+#' @importFrom glue glue
+#' @importFrom rlang abort
+#' @importFrom stringr regex str_detect
+#'
+#' @return logical()
+#'
+#' @examples
+#' get_rec_type("eaf9ee97241f300f1c7e76e1f945141f")
+#'
+#' @export
+get_rec_type <- function(id) {
+    if (str_detect(id, regex("^bed.[:alnum:]+.bedfile$")))
+        rec_type <- "bed"
+    else if (str_detect(id, regex("^bed.[:alnum:]+.bedset$")))
+        rec_type <- "bedset"
+    else if (str_detect(id, regex("^[:alnum:]+$")))
+        rec_type <- "object"
+    else
+        abort(glue("Unknown record identifier: {id}"))
+    rec_type
+}
 
 #' Construct object identifier
 #'
@@ -41,44 +64,23 @@ get_access_ids <- function(obj_id, quiet = FALSE) {
     access_methods
 }
 
-#' Query BEDbase API
-#'
-#' Note: The genomes end point error
-#'
-#' @param endpoint character() BEDbase API endpoint
-#' @param quiet logical() (default FALSE) display message
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 req_perform resp_body_json
-#' @importFrom rlang inform abort
-#'
-#' @return a vector or list
-#'
-#' @examples
-#' query_bedbase("bed/count")
-query_bedbase <- function(endpoint, quiet = FALSE) {
-    url <- glue("{BEDBASEURL}/{endpoint}")
-    if (!quiet)
-        inform(glue("Requesting {url} ..."))
-    tryCatch(
-        error =  function(cnd) {
-            abort("offline", message = "Can't access https://api.bedbase.org")
-        },
-        {
-            req_perform(request(url)) |>
-                resp_body_json()
-        }
-    )
-}
+setGeneric(name = "get_bb_service_info",
+           def = function(x) { standardGeneric("get_bb_service_info") })
 
 #' Get service information
 #'
-#' @param quiet logical() (default FALSE) display message
+#' @importFrom httr content
 #'
 #' @return list() service info, such as version
 #'
 #' @examples
-#' get_service_info()
-get_service_info <- function(quiet = FALSE) {
-    query_bedbase("service-info", quiet)
-}
+#' bb <- BEDbase()
+#' get_bb_service_info(bb)
+#'
+#' @export
+setMethod(
+    "get_bb_service_info", "BEDbase",
+    function(x) {
+        content(x$service_info_service_info_get())
+    }
+)

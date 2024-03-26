@@ -29,38 +29,58 @@ if (!"BiocManager" %in% rownames(installed.packages()))
     install.packages("BiocManager")
 BiocManager::install("bedbaser", dependencies=TRUE)
 ```
+
+## Create a bedbaser client
+
+bedbaser uses the `r Biocpkg("AnVIL")` Service class to create a `BEDbase`
+singleton, which can be use to access the API directly.
+
+```{r bedbase}
+client <- BEDbase()
+show(client)
+```
+
+Operations can be accessed with `$`. For example
+
+```{r count_bed_record_bed_count_get}
+library(httr)
+response <- client$get_example_bed_record_bed_example_get()
+example_bed <- content(response)
+```
+
+bedbaser includes convenience functions to facilitate finding BEDs, exploring
+their metadata, and download files.
+
 ## Find a BED file or BEDset
 
-Use `get_records()` to browse available resources in BEDbase. `get_records()`
+Use `bb_records()` to browse available resources in BEDbase. `get_records()`
 will display the record identifiers and names of BED files and BEDsets.
 Record identifiers can be used to access a specific resource.
 
 ```{r get_records}
-beds <- get_records("bed")
+beds <- bb_records(client, "bed")
 beds
 
-bedsets <- get_records("bedset")
+bedsets <- bb_records(client, "bedset")
 bedsets
 ```
 
 ### Examine metadata
 
-Use `get_metadata()` to learn more about a BED file or BEDset associated with
+Use `bb_metadata()` to learn more about a BED or BEDset associated with
 a record identifier.
 
 ```{r get_metadata}
-# Telomere
-rec_id <- "80d2b2581bb25fa6b73ec56c11969fb3"
-get_metadata(rec_id)
+bb_metadata(client, example_bed$record_identifier, "bed")
 ```
 
 ### Show BED files in BEDset
 
-`get_beds_in_bedset()` returns the record identifiers of BED files in a
+Use `get_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
-```{r get_beds_in_bedset}
-get_beds_in_bedset("excluderanges")
+```{r bb_get_beds_in_bedset}
+bb_get_beds_in_bedset("excluderanges")
 ```
 
 ### Search for a BED file by keyword

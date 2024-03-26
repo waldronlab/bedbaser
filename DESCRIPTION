@@ -9,10 +9,11 @@ URL: https://github.com/waldronlab/bedbaser
 BugReports: https://github.com/waldronlab/bedbaser/issues
 License: Artistic License 2.0
 Imports:
+    AnVIL,
     BiocFileCache,
     dplyr,
     glue,
-    httr2,
+    httr,
     purrr,
     rtracklayer,
     R.utils,

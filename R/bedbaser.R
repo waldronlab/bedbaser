@@ -1,122 +1,191 @@
+#' BEDbase class
+#'
+#' @importFrom AnVIL Service
+#'
+#' @export
+.BEDbase <- setClass(
+    "BEDbase",
+    contains = "Service"
+)
+
+#' BEDbase client constructor
+#'
+#' @return BEDbase object
+#'
+#' @examples
+#' BEDbase()
+#'
+#' @export
+BEDbase <- function() {
+    .BEDbase(
+        Service(
+            "BEDbase",
+            host = "api.bedbase.org",
+            authenticate = FALSE,
+            api_url = "https://api.bedbase.org/openapi.json",
+            package = "bedbaser"
+        )
+    )
+}
+
+setGeneric(name = "bb_count",
+           def = function(x, rec_type) { standardGeneric("bb_count") })
+
 #' Count BEDs or BEDsets
 #'
 #' @param rec_type character() bed or bedset
-#' @param quiet logical() (default FALSE) display message
 #'
-#' @importFrom glue glue
+#' @importFrom httr content
 #'
 #' @return integer() the number of BEDs or BEDsets available
 #'
 #' @examples
-#' count("bed")
+#' client <- BEDbase()
+#' bb_count(client, "bed")
 #'
 #' @export
-count <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
-    rec_type <- match.arg(rec_type)
-    query_bedbase(glue("{rec_type}/count"))
-}
+setMethod(
+    "bb_count", "BEDbase",
+    function(x, rec_type=c("bed", "bedset")) {
+        rec_type <- match.arg(rec_type)
+        if (rec_type == "bed")
+            content(x$count_bed_record_bed_count_get())
+        else
+            content(x$get_bedset_count_bedset_count_get())
+    }
+)
+
+setGeneric(name = "bb_genomes",
+           def = function(x, rec_type) { standardGeneric("bb_genomes") })
 
 #' Get genome assemblies in BEDbase
 #'
-#' @param rec_type character() BED, BEDset, or object
-#' @param quiet logical() (default FALSE) display message
+#' @param rec_type character() BED or BEDset
 #'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_body_json
+#' @importFrom httr content
+#' @importFrom purrr map_dfr
+#' @importFrom tibble tibble
 #'
-#' @return list() metadata
+#' @return tibble
 #'
 #' @examples
-#' get_genomes("bed")
+#' client <- BEDbase()
+#' bb_genomes(client, "bed")
 #'
 #' @export
-get_genomes <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
-    rec_type <- match.arg(rec_type)
-    genome_list <- query_bedbase(glue("{rec_type}/genomes"), quiet)
-    genome_tibble <- tibble()
-    if (length(genome_list)) {
-        cnames <- names(genome_list[[1]])
-        genome_tibble <- genome_list |>
-            map_dfr(function(x) { set_names(unlist(x), cnames) })
+setMethod(
+    "bb_genomes", "BEDbase",
+    function(x, rec_type = c("bed", "bedset")) {
+        rec_type <- match.arg(rec_type)
+        if (rec_type == "bed")
+            response <- x$get_bed_genome_assemblies_bed_genomes_get()
+        else
+            response <- x$get_bedset_genome_assemblies_bedset_genomes_get()
+        genome_list <- content(response)
+        genome_tibble <- tibble()
+        if (length(genome_list)) {
+            cnames <- names(genome_list[[1]])
+            genome_tibble <- genome_list |>
+                map_dfr(function(y) { set_names(unlist(y), cnames) })
+        }
+        genome_tibble
     }
-    genome_tibble
-}
+)
+
+setGeneric(name = "bb_metadata",
+           def = function(x, id, rec_type) { standardGeneric("bb_metadata") })
 
 #' Get metadata for an BED, BEDset, or object
 #'
 #' @param id integer() record or object identifier
 #' @param rec_type character() BED, BEDset, or object
-#' @param quiet logical() (default FALSE) display message
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_body_json
 #'
 #' @return list() metadata
 #'
-#' @examples
-#' get_metadata("421d2128e183424fcc6a74269bae7934", "bed")
-#'
-#' @export
-get_metadata <- function(id, rec_type = c("bed", "bedset", "object"),
-                         quiet = FALSE) {
-    rec_type <- match.arg(rec_type)
-    if (rec_type == "object")
-        rec_type <- "objects"   # End point for an object record is "objects"
-    url <- glue("{rec_type}/{id}")
-    if (rec_type %in% c("bed", "bedset"))
-        url <- glue("{url}/metadata")
-    query_bedbase(url, quiet)
-}
+  #' @examples
+  #' client <- BEDbase()
+  #' bb_metadata(client, "bed")
+  #'
+  #' @export
+  setMethod(
+      "bb_metadata", "BEDbase",
+      function(x, id, rec_type = c("bed", "bedset", "object")) {
+          rec_type <- match.arg(rec_type)
+          if (rec_type == "bed")
+              response <- x$get_bed_metadata_bed__bed_id__metadata_get(id)
+          else if (rec_type == "bedset")
+              response <- x$get_bedset_metadata_bedset__bedset_id__metadata_get(id)
+          else if (rec_type == "object")
+              response <- x$get_drs_object_metadata_objects__object_id__get(id)
+          record <- content(response)
+          record$metadata
+      }
+)
+
+setGeneric(name = "bb_records",
+           def = function(x, rec_type, ...) {
+               standardGeneric("bb_records")
+})
 
 #' Get record identifiers and names for BEDs or BEDsets
 #'
-#' Note: Should be paged
-#'
 #' @param rec_type character() bed or bedset
-#' @param quiet logical() (default FALSE) display message
+#' @param limit integer() maximum records
+#' @param token integer() next page of records
 #'
-#' @importFrom glue glue
-#' @importFrom httr2 request req_perform resp_body_json
 #' @importFrom purrr map_dfr set_names
 #' @importFrom tibble tibble as_tibble
 #'
 #' @return a tibble of record identifiers and record names
 #'
 #' @examples
-#' recs <- get_records("bed")
+#' client <- BEDbase()
+#' bb_records(client, "bed")
 #'
 #' @export
-get_records <- function(rec_type = c("bed", "bedset"), quiet = FALSE) {
-    records_list <- query_bedbase(glue("{rec_type}/list"), quiet)
-    records_tibble <- tibble()
-    if (length(records_list)) {
-        cnames <- names(records_list$records[[1]])
-        records_tibble <- records_list$records |>
-            map_dfr(function(x) { set_names(unlist(x), cnames) }) |>
-                as_tibble()
+setMethod(
+    "bb_records", "BEDbase",
+    function(x, rec_type = c("bed", "bedset"), ...) {
+        rec_type <- match.arg(rec_type)
+        if (rec_type == "bed")
+            response <- x$list_beds_bed_list_get(...)
+        else if (rec_type == "bedset")
+            response <- x$list_bedsets_bedset_list_get(...)
+        records_tibble <- tibble()
+        records_list <- content(response)
+        if (length(records_list)) {
+            cnames <- names(records_list$records[[1]])
+            records_tibble <- records_list$records |>
+                map_dfr(function(x) { set_names(unlist(x), cnames) }) |>
+                    as_tibble()
+        }
+        records_tibble
     }
-    records_tibble
-}
+)
+
+setGeneric(name = "bb_get_beds_in_bedset",
+           def = function(x, rec_id) { standardGeneric("bb_get_beds_in_bedset") })
 
 #' Get BEDs associated with BEDset
 #'
 #' @param rec_id integer() BEDset record identifier
-#' @param quiet logical() (default FALSE) display message
-#'
-#' @importFrom glue glue
-#' @importFrom httr2 req_perform request resp_body_json
-#' @importFrom tibble as_tibble
 #'
 #' @return list() BED record identifiers
 #'
 #' @examples
-#' get_beds_in_bedset("excluderanges")
-#'
+#' client <- BEDbase()
+#' bb_get_beds_in_bedset(client, "bed")
+#' rec_id <- "421d2128e183424fcc6a74269bae7934"
 #' @export
-get_beds_in_bedset <- function(rec_id, quiet = FALSE) {
-    records <- query_bedbase(glue("bedset/{rec_id}/bedfiles"), quiet)
-    unlist(records$bedfile_metadata, use.names = FALSE)
-}
+setMethod(
+    "bb_get_beds_in_bedset", "BEDbase",
+    function(x, rec_id) {
+        response <-
+            x$get_bedfiles_in_bedset_bedset__bedset_id__bedfiles_get(rec_id)
+        records <- content(response)
+        unlist(records$bedfile_metadata, use.names = FALSE)
+    }
+)
 
 #' Search BEDbase
 #'
@@ -130,7 +199,7 @@ get_beds_in_bedset <- function(rec_id, quiet = FALSE) {
 #' @importFrom tibble as_tibble
 #' @importFrom utils URLencode
 #'
-#' @return tibble() 
+#' @return tibble()
 #'
 #' @examples
 #' search_bedbase("excluderanges")
@@ -191,8 +260,8 @@ download_file <- function(rec_id, file_type = c("bytes", "thumbnail"),
     url <- glue("objects/{obj_id}/access/{acc_id}")
     if (file_type == "thumbnail")
         url <- glue("{url}/{file_type}")
-    download_url <- query_bedbase(url, quiet) 
-    .download_and_cache(download_url, quiet) 
+    download_url <- query_bedbase(url, quiet)
+    .download_and_cache(download_url, quiet)
 }
 
 ##' Create a GRanges object from a BED file

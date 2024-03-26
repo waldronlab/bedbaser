@@ -12,7 +12,7 @@
 #' @noRd
 .get_cache <- function() {
     bfc <- tools::R_user_dir("bedbaser", which="cache")
-    BiocFileCache::BiocFileCache(bfc)
+    BiocFileCache(bfc)
 }
 
 #' Retrieve path from cache or download file and cache
