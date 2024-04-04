@@ -2,23 +2,23 @@
 % Please edit documentation in R/bedbaser.R
 \name{bb_metadata,BEDbase-method}
 \alias{bb_metadata,BEDbase-method}
-\title{Get metadata for an BED, BEDset, or object}
+\title{Get metadata for an BED or BEDset}
 \usage{
-\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset", "object"))
+\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset"))
 }
 \arguments{
 \item{id}{integer() record or object identifier}
 
-\item{rec_type}{character() BED, BEDset, or object}
+\item{rec_type}{character() BED or BEDset}
 }
 \value{
 list() metadata
 }
 \description{
-Get metadata for an BED, BEDset, or object
+Get metadata for an BED or BEDset
 }
 \examples{
 client <- BEDbase()
-bb_metadata(client, "bed")
+bb_metadata(client, "421d2128e183424fcc6a74269bae7934", "bed")
 
 }

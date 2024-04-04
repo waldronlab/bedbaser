@@ -29,7 +29,9 @@ BEDbase <- function() {
 }
 
 setGeneric(name = "bb_count",
-           def = function(x, rec_type) { standardGeneric("bb_count") })
+           def = function(x, rec_type = c("bed", "bedset")) {
+               standardGeneric("bb_count")
+})
 
 #' Count BEDs or BEDsets
 #'
@@ -46,7 +48,7 @@ setGeneric(name = "bb_count",
 #' @export
 setMethod(
     "bb_count", "BEDbase",
-    function(x, rec_type=c("bed", "bedset")) {
+    function(x, rec_type = c("bed", "bedset")) {
         rec_type <- match.arg(rec_type)
         if (rec_type == "bed")
             content(x$count_bed_record_bed_count_get())
@@ -56,7 +58,9 @@ setMethod(
 )
 
 setGeneric(name = "bb_genomes",
-           def = function(x, rec_type) { standardGeneric("bb_genomes") })
+           def = function(x, rec_type = c("bed", "bedset")) {
+               standardGeneric("bb_genomes")
+})
 
 #' Get genome assemblies in BEDbase
 #'
@@ -93,41 +97,45 @@ setMethod(
 )
 
 setGeneric(name = "bb_metadata",
-           def = function(x, id, rec_type) { standardGeneric("bb_metadata") })
+           def = function(x, id, rec_type = c("bed", "bedset")) {
+               standardGeneric("bb_metadata")
+})
 
-#' Get metadata for an BED, BEDset, or object
+#' Get metadata for an BED or BEDset
 #'
 #' @param id integer() record or object identifier
-#' @param rec_type character() BED, BEDset, or object
+#' @param rec_type character() BED or BEDset
+#'
+#' @importFrom httr content
 #'
 #' @return list() metadata
 #'
-  #' @examples
-  #' client <- BEDbase()
-  #' bb_metadata(client, "bed")
-  #'
-  #' @export
-  setMethod(
-      "bb_metadata", "BEDbase",
-      function(x, id, rec_type = c("bed", "bedset", "object")) {
-          rec_type <- match.arg(rec_type)
-          if (rec_type == "bed")
-              response <- x$get_bed_metadata_bed__bed_id__metadata_get(id)
-          else if (rec_type == "bedset")
-              response <- x$get_bedset_metadata_bedset__bedset_id__metadata_get(id)
-          else if (rec_type == "object")
-              response <- x$get_drs_object_metadata_objects__object_id__get(id)
-          record <- content(response)
-          record$metadata
-      }
+#' @examples
+#' client <- BEDbase()
+#' bb_metadata(client, "421d2128e183424fcc6a74269bae7934", "bed")
+#'
+#' @export
+setMethod(
+    "bb_metadata", "BEDbase",
+    function(x, id, rec_type = c("bed", "bedset")) {
+        rec_type <- match.arg(rec_type)
+        if (rec_type == "bed")
+            response <- x$get_bed_metadata_bed__bed_id__metadata_get(id)
+        else
+            response <- x$get_bedset_metadata_bedset__bedset_id__metadata_get(id)
+        record <- content(response)
+        record$metadata
+    }
 )
 
 setGeneric(name = "bb_records",
-           def = function(x, rec_type, ...) {
+           def = function(x, rec_type, limit = NULL, token = NULL) {
                standardGeneric("bb_records")
 })
 
 #' Get record identifiers and names for BEDs or BEDsets
+#'
+#' Note: how to get next page token
 #'
 #' @param rec_type character() bed or bedset
 #' @param limit integer() maximum records
@@ -145,12 +153,12 @@ setGeneric(name = "bb_records",
 #' @export
 setMethod(
     "bb_records", "BEDbase",
-    function(x, rec_type = c("bed", "bedset"), ...) {
+    function(x, rec_type = c("bed", "bedset"), limit = NULL, token = NULL) {
         rec_type <- match.arg(rec_type)
         if (rec_type == "bed")
-            response <- x$list_beds_bed_list_get(...)
-        else if (rec_type == "bedset")
-            response <- x$list_bedsets_bedset_list_get(...)
+            response <- x$list_beds_bed_list_get(limit=limit, token=token)
+        else
+            response <- x$list_bedsets_bedset_list_get(limit=limit, token=token)
         records_tibble <- tibble()
         records_list <- content(response)
         if (length(records_list)) {
@@ -163,8 +171,8 @@ setMethod(
     }
 )
 
-setGeneric(name = "bb_get_beds_in_bedset",
-           def = function(x, rec_id) { standardGeneric("bb_get_beds_in_bedset") })
+setGeneric(name = "bb_beds_in_bedset",
+           def = function(x, rec_id) { standardGeneric("bb_beds_in_bedset") })
 
 #' Get BEDs associated with BEDset
 #'
@@ -174,11 +182,11 @@ setGeneric(name = "bb_get_beds_in_bedset",
 #'
 #' @examples
 #' client <- BEDbase()
-#' bb_get_beds_in_bedset(client, "bed")
+#' bb_beds_in_bedset(client, "bed")
 #' rec_id <- "421d2128e183424fcc6a74269bae7934"
 #' @export
 setMethod(
-    "bb_get_beds_in_bedset", "BEDbase",
+    "bb_beds_in_bedset", "BEDbase",
     function(x, rec_id) {
         response <-
             x$get_bedfiles_in_bedset_bedset__bedset_id__bedfiles_get(rec_id)

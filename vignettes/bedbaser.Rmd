@@ -76,11 +76,11 @@ bb_metadata(client, example_bed$record_identifier, "bed")
 
 ### Show BED files in BEDset
 
-Use `get_beds_in_bedset()` to display the record identifiers of BEDs in a
+Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
-```{r bb_get_beds_in_bedset}
-bb_get_beds_in_bedset("excluderanges")
+```{r bb_beds_in_bedset}
+bb_beds_in_bedset(client, "excluderanges")
 ```
 
 ### Search for a BED file by keyword
@@ -96,12 +96,12 @@ results <- search_bedbase("hg13", limit=20)
 
 Download a BED file by its record identifier:
 
-```{r downloadBedFile}
-# "GSM6856752_S1_H3K27ac_peaks"
-filepath <- download_file(rec_id, "bytes")
+```{r downloadBedFile, eval=FALSE}
+# Need to rewrite function
+filepath <- download_file(example_bed$record_identifier, "bytes")
 ```
 
-## SessionInfo()f
+## SessionInfo()
 
 ```{r sessionInfo}
 sessionInfo()

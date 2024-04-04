@@ -4,7 +4,7 @@
 \alias{bb_records,BEDbase-method}
 \title{Get record identifiers and names for BEDs or BEDsets}
 \usage{
-\S4method{bb_records}{BEDbase}(x, rec_type = c("bed", "bedset"), ...)
+\S4method{bb_records}{BEDbase}(x, rec_type = c("bed", "bedset"), limit = NULL, token = NULL)
 }
 \arguments{
 \item{rec_type}{character() bed or bedset}
@@ -17,7 +17,7 @@
 a tibble of record identifiers and record names
 }
 \description{
-Get record identifiers and names for BEDs or BEDsets
+Note: how to get next page token
 }
 \examples{
 client <- BEDbase()
