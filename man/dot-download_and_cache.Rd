@@ -15,7 +15,7 @@
 filepath character()
 }
 \description{
-Note: This function is described in BiocFileCache
+This function is described in the BiocFileCache vignette.
 }
 \examples{
 url <- "https://data2.bedbase.org/bed_files/hg38_UCSC_telomere.bed.gz"

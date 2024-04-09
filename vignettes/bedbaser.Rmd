@@ -18,9 +18,13 @@ vignette: >
 library(bedbaser)
 ```
 
-bedbaser is an R client for the BEDbase [API](https://api.bedbase.org).
+bedbaser is an R client for [BEDbase](https://bedbase.org) a platform for
+genomic region data, allowing users to search BED files and curate collections.
+bedbaser provides convenience functions to interact with the
+[BEDbase API](https://api.bedbase.org) but it also allow more direct
+interaction with the API through `r Biocpkg("AnVIL")`'s `Service` class.
 
-## Install
+## Install bedbaser
 
 Install bedbaser using `r CRANpkg("BiocManager")`.
 
@@ -33,36 +37,36 @@ BiocManager::install("bedbaser", dependencies=TRUE)
 ## Create a bedbaser client
 
 bedbaser uses the `r Biocpkg("AnVIL")` Service class to create a `BEDbase`
-singleton, which can be use to access the API directly.
+client, which can be use to access the API directly.
 
 ```{r bedbase}
 client <- BEDbase()
 show(client)
 ```
 
-Operations can be accessed with `$`. For example
+End points can be accessed with `$` and their results can be retrieved
+with `r CRANpkg("httr")`.
 
 ```{r count_bed_record_bed_count_get}
 library(httr)
-response <- client$get_example_bed_record_bed_example_get()
-example_bed <- content(response)
+resp <- client$get_example_bed_record_bed_example_get()
+example_bed <- content(resp)
 ```
 
-bedbaser includes convenience functions to facilitate finding BEDs, exploring
-their metadata, and download files.
+bedbaser includes convenience functions prefixed with *bb_* to facilitate
+finding BEDs, exploring their metadata, and download files.
 
 ## Find a BED file or BEDset
 
-Use `bb_records()` to browse available resources in BEDbase. `get_records()`
+Use `bb_records()` to browse available resources in BEDbase. `bb_records()`
 will display the record identifiers and names of BED files and BEDsets.
 Record identifiers can be used to access a specific resource.
 
 ```{r get_records}
-beds <- bb_records(client, "bed")
-beds
+# limit to 10 results, 
+bb_records(client, "bed")
 
-bedsets <- bb_records(client, "bedset")
-bedsets
+bb_records(client, "bedset")
 ```
 
 ### Examine metadata
@@ -89,7 +93,7 @@ Search for BED files by keywords:
 
 ```{r search_bedbase, eval=FALSE}
 # Currently not working
-results <- search_bedbase("hg13", limit=20)
+results <- search_bedbase("hg13", limit = 20)
 ```
 
 ## Download a BED file

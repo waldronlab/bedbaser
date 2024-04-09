@@ -2,7 +2,6 @@
 #'
 #' @param id character() BEDbase identifier
 #'
-#' @importFrom glue glue
 #' @importFrom rlang abort
 #' @importFrom stringr regex str_detect
 #'
@@ -20,7 +19,7 @@ get_rec_type <- function(id) {
     else if (str_detect(id, regex("^[:alnum:]+$")))
         rec_type <- "object"
     else
-        abort(glue("Unknown record identifier: {id}"))
+        abort(paste("Unknown record identifier:", id))
     rec_type
 }
 
@@ -32,15 +31,13 @@ get_rec_type <- function(id) {
 #' @param rec_type character() (default bed) BEDbase record type
 #' @param result_id character() (default bedfile) BEDbase result identifier
 #'
-#' @importFrom glue glue
-#'
 #' @return String
 #'
 #' @examples
 #' obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")
 make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 {
-    glue("{rec_type}.{rec_id}.{result_id}")
+    paste(rec_type, rec_id, result_id, sep =".")
 }
 
 #' Get valid access identifiers
@@ -63,24 +60,3 @@ get_access_ids <- function(obj_id, quiet = FALSE) {
     }
     access_methods
 }
-
-setGeneric(name = "get_bb_service_info",
-           def = function(x) { standardGeneric("get_bb_service_info") })
-
-#' Get service information
-#'
-#' @importFrom httr content
-#'
-#' @return list() service info, such as version
-#'
-#' @examples
-#' bb <- BEDbase()
-#' get_bb_service_info(bb)
-#'
-#' @export
-setMethod(
-    "get_bb_service_info", "BEDbase",
-    function(x) {
-        content(x$service_info_service_info_get())
-    }
-)

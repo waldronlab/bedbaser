@@ -9,9 +9,9 @@
 \arguments{
 \item{rec_type}{character() bed or bedset}
 
-\item{limit}{integer() maximum records}
+\item{limit}{integer() (defaults to NULL) maximum records}
 
-\item{token}{integer() next page of records}
+\item{token}{integer() (defaults to NULL) page token of records}
 }
 \value{
 a tibble of record identifiers and record names

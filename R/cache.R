@@ -1,8 +1,9 @@
 #' Get the cache
 #'
-#' Note: This function is described in BiocFileCache
+#' This function is described in the BiocFileCache vignette.
 #'
 #' @importFrom BiocFileCache BiocFileCache
+#' @importFrom tools R_user_dir
 #'
 #' @return BiocFileCache object
 #'
@@ -11,20 +12,19 @@
 #'
 #' @noRd
 .get_cache <- function() {
-    bfc <- tools::R_user_dir("bedbaser", which="cache")
+    bfc <- R_user_dir("bedbaser", which="cache")
     BiocFileCache(bfc)
 }
 
 #' Retrieve path from cache or download file and cache
 #'
-#' Note: This function is described in BiocFileCache
+#' This function is described in the BiocFileCache vignette.
 #'
 #' @param url character() remote resource
 #' @param quiet logical() display message
 #'
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfcdownload bfcneedsupdate
 #'     bfcquery bfcrpath
-#' @importFrom glue glue
 #' @importFrom rlang inform
 #'
 #' @return filepath character()
@@ -37,7 +37,7 @@
     rid <- bfcquery(bfc, url)$rid
     if (!length(rid)) {
         if (!quiet)
-            inform(glue("Downloading {url} ..."))
+            inform(paste("Downloading", url, "..."))
         rid <- names(bfcadd(bfc, url))
     }
     if (!isFALSE(bfcneedsupdate(bfc, rid)))

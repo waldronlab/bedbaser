@@ -1,6 +1,6 @@
 Package: bedbaser
 Title: A BEDbase client
-Version: 0.0.0.9000
+Version: 0.0.9000
 Authors@R: 
     person("Jennifer", "Wokaty", , "jennifer.wokaty@sph.cuny.edu",
            role = c("aut", "cre"))
@@ -12,13 +12,13 @@ Imports:
     AnVIL,
     BiocFileCache,
     dplyr,
-    glue,
     httr,
     purrr,
     rtracklayer,
     R.utils,
     stringr,
     tibble,
+    tools,
     utils
 Suggests:
     BiocStyle,

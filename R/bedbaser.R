@@ -82,10 +82,10 @@ setMethod(
     function(x, rec_type = c("bed", "bedset")) {
         rec_type <- match.arg(rec_type)
         if (rec_type == "bed")
-            response <- x$get_bed_genome_assemblies_bed_genomes_get()
+            resp <- x$get_bed_genome_assemblies_bed_genomes_get()
         else
-            response <- x$get_bedset_genome_assemblies_bedset_genomes_get()
-        genome_list <- content(response)
+            resp <- x$get_bedset_genome_assemblies_bedset_genomes_get()
+        genome_list <- content(resp)
         genome_tibble <- tibble()
         if (length(genome_list)) {
             cnames <- names(genome_list[[1]])
@@ -120,10 +120,10 @@ setMethod(
     function(x, id, rec_type = c("bed", "bedset")) {
         rec_type <- match.arg(rec_type)
         if (rec_type == "bed")
-            response <- x$get_bed_metadata_bed__bed_id__metadata_get(id)
+            resp <- x$get_bed_metadata_bed__bed_id__metadata_get(id)
         else
-            response <- x$get_bedset_metadata_bedset__bedset_id__metadata_get(id)
-        record <- content(response)
+            resp <- x$get_bedset_metadata_bedset__bedset_id__metadata_get(id)
+        record <- content(resp)
         record$metadata
     }
 )
@@ -138,9 +138,10 @@ setGeneric(name = "bb_records",
 #' Note: how to get next page token
 #'
 #' @param rec_type character() bed or bedset
-#' @param limit integer() maximum records
-#' @param token integer() next page of records
+#' @param limit integer() (defaults to NULL) maximum records
+#' @param token integer() (defaults to NULL) page token of records
 #'
+#' @importFrom httr content
 #' @importFrom purrr map_dfr set_names
 #' @importFrom tibble tibble as_tibble
 #'
@@ -156,11 +157,11 @@ setMethod(
     function(x, rec_type = c("bed", "bedset"), limit = NULL, token = NULL) {
         rec_type <- match.arg(rec_type)
         if (rec_type == "bed")
-            response <- x$list_beds_bed_list_get(limit=limit, token=token)
+            resp <- x$list_beds_bed_list_get(limit=limit, token=token)
         else
-            response <- x$list_bedsets_bedset_list_get(limit=limit, token=token)
+            resp <- x$list_bedsets_bedset_list_get(limit=limit, token=token)
         records_tibble <- tibble()
-        records_list <- content(response)
+        records_list <- content(resp)
         if (length(records_list)) {
             cnames <- names(records_list$records[[1]])
             records_tibble <- records_list$records |>
@@ -178,6 +179,8 @@ setGeneric(name = "bb_beds_in_bedset",
 #'
 #' @param rec_id integer() BEDset record identifier
 #'
+#' @importFrom httr content
+#'
 #' @return list() BED record identifiers
 #'
 #' @examples
@@ -190,33 +193,40 @@ setMethod(
     function(x, rec_id) {
         response <-
             x$get_bedfiles_in_bedset_bedset__bedset_id__bedfiles_get(rec_id)
-        records <- content(response)
+        records <- content(resp)
         unlist(records$bedfile_metadata, use.names = FALSE)
     }
 )
 
+setGeneric(name = "bb_search",
+           def = function(x, query, limit = NULL, offset = NULL) {
+               standardGeneric("bb_search")
+})
+
 #' Search BEDbase
 #'
-#' @param keywords character() keyword to search for
-#' @param limit integer() maximum number of results to include
-#' @param quiet logical() (default FALSE) display message
+#' @param query character() keywords to search
+#' @param limit integer() (defaults to NULL) maximum number of results
+#' @param offset integer() (defaults to NULL) page offset of results
 #'
 #' @importFrom dplyr bind_rows
-#' @importFrom glue glue
-#' @importFrom httr2 req_perform request resp_body_json
+#' @importFrom httr content
 #' @importFrom tibble as_tibble
 #' @importFrom utils URLencode
 #'
 #' @return tibble()
 #'
 #' @examples
-#' search_bedbase("excluderanges")
+#' client <- BEDbase()
+#' bb_search(client, "excluderanges")
 #'
 #' @export
-search_bedbase <- function(keywords, limit, quiet = FALSE) {
-    encoded_keywords <- URLencode(keywords, reserved = TRUE)
-    url <- glue("search/bed/{encoded_keywords}?limit={limit}")
-    results <- query_bedbase(url, quiet)
+bb_search <- function(x, query, limit = NULL, offset = NULL) {
+    encoded_query <- URLencode(query, reserved = TRUE)
+    resp <- x$text_to_bed_search_search_bed__query__get(encoded_query,
+                                                        limit = limit,
+                                                        offset = offset)
+    results <- content(resp)
     if (!length(results))
         return(results)
     metadata <- tibble()
@@ -249,7 +259,6 @@ search_bedbase <- function(keywords, limit, quiet = FALSE) {
 #' @param quiet logical() (default FALSE) display message
 #'
 #' @importFrom BiocFileCache bfcrpath
-#' @importFrom glue glue
 #' @importFrom httr2 req_perform request resp_body_json
 #' @importFrom stringr str_split_1
 #' @importFrom utils download.file tail
@@ -265,9 +274,9 @@ download_file <- function(rec_id, file_type = c("bytes", "thumbnail"),
     obj_id <- make_obj_id(rec_id)
     stopifnot(acc_id %in% get_access_ids(obj_id, TRUE))
     file_type <- match.arg(file_type)
-    url <- glue("objects/{obj_id}/access/{acc_id}")
+    url <- paste0("objects/", obj_id, "/access/", acc_id)
     if (file_type == "thumbnail")
-        url <- glue("{url}/{file_type}")
+        url <- paste(url, file_type, sep="/")
     download_url <- query_bedbase(url, quiet)
     .download_and_cache(download_url, quiet)
 }
