@@ -21,8 +21,9 @@ library(bedbaser)
 bedbaser is an R client for [BEDbase](https://bedbase.org) a platform for
 genomic region data, allowing users to search BED files and curate collections.
 bedbaser provides convenience functions to interact with the
-[BEDbase API](https://api.bedbase.org) but it also allow more direct
-interaction with the API through `r Biocpkg("AnVIL")`'s `Service` class.
+[BEDbase API](https://api.bedbase.org). It also allow more direct
+interaction with the API through `r Biocpkg("AnVIL")`'s `Service` class and
+imports BED files into `GRanges` objects.
 
 ## Install bedbaser
 
@@ -49,8 +50,8 @@ with `r CRANpkg("httr")`.
 
 ```{r count_bed_record_bed_count_get}
 library(httr)
-resp <- client$get_example_bed_record_bed_example_get()
-example_bed <- content(resp)
+rsp <- client$get_example_bed_record_v1_bed_example_get()
+example_bed <- content(rsp)
 ```
 
 bedbaser includes convenience functions prefixed with *bb_* to facilitate
@@ -58,15 +59,14 @@ finding BEDs, exploring their metadata, and download files.
 
 ## Find a BED file or BEDset
 
-Use `bb_records()` to browse available resources in BEDbase. `bb_records()`
+Use `bb_list()` to browse available resources in BEDbase. `bb_list()`
 will display the record identifiers and names of BED files and BEDsets.
 Record identifiers can be used to access a specific resource.
 
-```{r get_records}
-# limit to 10 results, 
-bb_records(client, "bed")
+```{r bb_list_beds}
+bb_list_beds(client)
 
-bb_records(client, "bedset")
+bb_list_bedsets(client)
 ```
 
 ### Examine metadata
@@ -74,8 +74,11 @@ bb_records(client, "bedset")
 Use `bb_metadata()` to learn more about a BED or BEDset associated with
 a record identifier.
 
-```{r get_metadata}
-bb_metadata(client, example_bed$record_identifier, "bed")
+Note: Currently a list of lists, but maybe could be a better format?
+
+```{r bb_metadata}
+metadata <- bb_metadata(client, example_bed$id, "bed")
+
 ```
 
 ### Show BED files in BEDset
@@ -91,18 +94,22 @@ bb_beds_in_bedset(client, "excluderanges")
 
 Search for BED files by keywords:
 
-```{r search_bedbase, eval=FALSE}
-# Currently not working
-results <- search_bedbase("hg13", limit = 20)
+```{r bb_search, eval=FALSE}
+# Currently not working correctly
+results <- bb_search(client, "hg13")
+results
 ```
 
-## Download a BED file
+## Import a BED into a GRanges object
 
 Download a BED file by its record identifier:
 
-```{r downloadBedFile, eval=FALSE}
-# Need to rewrite function
-filepath <- download_file(example_bed$record_identifier, "bytes")
+Note: Still in development, working for broadPeak, narrowPeak, and BEDX+0
+
+```{r bb_to_granges}
+rec_id <- "bbad85f21962bb8d972444f7f9a3a932"
+obj <- bb_to_granges(client, rec_id, file_type="bed", quietly = TRUE)
+obj
 ```
 
 ## SessionInfo()

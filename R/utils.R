@@ -1,31 +1,4 @@
-#' Get record type
-#'
-#' @param id character() BEDbase identifier
-#'
-#' @importFrom rlang abort
-#' @importFrom stringr regex str_detect
-#'
-#' @return logical()
-#'
-#' @examples
-#' get_rec_type("eaf9ee97241f300f1c7e76e1f945141f")
-#'
-#' @export
-get_rec_type <- function(id) {
-    if (str_detect(id, regex("^bed.[:alnum:]+.bedfile$")))
-        rec_type <- "bed"
-    else if (str_detect(id, regex("^bed.[:alnum:]+.bedset$")))
-        rec_type <- "bedset"
-    else if (str_detect(id, regex("^[:alnum:]+$")))
-        rec_type <- "object"
-    else
-        abort(paste("Unknown record identifier:", id))
-    rec_type
-}
-
 #' Construct object identifier
-#'
-#' Note: only rec_type = bed, result_id = bedfile?
 #'
 #' @param rec_id character() BEDbase record identifier
 #' @param rec_type character() (default bed) BEDbase record type
@@ -34,29 +7,85 @@ get_rec_type <- function(id) {
 #' @return String
 #'
 #' @examples
-#' obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")
+#' obj_id <- make_obj_id("bbad85f21962bb8d972444f7f9a3a932")
 make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 {
     paste(rec_type, rec_id, result_id, sep =".")
 }
 
-#' Get valid access identifiers
+#' Decompress gunzip file
 #'
-#' Note: omits 'local' option
+#' @param file_path character() path to gunzip file
 #'
-#' @param obj_id character() BEDbase object record identifier
-#' @param quiet logical() (default FALSE) display message
+#' @importFrom stringr str_replace
 #'
-#' @return character() available access identifiers
+#' @return character() decompressed file path
 #'
 #' @examples
-#' get_access_ids("bed.421d2128e183424fcc6a74269bae7934.bedfile")
-get_access_ids <- function(obj_id, quiet = FALSE) {
-    metadata <- get_metadata(obj_id, "object", quiet = FALSE)
-    access_methods <- unlist(lapply(metadata$access_methods, `[[`, c('type')))
-    remove_index <- match("local", access_methods)
-    if (!is.na(remove_index)) {
-        access_methods <- access_methods[-remove_index]
+#' .ungzip("path/to/my.gzip")
+.ungzip <- function(file_path) {
+    system(paste("gzip -d", file_path))
+    str_replace(file_path, "\\.gz", "")
+}
+
+#' Format BED file metadata
+#'
+#' @param records list() metadata records
+#'
+#' @importFrom dplyr bind_rows mutate
+#' @importFrom purrr map_depth
+#' @importFrom tidyr unnest_wider
+#'
+#' @return tibble() file metadata
+#'
+#' @examples
+#' client <- BEDbase()
+#' example <- content(client$get_example_bed_record_v1_bed_example_get())
+#' .format_metadata_files(example$files)
+.format_metadata_files <- function(records) {
+    results <- map_depth(.x = records, 2, ~ replace(.x, is.null(.x), NA),) |>
+        bind_rows() |>
+        mutate(access_methods = map_depth(access_methods, 2,
+                                          ~ replace(.x, is.null(.x), NA))) |>
+        unnest_wider(access_methods) |>
+        mutate(access_url = map_depth(access_url, 2,
+                                      ~ replace(.x, is.null(.x), NA))) |>
+        unnest_wider(access_url)
+    results
+}
+
+#' Format BED file metadata
+#'
+#' @param file_path character() path to BED file
+#' @param bed_type character() bed type
+#' @param bed_format character() format name
+#'
+#' @importFrom GenomicRanges GRanges
+#' @importFrom IRanges IRanges
+#' @importFrom rtracklayer import import.bed
+#' @importFrom stringr str_replace
+#'
+#' @return GRanges()
+#'
+#' @examples
+#' .file_to_granges(file_path, bed_type, bed_format)
+.file_to_granges <- function(file_path, bed_type, bed_format) {
+    nums <- stringr::str_replace(bed_type, "bed", "")
+    if (bed_format == "broadpeak" && bed_type == "bed6+3") {
+        extraCols <- c(signalValue = "numeric", pValue = "numeric",
+                       qValue = "numeric")
+        obj <- import(file_path, format = "BED", extraCols = extraCols)
+    } else if (bed_format == "narrowpeak" && bed_type == "bed6+4") {
+        extraCols <- c(signalValue = "numeric", pValue = "numeric",
+                       qValue = "numeric", peak = "integer")
+        obj <- import(file_path, format = "BED", extraCols = extraCols)
+    } else if (as.double(num[2]) == 0) {
+        obj <- import.bed(file_path)
+    } else {
+        # extraCols <-
+        # obj <- import(f, format = "BED", extraCols = extraCols)
+        # t <- read.table(f)
+        message("Not yet implemented")
     }
-    access_methods
+    obj
 }

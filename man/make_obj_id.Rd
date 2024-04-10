@@ -17,8 +17,8 @@ make_obj_id(rec_id, rec_type = "bed", result_id = "bedfile")
 String
 }
 \description{
-Note: only rec_type = bed, result_id = bedfile?
+Construct object identifier
 }
 \examples{
-obj_id <- make_obj_id("eaf9ee97241f300f1c7e76e1f945141f")
+obj_id <- make_obj_id("bbad85f21962bb8d972444f7f9a3a932")
 }

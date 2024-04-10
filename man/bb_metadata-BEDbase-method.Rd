@@ -4,12 +4,14 @@
 \alias{bb_metadata,BEDbase-method}
 \title{Get metadata for an BED or BEDset}
 \usage{
-\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset"))
+\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset"), full = TRUE)
 }
 \arguments{
 \item{id}{integer() record or object identifier}
 
 \item{rec_type}{character() BED or BEDset}
+
+\item{full}{logical() include all metadata}
 }
 \value{
 list() metadata
@@ -19,6 +21,6 @@ Get metadata for an BED or BEDset
 }
 \examples{
 client <- BEDbase()
-bb_metadata(client, "421d2128e183424fcc6a74269bae7934", "bed")
+bb_metadata(client, "0dcdf8986a72a3d85805bbc9493a1302", "bed")
 
 }

@@ -4,10 +4,16 @@
 \alias{bb_beds_in_bedset,BEDbase-method}
 \title{Get BEDs associated with BEDset}
 \usage{
-\S4method{bb_beds_in_bedset}{BEDbase}(x, rec_id)
+\S4method{bb_beds_in_bedset}{BEDbase}(x, rec_id, limit = 100, offset = 0, full = FALSE)
 }
 \arguments{
 \item{rec_id}{integer() BEDset record identifier}
+
+\item{limit}{integer() (defaults to 100) maximum records to include}
+
+\item{offset}{integer() (defaults to 0) page offset}
+
+\item{full}{logical() (defaults to FALSE) include all metadata}
 }
 \value{
 list() BED record identifiers
@@ -17,6 +23,6 @@ Get BEDs associated with BEDset
 }
 \examples{
 client <- BEDbase()
-bb_beds_in_bedset(client, "bed")
-rec_id <- "421d2128e183424fcc6a74269bae7934"
+rec_id <- "gse218680"
+bb_beds_in_bedset(client, rec_id)
 }

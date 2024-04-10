@@ -4,12 +4,12 @@
 \alias{.download_and_cache}
 \title{Retrieve path from cache or download file and cache}
 \usage{
-.download_and_cache(url, quiet = FALSE)
+.download_and_cache(url, quietly = FALSE)
 }
 \arguments{
 \item{url}{character() remote resource}
 
-\item{quiet}{logical() display message}
+\item{quietly}{logical() display message}
 }
 \value{
 filepath character()
