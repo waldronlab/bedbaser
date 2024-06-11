@@ -2,9 +2,9 @@
 % Please edit documentation in R/utils.R
 \name{.file_to_granges}
 \alias{.file_to_granges}
-\title{Format BED file metadata}
+\title{Create GRanges object from a BED file}
 \usage{
-.file_to_granges(file_path, bed_type, bed_format)
+.file_to_granges(file_path, bed_type, bed_format, extra_cols, quietly = FALSE)
 }
 \arguments{
 \item{file_path}{character() path to BED file}
@@ -12,12 +12,16 @@
 \item{bed_type}{character() bed type}
 
 \item{bed_format}{character() format name}
+
+\item{extra_cols}{character() extra column names to construct GRanges objects}
+
+\item{quietly}{boolean() (default FALSE) Display information messages}
 }
 \value{
-GRanges()
+GRanges() object representing BED
 }
 \description{
-Format BED file metadata
+Create GRanges object from a BED file
 }
 \examples{
 .file_to_granges(file_path, bed_type, bed_format)

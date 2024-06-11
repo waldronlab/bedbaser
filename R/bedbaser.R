@@ -33,8 +33,6 @@ setGeneric(name = "bb_metadata",
                standardGeneric("bb_metadata")
 })
 
-#### TODO
-
 #' Get metadata for an BED or BEDset
 #'
 #' @param id integer() record or object identifier
@@ -134,22 +132,19 @@ setMethod(
         results <- tibble()
         if (recs$count)
             results <- bind_rows(recs$results) |>
-                       unnest(bed_ids)
+                       unnest(cols = c(bed_ids))
         results
     }
 )
 
 setGeneric(name = "bb_beds_in_bedset",
-           def = function(x, rec_id, limit = 100, offset = 0, full = FALSE) {
+           def = function(x, rec_id) {
                standardGeneric("bb_beds_in_bedset")
 })
 
 #' Get BEDs associated with BEDset
 #'
 #' @param rec_id integer() BEDset record identifier
-#' @param limit integer() (defaults to 100) maximum records to include
-#' @param offset integer() (defaults to 0) page offset
-#' @param full logical() (defaults to FALSE) include all metadata
 #'
 #' @importFrom httr content
 #'
@@ -157,23 +152,18 @@ setGeneric(name = "bb_beds_in_bedset",
 #'
 #' @examples
 #' client <- BEDbase()
-#' rec_id <- "gse218680"
-#' bb_beds_in_bedset(client, rec_id)
+#' bb_beds_in_bedset(client, rec_id = "gse218680")
 #' @export
 setMethod(
     "bb_beds_in_bedset", "BEDbase",
-    function(x, rec_id, limit = 100, offset = 0, full = FALSE) {
+    function(x, rec_id) {
         rsp <-
             x$get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get(
-                rec_id, limit, offset, full)
+                bedset_id = rec_id)
         recs <- content(rsp)
         results <- tibble()
-        if (recs$count) {
-            if (!full)
-                results <- bind_rows(recs$results)
-            # TODO: full
-        }
-
+        if (recs$count)
+            results <- bind_rows(recs$results)
         results
     }
 )
@@ -206,14 +196,13 @@ setMethod(
     "bb_search", "BEDbase",
     function(x, query, limit = 10, offset = 0) {
         encoded_query <- URLencode(query, reserved = TRUE)
-        rsp <- x$text_to_bed_search_v1_bed_search_text_post(encoded_query,
-                                                            limit, offset)
-        records <- content(rsp)
+        rsp <- x$text_to_bed_search_v1_bed_search_text_post(query = encoded_query,
+                                                            limit = limit,
+                                                            offset = offset)
+        recs <- content(rsp)
         results <- tibble()
-        if (records$count) {
-            results <- records$results
-#            results <- bind_rows(records$results) |>
-#                       unnest(c(payload, metadata))
+        if (recs$count) {
+            results <- recs$results
         }
         results
     }
@@ -243,39 +232,9 @@ setMethod(
     }
 )
 
-setGeneric(name = "bb_metadata_classification",
-           def = function(x, rec_id) {
-               standardGeneric("bb_metadata_classification")
-})
-
-#' Get BED metadata classification
-#'
-#' @param rec_id BEDbase record identifier
-#'
-#' @importFrom dplyr filter
-#'
-#' @return tibble() records
-#'
-#' @examples
-#' client <- BEDbase()
-#' bb_metadata_classification(client, "bbad85f21962bb8d972444f7f9a3a932")
-#'
-#' @export
-setMethod(
-    "bb_metadata_classification", "BEDbase",
-    function(x, rec_id) {
-        metadata <- bb_metadata(rec_id)
-        record <- metadata$files |>
-                  filter(name == paste(file_type, "file", sep = "_"),
-                         access_id == "http")
-        file_path <- .download_and_cache(record$url, quietly)
-        bb_to_granges(file_path, metadata$bed_type)
-    }
-)
-
 setGeneric(name = "bb_to_granges",
            def = function(x, rec_id, file_type = c("bed", "bigbed"),
-                          quietly = FALSE) {
+                          extra_cols = c(), quietly = FALSE) {
                standardGeneric("bb_to_granges")
 })
 
@@ -283,27 +242,32 @@ setGeneric(name = "bb_to_granges",
 #'
 #' @param rec_id BEDbase record identifier
 #' @param file_type character() bed or bigbed
+#' @param extra_cols character() extra column names to construct GRanges objects
 #' @param quietly logical() (defaults to FALSE) display messages
 #'
 #' @importFrom dplyr filter
+#' @importFrom R.utils gunzip
 #'
 #' @return a GRanges object
 #'
 #' @examples
 #' client <- BEDbase()
-#' bb_to_granges(client, "421d2128e183424fcc6a74269bae7934")
+#' rec_id <- content(client$get_example_bed_record_v1_bed_example_get())$id
+#' bb_to_granges(client, rec_id)
 #'
 #' @export
 setMethod(
     "bb_to_granges", "BEDbase",
-    function(x, rec_id, file_type = c("bed", "bigbed"), quietly = FALSE) {
+    function(x, rec_id, file_type = c("bed", "bigbed"), extra_cols = c(),
+             quietly = FALSE) {
         file_type <- match.arg(file_type)
         metadata <- bb_metadata(x, rec_id)
         record <- .format_metadata_files(metadata$files) |>
             filter(name == paste(file_type, "file", sep = "_"),
                    access_id == "http")
         gzipfile <- .download_and_cache(record$url, quietly)
-        file_path <- .ungzip(gzipfile)
-        .file_to_granges(file_path, metadata$bed_type, metadata$bed_format)
+        file_path <- gunzip(gzipfile, remove = FALSE)
+        .file_to_granges(file_path, metadata$bed_type, metadata$bed_format,
+                         extra_cols = extra_cols)
     }
 )

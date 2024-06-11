@@ -1,33 +1,3 @@
-#' Construct object identifier
-#'
-#' @param rec_id character() BEDbase record identifier
-#' @param rec_type character() (default bed) BEDbase record type
-#' @param result_id character() (default bedfile) BEDbase result identifier
-#'
-#' @return String
-#'
-#' @examples
-#' obj_id <- make_obj_id("bbad85f21962bb8d972444f7f9a3a932")
-make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
-{
-    paste(rec_type, rec_id, result_id, sep =".")
-}
-
-#' Decompress gunzip file
-#'
-#' @param file_path character() path to gunzip file
-#'
-#' @importFrom stringr str_replace
-#'
-#' @return character() decompressed file path
-#'
-#' @examples
-#' .ungzip("path/to/my.gzip")
-.ungzip <- function(file_path) {
-    system(paste("gzip -d", file_path))
-    str_replace(file_path, "\\.gz", "")
-}
-
 #' Format BED file metadata
 #'
 #' @param records list() metadata records
@@ -43,49 +13,92 @@ make_obj_id <- function(rec_id, rec_type = "bed", result_id = "bedfile")
 #' example <- content(client$get_example_bed_record_v1_bed_example_get())
 #' .format_metadata_files(example$files)
 .format_metadata_files <- function(records) {
-    results <- map_depth(.x = records, 2, ~ replace(.x, is.null(.x), NA),) |>
-        bind_rows() |>
-        mutate(access_methods = map_depth(access_methods, 2,
-                                          ~ replace(.x, is.null(.x), NA))) |>
-        unnest_wider(access_methods) |>
-        mutate(access_url = map_depth(access_url, 2,
-                                      ~ replace(.x, is.null(.x), NA))) |>
-        unnest_wider(access_url)
-    results
+    bind_rows(records) |>
+        unnest_wider(access_methods) |> unnest_wider(access_url)
 }
 
-#' Format BED file metadata
+#' Return a named vector with type
+#'
+#' @param file_path character() path to BED
+#' @param y double() the y in BEDX+Y
+#'
+#' @return vector representing extraCols for rtracklayer
+#'
+#' @examples
+#'
+#' .get_extraCols("path/to/my/file.bed", 3)
+.get_extraCols <- function(file_path, y) {
+    t <- read.table(file_path)
+    extraCols <- c()
+    for (i in t[y:dim(t)[2]])
+        extraCols <- c(extraCols, typeof(i))
+    extraCols <- setNames(extraCols, names(t[y:dim(t)[2]]))
+    extraCols
+}
+
+#' Create GRanges object from a BED file
+#'
+#' If the BED format is known, `extra_cols` may be used to set the column name
+#' and type. For example, `extra_cols = c(signalValue = "numeric",
+#' pValue = "numeric", qValue = "numeric")`.
 #'
 #' @param file_path character() path to BED file
 #' @param bed_type character() bed type
 #' @param bed_format character() format name
+#' @param extra_cols character() extra column names to construct GRanges objects
+#' @param quietly boolean() (default FALSE) Display information messages
 #'
-#' @importFrom GenomicRanges GRanges
-#' @importFrom IRanges IRanges
-#' @importFrom rtracklayer import import.bed
-#' @importFrom stringr str_replace
+#' @importFrom rtracklayer import.bed
+#' @importFrom stringr str_replace str_split_1
 #'
-#' @return GRanges()
+#' @return GRanges() object representing BED
 #'
 #' @examples
 #' .file_to_granges(file_path, bed_type, bed_format)
-.file_to_granges <- function(file_path, bed_type, bed_format) {
-    nums <- stringr::str_replace(bed_type, "bed", "")
-    if (bed_format == "broadpeak" && bed_type == "bed6+3") {
+.file_to_granges <- function(file_path, bed_type, bed_format, extra_cols,
+                             quietly = FALSE) {
+    nums <- str_replace(bed_type, "bed", "") |> str_split_1("\\+")
+
+    if (!identical(c(), extra_cols))
+        extraCols <- extra_cols
+    else if (bed_type == "bed12+3") {
+        if (!quietly)
+            inform("Detected bed12+3.")
         extraCols <- c(signalValue = "numeric", pValue = "numeric",
                        qValue = "numeric")
-        obj <- import(file_path, format = "BED", extraCols = extraCols)
     } else if (bed_format == "narrowpeak" && bed_type == "bed6+4") {
+        if (!quietly)
+            inform(paste("Detected", bed_format, "."))
         extraCols <- c(signalValue = "numeric", pValue = "numeric",
-                       qValue = "numeric", peak = "integer")
-        obj <- import(file_path, format = "BED", extraCols = extraCols)
-    } else if (as.double(num[2]) == 0) {
-        obj <- import.bed(file_path)
+                       qValue = "numeric", peak = "numeric")
+    } else if (bed_type == "bed6+4") {
+        if (!quietly)
+            inform(paste("Detected peptidemapping."))
+        extraCols <- c(rawScore = "numeric", spectrumId = "numeric",
+                       peptideRank = "numeric", peptideRepeatCount = "numeric")
+    } else if (bed_format == "broadpeak" && bed_type == "bed6+3") {
+        if (!quietly)
+            inform(paste("Detected", bed_format, "."))
+        extraCols <- c(signalValue = "numeric", pValue = "numeric",
+                       qValue = "numeric")
+    } else if (bed_type == "bed6+2") {
+        if (!quietly)
+            inform(paste("Detected pairedtagalign."))
+        extraCols <- c(strand = "character", seq1 = "numeric", seq2 = "numeric")
+    } else if (bed_type == "bed3+3") {
+        if (!quietly)
+            inform(paste("Detected tagAlign."))
+        extraCols <- c(sequence = "numeric", score = "numeric",
+                       strand = "character")
+    } else if (nums[2] == "0") {
+        extraCols <- c()
     } else {
-        # extraCols <-
-        # obj <- import(f, format = "BED", extraCols = extraCols)
-        # t <- read.table(f)
-        message("Not yet implemented")
+        if (!quietly)
+            inform(paste("Detected nonstandard BED. Detecting column",
+                         "types and assigning random column names. Use",
+                         "extra_cols to set the name and column type."))
+        extraCols <- .get_extraCols(file_path,
+                                    as.double(nums[1]) + as.double(nums[2]))
     }
-    obj
+    import.bed(file_path, extraCols = extraCols)
 }

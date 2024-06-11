@@ -2,8 +2,7 @@
 title: bedbaser
 author:
 - name: J Wokaty
-  affiliation: 
-  - CUNY School of Public Health
+  affiliation: CUNY School of Public Health
   email: jennifer.wokaty@sph.cuny.edu
 package: bedbaser
 output: 
@@ -18,12 +17,12 @@ vignette: >
 library(bedbaser)
 ```
 
-bedbaser is an R client for [BEDbase](https://bedbase.org) a platform for
-genomic region data, allowing users to search BED files and curate collections.
-bedbaser provides convenience functions to interact with the
-[BEDbase API](https://api.bedbase.org). It also allow more direct
-interaction with the API through `r Biocpkg("AnVIL")`'s `Service` class and
-imports BED files into `GRanges` objects.
+bedbaser is an R client for [BEDbase](https://bedbase.org), a platform for
+genomic region data that allows users to search BED files and curate collections.
+It provides convenience functions to interact with the
+[BEDbase API](https://api.bedbase.org) and allows more direct interaction with
+the API through `r Biocpkg("AnVIL")`'s `Service` class.
+bedbaser also imports BED files into `GRanges` objects.
 
 ## Install bedbaser
 
@@ -60,7 +59,7 @@ finding BEDs, exploring their metadata, and download files.
 ## Find a BED file or BEDset
 
 Use `bb_list()` to browse available resources in BEDbase. `bb_list()`
-will display the record identifiers and names of BED files and BEDsets.
+displays the record identifiers and names of BED files and BEDsets.
 Record identifiers can be used to access a specific resource.
 
 ```{r bb_list_beds}
@@ -86,7 +85,8 @@ metadata <- bb_metadata(client, example_bed$id, "bed")
 Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
-```{r bb_beds_in_bedset}
+```{r bb_beds_in_bedset, eval=FALSE}
+# Need to fix
 bb_beds_in_bedset(client, "excluderanges")
 ```
 
@@ -102,18 +102,35 @@ results
 
 ## Import a BED into a GRanges object
 
-Download a BED file by its record identifier:
+`bb_to_granges` creates a GRanges object from a BED record identifier. It uses 
+`rtracklayer` to import the BED file. When column names are not known for BEDX+Y
+formats, a name is given indicating its position in the BED file.
 
 Note: Still in development, working for broadPeak, narrowPeak, and BEDX+0
 
 ```{r bb_to_granges}
-rec_id <- "bbad85f21962bb8d972444f7f9a3a932"
-obj <- bb_to_granges(client, rec_id, file_type="bed", quietly = TRUE)
-obj
-```
+rec_id1 <- "bbad85f21962bb8d972444f7f9a3a932"
+bed1 <- bb_metadata(client, rec_id1, rec_type = "bed")
+print(paste(bed1$name, "is in", bed1$bed_type, "format."))
+obj1 <- bb_to_granges(client, rec_id1, file_type="bed", quietly = TRUE)
+obj1
+
+# The following imports a BED4+1. Since we don't know the last column, we take
+# the column name and type from reading the table, which is V5.
+bed2 <- bb_metadata(client, example_bed$id, rec_type = "bed")
+print(paste(bed2$name, "is in", bed2$bed_type, "format."))
+obj2 <- bb_to_granges(client, example_bed$id, file_type="bed", quietly = TRUE)
+obj2
+# This is the same as
+# file_path <- "/home/meatbag/.cache/R/bedbaser/5611ae9d790f_04c46b96264ef40bca93f03b10345da5.bed"
+# import.bed(file_path, extraCols = c(V5 = numeric))
+```x`
 
 ## SessionInfo()
 
 ```{r sessionInfo}
 sessionInfo()
 ```   
+Notes: For metadata in R, maybe create a tibble from some reasonable level of untested data, then demo use of tidy::unnest_wider() / unnest_longer(),  GRanges as plyranges?
+
+Can you specify the column names interactively? 

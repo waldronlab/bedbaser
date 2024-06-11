@@ -4,12 +4,20 @@
 \alias{bb_to_granges,BEDbase-method}
 \title{Create a GRanges object given a BED id}
 \usage{
-\S4method{bb_to_granges}{BEDbase}(x, rec_id, file_type = c("bed", "bigbed"), quietly = FALSE)
+\S4method{bb_to_granges}{BEDbase}(
+  x,
+  rec_id,
+  file_type = c("bed", "bigbed"),
+  extra_cols = c(),
+  quietly = FALSE
+)
 }
 \arguments{
 \item{rec_id}{BEDbase record identifier}
 
 \item{file_type}{character() bed or bigbed}
+
+\item{extra_cols}{character() extra column names to construct GRanges objects}
 
 \item{quietly}{logical() (defaults to FALSE) display messages}
 }
