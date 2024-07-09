@@ -16,7 +16,7 @@
 \item{offset}{integer() (defaults to 0) page token of records}
 }
 \value{
-a tibble of BED records
+tibble() of BED records
 }
 \description{
 List BEDs

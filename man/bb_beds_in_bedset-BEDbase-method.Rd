@@ -4,10 +4,10 @@
 \alias{bb_beds_in_bedset,BEDbase-method}
 \title{Get BEDs associated with BEDset}
 \usage{
-\S4method{bb_beds_in_bedset}{BEDbase}(x, rec_id)
+\S4method{bb_beds_in_bedset}{BEDbase}(x, id)
 }
 \arguments{
-\item{rec_id}{integer() BEDset record identifier}
+\item{id}{integer() BEDset record identifier}
 }
 \value{
 list() BED record identifiers
@@ -17,5 +17,7 @@ Get BEDs associated with BEDset
 }
 \examples{
 client <- BEDbase()
-bb_beds_in_bedset(client, rec_id = "gse218680")
+ex_bedset <- bb_example(client, "bedset")
+bb_beds_in_bedset(client, ex_bedset$id)
+
 }

@@ -1,6 +1,6 @@
 #' Format BED file metadata
 #'
-#' @param records list() metadata records
+#' @param records list() metadata
 #'
 #' @importFrom dplyr bind_rows mutate
 #' @importFrom purrr map_depth
@@ -10,30 +10,66 @@
 #'
 #' @examples
 #' client <- BEDbase()
-#' example <- content(client$get_example_bed_record_v1_bed_example_get())
-#' .format_metadata_files(example$files)
-.format_metadata_files <- function(records) {
-    bind_rows(records) |>
-        unnest_wider(access_methods) |> unnest_wider(access_url)
+#' ex_bed <- bb_example(client, "bed")
+#' ex_metadata <-bb_metadata(client, ex_bed$id, "bed", TRUE)
+#' .format_metadata_files(ex_bed$files)
+.format_metadata_files <- function(metadata) {
+    bind_rows(metadata) |>
+        unnest_wider(access_methods) |>
+        unnest_wider(access_url)
+}
+
+#' Get a file from BEDbase
+#'
+#' @param file_url character() url to file
+#' @param file_type character() bed or bigbed
+#' @param quietly logical() (defaults to FALSE) display messages
+#'
+#' @importFrom R.utils gunzip
+#'
+#' @return character() file path
+#'
+#' @examples
+#' client <- BEDbase()
+#' ex_bed <- bb_example(client, "bed")
+#' md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
+#' .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url, "bed")
+.get_file_path <- function(file_url, file_type, quietly = FALSE) {
+    gzipfile <- .download_and_cache(file_url, quietly)
+    tryCatch(
+        gunzip(gzipfile, remove = FALSE),
+        error = function(e) {
+            gsub(".gz", "", gzipfile)
+        })
 }
 
 #' Return a named vector with type
 #'
 #' @param file_path character() path to BED
+#' @param x double() the x in BEDX+Y
 #' @param y double() the y in BEDX+Y
 #'
 #' @return vector representing extraCols for rtracklayer
 #'
 #' @examples
-#'
-#' .get_extraCols("path/to/my/file.bed", 3)
-.get_extraCols <- function(file_path, y) {
+#' id <- "608827efc82fcaa4b0bfc65f590ffef8"
+#' md <- bb_metadata(client, id, "bed", TRUE)
+#' file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
+#'                             "bed")
+#' .get_extra_cols(file_path, 3, 9)
+.get_extra_cols <- function(file_path, x, y) {
     t <- read.table(file_path)
-    extraCols <- c()
-    for (i in t[y:dim(t)[2]])
-        extraCols <- c(extraCols, typeof(i))
-    extraCols <- setNames(extraCols, names(t[y:dim(t)[2]]))
-    extraCols
+    extra_cols <- c()
+    stopifnot(x + y == dim(t)[2])
+    t_seq <- seq(from = x+1, to = x+y)
+    for (i in t[t_seq]) {
+        if (typeof(i) == "integer")
+            col_type <- "numeric"
+        else
+            col_type <- typeof(i)
+        extra_cols <- c(extra_cols, col_type)
+    }
+    setNames(extra_cols, names(t[t_seq]))
 }
 
 #' Create GRanges object from a BED file
@@ -42,63 +78,75 @@
 #' and type. For example, `extra_cols = c(signalValue = "numeric",
 #' pValue = "numeric", qValue = "numeric")`.
 #'
+#' It will also attempt to supply the `genome` if `genome_alias` exists in the
+#' metadata.
+#'
 #' @param file_path character() path to BED file
-#' @param bed_type character() bed type
-#' @param bed_format character() format name
-#' @param extra_cols character() extra column names to construct GRanges objects
+#' @param metadata list() full metadata
+#' @param extra_cols character() (defaults to NULL) extra column names to
+#'        construct GRanges objects
 #' @param quietly boolean() (default FALSE) Display information messages
 #'
-#' @importFrom rtracklayer import.bed
+#' @importFrom rlang abort inform
+#' @importFrom rtracklayer import
 #' @importFrom stringr str_replace str_split_1
 #'
 #' @return GRanges() object representing BED
 #'
 #' @examples
-#' .file_to_granges(file_path, bed_type, bed_format)
-.file_to_granges <- function(file_path, bed_type, bed_format, extra_cols,
-                             quietly = FALSE) {
-    nums <- str_replace(bed_type, "bed", "") |> str_split_1("\\+")
+#' client <- BEDbase()
+#' ex_bed <- bb_example(client, "bed")
+#' .bed_file_to_granges(file_path, bed_type, bed_format)
+.bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
+                                 quietly = FALSE) {
+    bed_format <- metadata$bed_format
+    bed_type <- metadata$bed_type
+    nums <- str_replace(bed_type, "bed", "") |>
+            str_split_1("\\+") |>
+            as.double()
 
-    if (!identical(c(), extra_cols))
-        extraCols <- extra_cols
-    else if (bed_type == "bed12+3") {
-        if (!quietly)
-            inform("Detected bed12+3.")
-        extraCols <- c(signalValue = "numeric", pValue = "numeric",
-                       qValue = "numeric")
-    } else if (bed_format == "narrowpeak" && bed_type == "bed6+4") {
-        if (!quietly)
-            inform(paste("Detected", bed_format, "."))
-        extraCols <- c(signalValue = "numeric", pValue = "numeric",
-                       qValue = "numeric", peak = "numeric")
-    } else if (bed_type == "bed6+4") {
-        if (!quietly)
-            inform(paste("Detected peptidemapping."))
-        extraCols <- c(rawScore = "numeric", spectrumId = "numeric",
-                       peptideRank = "numeric", peptideRepeatCount = "numeric")
-    } else if (bed_format == "broadpeak" && bed_type == "bed6+3") {
-        if (!quietly)
-            inform(paste("Detected", bed_format, "."))
-        extraCols <- c(signalValue = "numeric", pValue = "numeric",
-                       qValue = "numeric")
-    } else if (bed_type == "bed6+2") {
-        if (!quietly)
-            inform(paste("Detected pairedtagalign."))
-        extraCols <- c(strand = "character", seq1 = "numeric", seq2 = "numeric")
-    } else if (bed_type == "bed3+3") {
-        if (!quietly)
-            inform(paste("Detected tagAlign."))
-        extraCols <- c(sequence = "numeric", score = "numeric",
-                       strand = "character")
-    } else if (nums[2] == "0") {
-        extraCols <- c()
-    } else {
-        if (!quietly)
-            inform(paste("Detected nonstandard BED. Detecting column",
-                         "types and assigning random column names. Use",
-                         "extra_cols to set the name and column type."))
-        extraCols <- .get_extraCols(file_path,
-                                    as.double(nums[1]) + as.double(nums[2]))
+    if (is.null(extra_cols)) {
+        extra_cols <- c()
+    } else if ((length(extra_cols) > 0) && (nums[2] != length(extra_cols))) {
+        abort(paste("The length of `extra_cols` must match the Y value in the",
+                    "`bed_type` or be a vector length zero."))
     }
-    import.bed(file_path, extraCols = extraCols)
+
+    if (bed_type == "bed12+3") {
+        bed_format <- "gappedPeak"
+        extra_cols <- c(signalValue = "numeric", pValue = "numeric",
+                        qValue = "numeric")
+    } else if ((bed_format == "broadpeak" && bed_type == "bed6+3") ||
+               (bed_format == "narrowpeak" && bed_type == "bed6+4")) {
+        bed_format <- gsub("peak", "Peak", bed_format)
+    } else if (bed_format != "broadpeak" && bed_type == "bed6+3") {
+        bed_format <- "RNA elements"
+        extra_cols <- c(level = "character", signif = "character",
+                        score2 = "numeric")
+    } else if (nums[2] != length(extra_cols)) {
+        bed_format <- "nonstandard"
+        extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
+    }
+
+    if (!quietly && bed_format != "bed") {
+        inform(paste("Detected", bed_format, "BED file."))
+        if (bed_format == "nonstandard") {
+            inform(paste("Detecting column and types. Assigning random",
+                         "column names. Use `extra_cols` to set the",
+                         "name and column type."))
+        }
+    }
+
+    if (bed_format %in% c("broadPeak", "narrowPeak")) {
+        import(file_path, format = bed_format)
+    } else if (!is.null(metadata$genome_alias)) {
+        tryCatch({
+            import(file_path, format = "bed", extraCols = extra_cols,
+                   genome = metadata$genome_alias)
+        }, error = function(e) {
+            import(file_path, format = "bed", extraCols = extra_cols)
+        })
+    } else {
+        import(file_path, format = "bed", extraCols = extra_cols)
+    }
 }

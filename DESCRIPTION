@@ -12,6 +12,7 @@ Imports:
     AnVIL,
     BiocFileCache,
     dplyr,
+    glue,
     httr,
     purrr,
     rtracklayer,

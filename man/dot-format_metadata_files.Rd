@@ -4,10 +4,10 @@
 \alias{.format_metadata_files}
 \title{Format BED file metadata}
 \usage{
-.format_metadata_files(records)
+.format_metadata_files(metadata)
 }
 \arguments{
-\item{records}{list() metadata records}
+\item{records}{list() metadata}
 }
 \value{
 tibble() file metadata
@@ -17,6 +17,7 @@ Format BED file metadata
 }
 \examples{
 client <- BEDbase()
-example <- content(client$get_example_bed_record_v1_bed_example_get())
-.format_metadata_files(example$files)
+ex_bed <- bb_example(client, "bed")
+ex_metadata <-bb_metadata(client, ex_bed$id, "bed", TRUE)
+.format_metadata_files(ex_bed$files)
 }

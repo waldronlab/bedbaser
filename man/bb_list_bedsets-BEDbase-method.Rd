@@ -7,14 +7,14 @@
 \S4method{bb_list_bedsets}{BEDbase}(x, query = NULL, limit = 1000, offset = 0)
 }
 \arguments{
-\item{query}{character() (defaults to NULL) BEDset keyword}
+\item{query}{character() (defaults to NULL) keyword}
 
-\item{limit}{integer() (defaults to 1000) maximum records}
+\item{limit}{integer() (defaults to 1000) maximum records of bedsets}
 
 \item{offset}{integer() (defaults to 0) page token of records}
 }
 \value{
-a tibble of BEDset records
+tibble() of BEDset records
 }
 \description{
 List BEDsets

@@ -41,6 +41,6 @@
         rid <- names(bfcadd(bfc, url))
     }
     if (!isFALSE(bfcneedsupdate(bfc, rid)))
-    bfcdownload(bfc, rid)
+    bfcdownload(bfc, rid, ask = FALSE)
     bfcrpath(bfc, rids = rid)
 }

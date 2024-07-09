@@ -6,29 +6,31 @@
 \usage{
 \S4method{bb_to_granges}{BEDbase}(
   x,
-  rec_id,
+  id,
   file_type = c("bed", "bigbed"),
-  extra_cols = c(),
+  extra_cols = NULL,
   quietly = FALSE
 )
 }
 \arguments{
-\item{rec_id}{BEDbase record identifier}
+\item{id}{integer() BED record identifier}
 
 \item{file_type}{character() bed or bigbed}
 
-\item{extra_cols}{character() extra column names to construct GRanges objects}
+\item{extra_cols}{character() (defaults to NULL) extra column names to
+construct GRanges objects}
 
 \item{quietly}{logical() (defaults to FALSE) display messages}
 }
 \value{
-a GRanges object
+GRanges() object
 }
 \description{
 Create a GRanges object given a BED id
 }
 \examples{
 client <- BEDbase()
-bb_to_granges(client, "421d2128e183424fcc6a74269bae7934")
+ex_bed <- bb_example(client, "bed")
+bb_to_granges(client, ex_bed$id)
 
 }

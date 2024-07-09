@@ -4,19 +4,20 @@
 \alias{bb_metadata_files,BEDbase-method}
 \title{BED files metadata}
 \usage{
-\S4method{bb_metadata_files}{BEDbase}(x, rec_id)
+\S4method{bb_metadata_files}{BEDbase}(x, id)
 }
 \arguments{
-\item{rec_id}{integer() BED record identifier}
+\item{id}{integer() BED record identifier}
 }
 \value{
-tibble() records
+tibble() file metadata
 }
 \description{
 BED files metadata
 }
 \examples{
 client <- BEDbase()
-metadata <- bb_metadata_files(client, "bbad85f21962bb8d972444f7f9a3a932")
+ex_bed <- bb_example(client, "bed")
+mdf <- bb_metadata_files(client, ex_bed$id)
 
 }

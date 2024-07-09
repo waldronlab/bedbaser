@@ -4,23 +4,29 @@
 \alias{bb_metadata,BEDbase-method}
 \title{Get metadata for an BED or BEDset}
 \usage{
-\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset"), full = TRUE)
+\S4method{bb_metadata}{BEDbase}(x, id, rec_type = c("bed", "bedset"), full = FALSE)
 }
 \arguments{
 \item{id}{integer() record or object identifier}
 
 \item{rec_type}{character() BED or BEDset}
 
-\item{full}{logical() include all metadata}
+\item{full}{logical() (default FALSE) include full record with stats, files,
+and metadata}
 }
 \value{
 list() metadata
 }
 \description{
-Get metadata for an BED or BEDset
+Aborts if not found or id is not not 32 characters
 }
 \examples{
 client <- BEDbase()
-bb_metadata(client, "0dcdf8986a72a3d85805bbc9493a1302", "bed")
+
+ex_bed <- bb_example(client, "bed")
+md <- bb_metadata(client, ex_bed$id, "bed")
+
+ex_bedset <- bb_example(client, "bedset")
+md <- bb_metadata(client, ex_bedset$id, "bedset")
 
 }
