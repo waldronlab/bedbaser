@@ -2,8 +2,7 @@
 #'
 #' @param records list() metadata
 #'
-#' @importFrom dplyr bind_rows mutate
-#' @importFrom purrr map_depth
+#' @importFrom dplyr bind_rows
 #' @importFrom tidyr unnest_wider
 #'
 #' @return tibble() file metadata
@@ -48,6 +47,8 @@
 #' @param file_path character() path to BED
 #' @param x double() the x in BEDX+Y
 #' @param y double() the y in BEDX+Y
+#'
+#' @importFrom utils read.table
 #'
 #' @return vector representing extraCols for rtracklayer
 #'

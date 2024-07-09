@@ -199,6 +199,8 @@ setGeneric(name = "bb_beds_in_bedset",
 #' @param id integer() BEDset record identifier
 #'
 #' @importFrom httr content
+#' @importFrom dplyr bind_rows
+#' @importFrom tibble tibble
 #'
 #' @return list() BED record identifiers
 #'
@@ -237,6 +239,7 @@ setGeneric(name = "bb_bed_text_search",
 #'
 #' @importFrom dplyr bind_rows
 #' @importFrom httr content
+#' @importFrom purrr map_depth
 #' @importFrom tibble tibble
 #' @importFrom utils URLencode
 #'
@@ -306,6 +309,7 @@ setGeneric(name = "bb_to_granges",
 #' @importFrom dplyr filter
 #' @importFrom R.utils gunzip
 #' @importFrom rtracklayer import.bb
+#' @importFrom rlang warn
 #'
 #' @return GRanges() object
 #'
