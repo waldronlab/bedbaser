@@ -89,26 +89,28 @@ test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
     id <- "b7cb28278e4cba2dc62e51ddc70cfbfb"
     md <- bb_metadata(client, id, "bed", TRUE)
     expect_equal("bed3+0", md$bed_type)
-    gro <- bb_to_granges(client, id, "bed")
+    gro <- bb_to_granges(client, id, "bed", quietly = TRUE)
     expect_equal("GRanges", class(gro)[1])
-    expect_equal(0, length(mcols(gro)))
 })
 
-test_that("bb_to_granges returns a GRanges object given a 3+0 bigBed file", {
+test_that("bb_to_granges returns a GRanges object given a bigBed file", {
     client <- BEDbase()
-    id <- "b7cb28278e4cba2dc62e51ddc70cfbfb"
-    gro <- bb_to_granges(client, id, "bigbed")
+    ex_bed <- bb_example(client, "bed")
+    gro <- bb_to_granges(client, ex_bed$id, "bigbed", quietly = TRUE)
     expect_equal("GRanges", class(gro)[1])
-    expect_equal(0, length(mcols(gro)))
 })
+
 test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", {
     client <- BEDbase()
     id <- "bbad85f21962bb8d972444f7f9a3a932"
     md <- bb_metadata(client, id, "bed", TRUE)
     expect_equal("bed6+4", md$bed_type)
-    gro <- bb_to_granges(client, id, "bed")
-    expect_contains(c("name", "score", "signalValue", "pValue", "qValue", "peak"),
-                    names(mcols(gro)))
+    gro <- bb_to_granges(client, id, "bed", quietly = TRUE)
+    expect_equal("GRanges", class(gro)[1])
+    df <- as.data.frame(gro)
+    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
+                      "score", "signalValue", "pValue", "qValue", "peak"),
+                    names(df))
 })
 
 test_that("bb_to_granges returns a GRanges object given bed3+9 file using genome", {
@@ -116,9 +118,11 @@ test_that("bb_to_granges returns a GRanges object given bed3+9 file using genome
     id <- "608827efc82fcaa4b0bfc65f590ffef8"
     md <- bb_metadata(client, id, "bed", TRUE)
     expect_equal("bed3+9", md$bed_type)
-    gro <- bb_to_granges(client, id, "bed")
-    expect_equal(9, length(mcols(gro)))
-    expect_equal(md$genome_alias, seqinfo(gro)@genome[1])
+    gro <- bb_to_granges(client, id, "bed", quietly = TRUE)
+    df <- as.data.frame(gro)
+    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
+                      "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12"),
+                    names(df))
 })
 
 test_that("bb_to_granges allows passing extra_cols", {
@@ -127,6 +131,15 @@ test_that("bb_to_granges allows passing extra_cols", {
     md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
     expect_equal("bed4+1", md$bed_type)
     gro <- bb_to_granges(client, ex_bed$id, "bed",
-                         extra_cols = c("testing" = "character"))
-    expect_true("testing" %in% names(mcols(gro)))
+                         extra_cols = c("testing" = "character"), quietly = TRUE)
+    df <- as.data.frame(gro)
+    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
+                      "testing"), names(df))
+})
+
+test_that("bb_to_grangeslist creates a GRangesList", {
+    client <- BEDbase()
+    grl <- bb_to_grangeslist(client, "lola_hg38_ucsc_features", quietly = TRUE)
+    expect_equal("CompressedGRangesList", class(grl)[1])
+    expect_equal(10, length(grl))
 })

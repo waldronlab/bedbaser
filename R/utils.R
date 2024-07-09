@@ -20,11 +20,13 @@
 
 #' Get a file from BEDbase
 #'
-#' @param file_url character() url to file
+#' @param metadata list() full metadata
 #' @param file_type character() bed or bigbed
+#' @param access_type character() s3 or http
 #' @param quietly logical() (defaults to FALSE) display messages
 #'
 #' @importFrom R.utils gunzip
+#' @importFrom dplyr filter
 #'
 #' @return character() file path
 #'
@@ -32,9 +34,13 @@
 #' client <- BEDbase()
 #' ex_bed <- bb_example(client, "bed")
 #' md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
-#' .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url, "bed")
-.get_file_path <- function(file_url, file_type, quietly = FALSE) {
-    gzipfile <- .download_and_cache(file_url, quietly)
+#' .get_file(md, "bed", "http")
+.get_file <- function(metadata, file_type = c("bed", "bigbed"),
+                      access_type = c("s3", "http"), quietly = FALSE) {
+    file_details <- .format_metadata_files(metadata$files) |>
+                     filter(name == paste(file_type, "file", sep = "_"),
+                            access_id == access_type)
+    gzipfile <- .download_and_cache(file_details$url, quietly)
     tryCatch(
         gunzip(gzipfile, remove = FALSE),
         error = function(e) {
@@ -82,6 +88,8 @@
 #' It will also attempt to supply the `genome` if `genome_alias` exists in the
 #' metadata.
 #'
+#' Aborts if the length of `extra_cols` is not equal to Y in BEDX+Y.
+#'
 #' @param file_path character() path to BED file
 #' @param metadata list() full metadata
 #' @param extra_cols character() (defaults to NULL) extra column names to
@@ -97,6 +105,9 @@
 #' @examples
 #' client <- BEDbase()
 #' ex_bed <- bb_example(client, "bed")
+#' md <- bb_metadata(client, ex_bed$id, "bed", TRUE).
+#' file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
+#'                             "bed")
 #' .bed_file_to_granges(file_path, bed_type, bed_format)
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
                                  quietly = FALSE) {
@@ -142,9 +153,16 @@
         import(file_path, format = bed_format)
     } else if (!is.null(metadata$genome_alias)) {
         tryCatch({
+            if (!quietly) {
+                inform(paste("Attempting to pass `genome =",
+                             metadata$genome_alias, "` when importing."))
+            }
             import(file_path, format = "bed", extraCols = extra_cols,
                    genome = metadata$genome_alias)
         }, error = function(e) {
+            if (!quietly) {
+                inform("Importing without passing `genome`.")
+            }
             import(file_path, format = "bed", extraCols = extra_cols)
         })
     } else {

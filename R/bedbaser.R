@@ -325,10 +325,7 @@ setMethod(
              quietly = FALSE) {
         file_type <- match.arg(file_type)
         metadata <- bb_metadata(x, id, "bed", TRUE)
-        rec <- .format_metadata_files(metadata$files) |>
-               filter(name == paste(file_type, "file", sep = "_"),
-                      access_id == "http")
-        file_path <- .get_file_path(rec$url, file_type, quietly)
+        file_path <- .get_file(metadata, file_type, "http", quietly)
 
         if (file_type == "bed") {
             .bed_file_to_granges(file_path, metadata, extra_cols, quietly)
@@ -339,5 +336,36 @@ setMethod(
                 import.bb(file_path, format = "bigBed")
             }
         }
+    }
+)
+
+setGeneric(name = "bb_to_grangeslist",
+           def = function(x, id, quietly = FALSE) {
+               standardGeneric("bb_to_grangeslist")
+})
+
+#' Create a GRangesList object given a BEDset id
+#'
+#' @param id integer() BEDset record identifier
+#' @param quietly logical() (defaults to FALSE) display messages
+#'
+#' @return GRangesList() object
+#'
+#' @examples
+#' client <- BEDbase()
+#' id <- "lola_hg38_ucsc_features"
+#' bb_to_grangeslist(client, id)
+#'
+#' @export
+setMethod(
+    "bb_to_grangeslist", "BEDbase",
+    function(x, id, quietly = FALSE) {
+        beds <- bb_beds_in_bedset(client, id)
+        gros <- list()
+        for (id in beds$id) {
+            gro <- bb_to_granges(x, id, "bed", quietly = quietly) 
+            gros[[length(gros)+1]] <- gro
+        }
+        GRangesList(gros)
     }
 )
