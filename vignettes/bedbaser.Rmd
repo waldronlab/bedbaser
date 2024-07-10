@@ -92,45 +92,59 @@ bb_beds_in_bedset(client, "excluderanges")
 
 ### Search for a BED file by keyword
 
-Search for BED files by keywords:
+Search for BED files by keywords. `bb_bed_text_search()` returns all BED files
+scored against a query.
 
 ```{r bb_search, eval=FALSE}
-# Currently not working correctly
-results <- bb_search(client, "hg13")
-results
+bb_bed_text_search(client, "hg13", limit = 10)
 ```
 
 ## Import a BED into a GRanges object
 
-`bb_to_granges` creates a GRanges object from a BED record identifier. It uses 
-`rtracklayer` to import the BED file. When column names are not known for BEDX+Y
-formats, a name is given indicating its position in the BED file.
+`bb_to_granges` downloads and imports a BED file into `rtracklayer` to
+create a GRanges object when given a BED record identifier.
 
-Note: Still in development, working for broadPeak, narrowPeak, and BEDX+0
+For BEDX+Y formats, a named list with column types may be passed through
+`extra_cols` if the column name and type are known. Otherwise, `bb_to_granges`
+attempts to guess the types and assigns column names. `bb_to_granges` assigns
+the proper name and types for broad peak and narrow peak files.
+
+`bb_to_granges` also attempts to pass the genome to `rtracklayer`
 
 ```{r bb_to_granges}
-rec_id1 <- "bbad85f21962bb8d972444f7f9a3a932"
-bed1 <- bb_metadata(client, rec_id1, rec_type = "bed")
-print(paste(bed1$name, "is in", bed1$bed_type, "format."))
-obj1 <- bb_to_granges(client, rec_id1, file_type="bed", quietly = TRUE)
-obj1
+ex_bed <- bb_example(client, "bed")
+ex_bed$bed_type
+ex_bed$genome_alias
+bb_to_granges(client, ex_bed$id, "bed")
 
-# The following imports a BED4+1. Since we don't know the last column, we take
-# the column name and type from reading the table, which is V5.
-bed2 <- bb_metadata(client, example_bed$id, rec_type = "bed")
-print(paste(bed2$name, "is in", bed2$bed_type, "format."))
-obj2 <- bb_to_granges(client, example_bed$id, file_type="bed", quietly = TRUE)
-obj2
-# This is the same as
-# file_path <- "/home/meatbag/.cache/R/bedbaser/5611ae9d790f_04c46b96264ef40bca93f03b10345da5.bed"
-# import.bed(file_path, extraCols = c(V5 = numeric))
-```x`
+ex_bed <- bb_example(client, "bed")
+ex_bed$bed_type
+bb_to_granges(client, ex_bed$id, "bed", extra_cols = c("testing" = "character"))
+
+id <- "bbad85f21962bb8d972444f7f9a3a932"
+md <- bb_metadata(client, id, "bed", TRUE)
+md$bed_format
+md$bed_type
+bb_to_granges(client, id, "bed")
+```
+
+`bb_to_granges` can also import big BED files.
+
+```{r bb_to_granges_big_bed}
+ex_bed <- bb_example(client, "bed")
+bb_to_granges(client, ex_bed$id, "bigbed")
+```
+# Import a BEDset into a GRangesList
+
+`bb_to_grangeslist` creates GRangesList object given a BEDset record identifier.
+
+```{r bb_to_grangeslist}
+id <- "lola_hg38_ucsc_features"
+bb_to_grangeslist(client, id)
+```
 
 ## SessionInfo()
 
 ```{r sessionInfo}
 sessionInfo()
-```   
-Notes: For metadata in R, maybe create a tibble from some reasonable level of untested data, then demo use of tidy::unnest_wider() / unnest_longer(),  GRanges as plyranges?
-
-Can you specify the column names interactively? 
+```

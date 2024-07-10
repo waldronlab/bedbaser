@@ -267,31 +267,6 @@ setMethod(
     }
 )
 
-setGeneric(name = "bb_metadata_files",
-           def = function(x, id) { standardGeneric("bb_metadata_files") })
-
-#' BED files metadata
-#'
-#' @param id integer() BED record identifier
-#'
-#' @importFrom httr content
-#'
-#' @return tibble() file metadata
-#'
-#' @examples
-#' client <- BEDbase()
-#' ex_bed <- bb_example(client, "bed")
-#' mdf <- bb_metadata_files(client, ex_bed$id)
-#'
-#' @export
-setMethod(
-    "bb_metadata_files", "BEDbase",
-    function(x, id) {
-        md <- bb_metadata(x, id, "bed", TRUE)
-        .format_metadata_files(md$files)
-    }
-)
-
 setGeneric(name = "bb_to_granges",
            def = function(x, id, file_type = c("bed", "bigbed"),
                           extra_cols = NULL, quietly = FALSE) {
@@ -349,6 +324,8 @@ setGeneric(name = "bb_to_grangeslist",
 #' @param id integer() BEDset record identifier
 #' @param quietly logical() (defaults to FALSE) display messages
 #'
+#' @importFrom GenomicRanges GRangesList
+#'
 #' @return GRangesList() object
 #'
 #' @examples
@@ -360,7 +337,7 @@ setGeneric(name = "bb_to_grangeslist",
 setMethod(
     "bb_to_grangeslist", "BEDbase",
     function(x, id, quietly = FALSE) {
-        beds <- bb_beds_in_bedset(client, id)
+        beds <- bb_beds_in_bedset(x, id)
         gros <- list()
         for (id in beds$id) {
             gro <- bb_to_granges(x, id, "bed", quietly = quietly) 

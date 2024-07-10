@@ -12,6 +12,7 @@ Imports:
     AnVIL,
     BiocFileCache,
     dplyr,
+    GenomicRanges,
     httr,
     purrr,
     rtracklayer,

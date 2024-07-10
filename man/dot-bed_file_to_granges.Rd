@@ -32,7 +32,7 @@ Aborts if the length of \code{extra_cols} is not equal to Y in BEDX+Y.
 \examples{
 client <- BEDbase()
 ex_bed <- bb_example(client, "bed")
-md <- bb_metadata(client, ex_bed$id, "bed", TRUE).
+md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
 file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
                             "bed")
 .bed_file_to_granges(file_path, bed_type, bed_format)
