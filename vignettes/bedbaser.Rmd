@@ -85,7 +85,7 @@ metadata <- bb_metadata(client, example_bed$id, "bed")
 Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
-```{r bb_beds_in_bedset, eval=FALSE}
+```{r bb_beds_in_bedset}
 # Need to fix
 bb_beds_in_bedset(client, "excluderanges")
 ```
@@ -95,7 +95,7 @@ bb_beds_in_bedset(client, "excluderanges")
 Search for BED files by keywords. `bb_bed_text_search()` returns all BED files
 scored against a query.
 
-```{r bb_search, eval=FALSE}
+```{r bb_search}
 bb_bed_text_search(client, "hg13", limit = 10)
 ```
 

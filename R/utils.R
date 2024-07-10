@@ -106,13 +106,11 @@
 #' client <- BEDbase()
 #' ex_bed <- bb_example(client, "bed")
 #' md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
-#' file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
-#'                             "bed")
-#' .bed_file_to_granges(file_path, bed_type, bed_format)
+#' file_path <- .get_file(md, "bed", "http")
+#' .bed_file_to_granges(file_path, md)
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
                                  quietly = FALSE) {
     bed_format <- metadata$bed_format
-    bed_type <- metadata$bed_type
     nums <- str_replace(bed_type, "bed", "") |>
             str_split_1("\\+") |>
             as.double()
@@ -124,14 +122,14 @@
                     "`bed_type` or be a vector length zero."))
     }
 
-    if (bed_type == "bed12+3") {
+    if (metadata$bed_type == "bed12+3") {
         bed_format <- "gappedPeak"
         extra_cols <- c(signalValue = "numeric", pValue = "numeric",
                         qValue = "numeric")
-    } else if ((bed_format == "broadpeak" && bed_type == "bed6+3") ||
-               (bed_format == "narrowpeak" && bed_type == "bed6+4")) {
+    } else if ((bed_format == "broadpeak" && metadata$bed_type == "bed6+3") ||
+               (bed_format == "narrowpeak" && metadata$bed_type == "bed6+4")) {
         bed_format <- gsub("peak", "Peak", bed_format)
-    } else if (bed_format != "broadpeak" && bed_type == "bed6+3") {
+    } else if (bed_format != "broadpeak" && metadata$bed_type == "bed6+3") {
         bed_format <- "RNA elements"
         extra_cols <- c(level = "character", signif = "character",
                         score2 = "numeric")
@@ -154,7 +152,7 @@
     } else if (!is.null(metadata$genome_alias)) {
         tryCatch({
             if (!quietly) {
-                inform(paste("Attempting to pass `genome =",
+                inform(paste0("Attempting to pass `genome =",
                              metadata$genome_alias, "` when importing."))
             }
             import(file_path, format = "bed", extraCols = extra_cols,
