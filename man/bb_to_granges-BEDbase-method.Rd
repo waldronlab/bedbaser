@@ -6,14 +6,14 @@
 \usage{
 \S4method{bb_to_granges}{BEDbase}(
   x,
-  id,
+  bed_id,
   file_type = c("bed", "bigbed"),
   extra_cols = NULL,
   quietly = FALSE
 )
 }
 \arguments{
-\item{id}{integer() BED record identifier}
+\item{bed_id}{integer() BED record identifier}
 
 \item{file_type}{character() bed or bigbed}
 

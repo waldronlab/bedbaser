@@ -111,7 +111,7 @@
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
                                  quietly = FALSE) {
     bed_format <- metadata$bed_format
-    nums <- str_replace(bed_type, "bed", "") |>
+    nums <- str_replace(metadata$bed_type, "bed", "") |>
             str_split_1("\\+") |>
             as.double()
 
@@ -119,7 +119,7 @@
         extra_cols <- c()
     } else if ((length(extra_cols) > 0) && (nums[2] != length(extra_cols))) {
         abort(paste("The length of `extra_cols` must match the Y value in the",
-                    "`bed_type` or be a vector length zero."))
+                    "`bed_type`."))
     }
 
     if (metadata$bed_type == "bed12+3") {
@@ -141,9 +141,8 @@
     if (!quietly && bed_format != "bed") {
         inform(paste("Detected", bed_format, "BED file."))
         if (bed_format == "nonstandard") {
-            inform(paste("Detecting column and types. Assigning random",
-                         "column names. Use `extra_cols` to set the",
-                         "name and column type."))
+            inform(paste("Detecting column and types. Assigning column names.",
+                         "Use `extra_cols` to set name and column type."))
         }
     }
 
@@ -152,7 +151,7 @@
     } else if (!is.null(metadata$genome_alias)) {
         tryCatch({
             if (!quietly) {
-                inform(paste0("Attempting to pass `genome =",
+                inform(paste0("Attempting to pass `genome = ",
                              metadata$genome_alias, "` when importing."))
             }
             import(file_path, format = "bed", extraCols = extra_cols,

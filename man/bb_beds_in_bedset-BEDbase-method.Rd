@@ -4,10 +4,10 @@
 \alias{bb_beds_in_bedset,BEDbase-method}
 \title{Get BEDs associated with BEDset}
 \usage{
-\S4method{bb_beds_in_bedset}{BEDbase}(x, id)
+\S4method{bb_beds_in_bedset}{BEDbase}(x, bedset_id)
 }
 \arguments{
-\item{id}{integer() BEDset record identifier}
+\item{bedset_id}{integer() BEDset record identifier}
 }
 \value{
 list() BED record identifiers

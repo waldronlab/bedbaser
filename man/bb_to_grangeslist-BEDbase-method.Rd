@@ -4,10 +4,10 @@
 \alias{bb_to_grangeslist,BEDbase-method}
 \title{Create a GRangesList object given a BEDset id}
 \usage{
-\S4method{bb_to_grangeslist}{BEDbase}(x, id, quietly = FALSE)
+\S4method{bb_to_grangeslist}{BEDbase}(x, bedset_id, quietly = FALSE)
 }
 \arguments{
-\item{id}{integer() BEDset record identifier}
+\item{bedset_id}{integer() BEDset record identifier}
 
 \item{quietly}{logical() (defaults to FALSE) display messages}
 }

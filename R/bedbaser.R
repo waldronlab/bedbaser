@@ -190,13 +190,13 @@ setMethod(
 )
 
 setGeneric(name = "bb_beds_in_bedset",
-           def = function(x, id) {
+           def = function(x, bedset_id) {
                standardGeneric("bb_beds_in_bedset")
 })
 
 #' Get BEDs associated with BEDset
 #'
-#' @param id integer() BEDset record identifier
+#' @param bedset_id integer() BEDset record identifier
 #'
 #' @importFrom httr content
 #' @importFrom dplyr bind_rows
@@ -212,10 +212,10 @@ setGeneric(name = "bb_beds_in_bedset",
 #' @export
 setMethod(
     "bb_beds_in_bedset", "BEDbase",
-    function(x, id) {
+    function(x, bedset_id) {
         rsp <-
             x$get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get(
-                bedset_id = id)
+                bedset_id = bedset_id)
         recs <- content(rsp)
         results <- tibble()
         if (recs$count)
@@ -268,14 +268,14 @@ setMethod(
 )
 
 setGeneric(name = "bb_to_granges",
-           def = function(x, id, file_type = c("bed", "bigbed"),
+           def = function(x, bed_id, file_type = c("bed", "bigbed"),
                           extra_cols = NULL, quietly = FALSE) {
                standardGeneric("bb_to_granges")
 })
 
 #' Create a GRanges object given a BED id
 #'
-#' @param id integer() BED record identifier
+#' @param bed_id integer() BED record identifier
 #' @param file_type character() bed or bigbed
 #' @param extra_cols character() (defaults to NULL) extra column names to
 #'        construct GRanges objects
@@ -296,10 +296,10 @@ setGeneric(name = "bb_to_granges",
 #' @export
 setMethod(
     "bb_to_granges", "BEDbase",
-    function(x, id, file_type = c("bed", "bigbed"), extra_cols = NULL,
+    function(x, bed_id, file_type = c("bed", "bigbed"), extra_cols = NULL,
              quietly = FALSE) {
         file_type <- match.arg(file_type)
-        metadata <- bb_metadata(x, id, "bed", TRUE)
+        metadata <- bb_metadata(x, bed_id, "bed", TRUE)
         file_path <- .get_file(metadata, file_type, "http", quietly)
 
         if (file_type == "bed") {
@@ -315,13 +315,13 @@ setMethod(
 )
 
 setGeneric(name = "bb_to_grangeslist",
-           def = function(x, id, quietly = FALSE) {
+           def = function(x, bedset_id, quietly = FALSE) {
                standardGeneric("bb_to_grangeslist")
 })
 
 #' Create a GRangesList object given a BEDset id
 #'
-#' @param id integer() BEDset record identifier
+#' @param bedset_id integer() BEDset record identifier
 #' @param quietly logical() (defaults to FALSE) display messages
 #'
 #' @importFrom GenomicRanges GRangesList
@@ -336,8 +336,8 @@ setGeneric(name = "bb_to_grangeslist",
 #' @export
 setMethod(
     "bb_to_grangeslist", "BEDbase",
-    function(x, id, quietly = FALSE) {
-        beds <- bb_beds_in_bedset(x, id)
+    function(x, bedset_id, quietly = FALSE) {
+        beds <- bb_beds_in_bedset(x, bedset_id)
         gros <- list()
         for (id in beds$id) {
             gro <- bb_to_granges(x, id, "bed", quietly = quietly) 

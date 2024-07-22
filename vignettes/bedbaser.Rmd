@@ -86,7 +86,6 @@ Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
 ```{r bb_beds_in_bedset}
-# Need to fix
 bb_beds_in_bedset(client, "excluderanges")
 ```
 
@@ -96,7 +95,7 @@ Search for BED files by keywords. `bb_bed_text_search()` returns all BED files
 scored against a query.
 
 ```{r bb_search}
-bb_bed_text_search(client, "hg13", limit = 10)
+bb_bed_text_search(client, "cancer", limit = 10)
 ```
 
 ## Import a BED into a GRanges object

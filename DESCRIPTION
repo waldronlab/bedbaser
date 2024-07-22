@@ -2,11 +2,26 @@ Package: bedbaser
 Title: A BEDbase client
 Version: 0.0.9000
 Authors@R: 
-    person("Jennifer", "Wokaty", , "jennifer.wokaty@sph.cuny.edu",
-           role = c("aut", "cre"))
-Description: A BEDbase client for api.bedbase.org.
+    person(
+        given = "Jennifer",
+        family = "Wokaty",
+        role = c("aut", "cre"),
+        email = "jennifer.wokaty@sph.cuny.edu",
+        comment = c(ORCID = "0009-0008-0900-8793")
+    ),
+    person(
+        given = "Levi",
+        family = "Waldron",
+        role = c("aut"),
+        email = "levi.waldron@sph.cuny.edu",
+        comment = c(ORCID = "0000-0003-2725-0694")
+    ))
+Description: A client for BEDbase, providing access to the API at
+    api.bedbase.org and including convenience functions to import a BED file
+    into GRanges object and BEDset into a GRangesList.
 URL: https://github.com/waldronlab/bedbaser
-BugReports: https://github.com/waldronlab/bedbaser/issues
+BugReports: https://github.com/jwokaty/bedbaser/issues
+biocViews: Software, DataImport, ThirdPartyClient
 License: Artistic License 2.0
 Imports:
     AnVIL,
