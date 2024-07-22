@@ -146,23 +146,28 @@
         }
     }
 
-    if (bed_format %in% c("broadPeak", "narrowPeak")) {
-        import(file_path, format = bed_format)
-    } else if (!is.null(metadata$genome_alias)) {
-        tryCatch({
+    genome <- ifelse(!is.null(metadata$genome_alias), metadata$genome_alias, NA)
+    
+    tryCatch({
             if (!quietly) {
                 inform(paste0("Attempting to pass `genome = ",
-                             metadata$genome_alias, "` when importing."))
+                              genome, "` when importing."))
+                }
+            if (bed_format %in% c("broadPeak", "narrowPeak")) {
+                import(file_path, format = bed_format, genome = genome)
+            } else {
+                import(file_path, format = "bed", extraCols = extra_cols,
+                       genome =  genome)
             }
-            import(file_path, format = "bed", extraCols = extra_cols,
-                   genome = metadata$genome_alias)
         }, error = function(e) {
             if (!quietly) {
                 inform("Importing without passing `genome`.")
             }
-            import(file_path, format = "bed", extraCols = extra_cols)
+            if (bed_format %in% c("broadPeak", "narrowPeak")) {
+                import(file_path, format = bed_format)
+            } else {
+                import(file_path, format = "bed", extraCols = extra_cols)
+            }
+          
         })
-    } else {
-        import(file_path, format = "bed", extraCols = extra_cols)
-    }
 }

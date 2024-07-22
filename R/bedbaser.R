@@ -339,8 +339,8 @@ setMethod(
     function(x, bedset_id, quietly = FALSE) {
         beds <- bb_beds_in_bedset(x, bedset_id)
         gros <- list()
-        for (id in beds$id) {
-            gro <- bb_to_granges(x, id, "bed", quietly = quietly) 
+        for (bed_id in beds$id) {
+            gro <- bb_to_granges(x, bed_id, "bed", quietly = quietly) 
             gros[[length(gros)+1]] <- gro
         }
         GRangesList(gros)

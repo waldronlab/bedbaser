@@ -13,18 +13,17 @@ vignette: >
   %\VignetteEncoding{UTF-8}  
 ---
 
+# Introduction
+
 ```{r library, include=FALSE}
 library(bedbaser)
 ```
 
-bedbaser is an R client for [BEDbase](https://bedbase.org), a platform for
-genomic region data that allows users to search BED files and curate collections.
-It provides convenience functions to interact with the
-[BEDbase API](https://api.bedbase.org) and allows more direct interaction with
-the API through `r Biocpkg("AnVIL")`'s `Service` class.
-bedbaser also imports BED files into `GRanges` objects.
+bedbaser is an R client for [BEDbase](https://bedbase.org) that provides access
+to the [BEDbase API](https://api.bedbase.org) and includes convenience functions
+to create GRanges and GRangesList objects.
 
-## Install bedbaser
+# Install bedbaser
 
 Install bedbaser using `r CRANpkg("BiocManager")`.
 
@@ -34,10 +33,10 @@ if (!"BiocManager" %in% rownames(installed.packages()))
 BiocManager::install("bedbaser", dependencies=TRUE)
 ```
 
-## Create a bedbaser client
+# Create a bedbaser client
 
 bedbaser uses the `r Biocpkg("AnVIL")` Service class to create a `BEDbase`
-client, which can be use to access the API directly.
+client, which allows access to the API directly.
 
 ```{r bedbase}
 client <- BEDbase()
@@ -56,7 +55,7 @@ example_bed <- content(rsp)
 bedbaser includes convenience functions prefixed with *bb_* to facilitate
 finding BEDs, exploring their metadata, and download files.
 
-## Find a BED file or BEDset
+# Find a BED file or BEDset
 
 Use `bb_list()` to browse available resources in BEDbase. `bb_list()`
 displays the record identifiers and names of BED files and BEDsets.
@@ -68,19 +67,17 @@ bb_list_beds(client)
 bb_list_bedsets(client)
 ```
 
-### Examine metadata
+# Examine metadata
 
 Use `bb_metadata()` to learn more about a BED or BEDset associated with
 a record identifier.
 
-Note: Currently a list of lists, but maybe could be a better format?
-
 ```{r bb_metadata}
-metadata <- bb_metadata(client, example_bed$id, "bed")
-
+md <- bb_metadata(client, example_bed$id, "bed")
+head(md)
 ```
 
-### Show BED files in BEDset
+# Show BED files in BEDset
 
 Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
@@ -89,7 +86,7 @@ BEDset.
 bb_beds_in_bedset(client, "excluderanges")
 ```
 
-### Search for a BED file by keyword
+# Search for a BED file by keyword
 
 Search for BED files by keywords. `bb_bed_text_search()` returns all BED files
 scored against a query.
@@ -98,33 +95,36 @@ scored against a query.
 bb_bed_text_search(client, "cancer", limit = 10)
 ```
 
-## Import a BED into a GRanges object
+# Import a BED into a GRanges object
 
-`bb_to_granges` downloads and imports a BED file into `rtracklayer` to
-create a GRanges object when given a BED record identifier.
-
-For BEDX+Y formats, a named list with column types may be passed through
-`extra_cols` if the column name and type are known. Otherwise, `bb_to_granges`
-attempts to guess the types and assigns column names. `bb_to_granges` assigns
-the proper name and types for broad peak and narrow peak files.
-
+`bb_to_granges` downloads and imports a BED file using `rtracklayer` to
+create a `GRanges` object when given a BED file record identifier. 
 `bb_to_granges` also attempts to pass the genome to `rtracklayer`
 
 ```{r bb_to_granges}
 ex_bed <- bb_example(client, "bed")
-ex_bed$bed_type
-ex_bed$genome_alias
+head(ex_bed)
+# Allow bedbaser to assign column names and types
 bb_to_granges(client, ex_bed$id, "bed")
+```
 
-ex_bed <- bb_example(client, "bed")
-ex_bed$bed_type
-bb_to_granges(client, ex_bed$id, "bed", extra_cols = c("testing" = "character"))
+For BEDX+Y formats, a named list with column types may be passed through
+`extra_cols` if the column name and type are known. Otherwise, `bb_to_granges`
+guesses the column types and assigns column names.
 
-id <- "bbad85f21962bb8d972444f7f9a3a932"
-md <- bb_metadata(client, id, "bed", TRUE)
-md$bed_format
-md$bed_type
-bb_to_granges(client, id, "bed")
+```{r bb_to_granges_manual, eval=FALSE}
+# Manually assign column name and type using `extra_cols`
+bb_to_granges(client, ex_bed$id, "bed", extra_cols = c("column_name" = "character"))
+```
+
+`bb_to_granges` automatically assigns the column names and types for broad peak
+and narrow peak files.
+
+```{r bb_to_granges_narrowpeak}
+bed_id <- "bbad85f21962bb8d972444f7f9a3a932"
+md <- bb_metadata(client, bed_id, "bed")
+head(md)
+bb_to_granges(client, bed_id, "bed")
 ```
 
 `bb_to_granges` can also import big BED files.
@@ -133,16 +133,18 @@ bb_to_granges(client, id, "bed")
 ex_bed <- bb_example(client, "bed")
 bb_to_granges(client, ex_bed$id, "bigbed")
 ```
+
 # Import a BEDset into a GRangesList
 
-`bb_to_grangeslist` creates GRangesList object given a BEDset record identifier.
+`bb_to_grangeslist` creates a `GRangesList` object given a BEDset record
+identifier.
 
 ```{r bb_to_grangeslist}
-id <- "lola_hg38_ucsc_features"
-bb_to_grangeslist(client, id)
+bedset_id <- "lola_hg38_ucsc_features"
+bb_to_grangeslist(client, bedset_id)
 ```
 
-## SessionInfo()
+# SessionInfo()
 
 ```{r sessionInfo}
 sessionInfo()
