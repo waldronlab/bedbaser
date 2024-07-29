@@ -55,6 +55,11 @@ example_bed <- content(rsp)
 bedbaser includes convenience functions prefixed with *bb_* to facilitate
 finding BEDs, exploring their metadata, and download files.
 
+## Set the cache
+
+Set cache path with the environment variable `BEDBASER_CACHE`; otherwise,
+bedbaser will choose the default cache location.
+
 # Find a BED file or BEDset
 
 Use `bb_list()` to browse available resources in BEDbase. `bb_list()`

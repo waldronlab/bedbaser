@@ -1,18 +1,26 @@
 #' Get the cache
 #'
-#' This function is described in the BiocFileCache vignette.
+#' Uses BEDBASER_CACHE for cache path if set; otherwise, it uses the default R
+#' cache path for bedbaser.
 #'
-#' @importFrom BiocFileCache BiocFileCache
+#' @param quietly logical() display message
+#'
+#' @importFrom BiocFileCache BiocFileCache bfccache
 #' @importFrom tools R_user_dir
 #'
 #' @return BiocFileCache object
 #'
-#' @example
+#' @examples
+#' Sys.setenv("BEDBASER_CACHE"=".cache/bedbaser")
 #' bfc <- .get_cache()
-#'
 #' @noRd
-.get_cache <- function() {
-    bfc <- R_user_dir("bedbaser", which="cache")
+.get_cache <- function(quietly = FALSE) {
+    bfc <- ifelse(Sys.getenv("BEDBASER_CACHE") != "",
+                  Sys.getenv("BEDBASER_CACHE"),
+                  R_user_dir("bedbaser", which="cache"))
+    if (!quietly) {
+        print(paste("Using", bfccache()))
+    }
     BiocFileCache(bfc)
 }
 
