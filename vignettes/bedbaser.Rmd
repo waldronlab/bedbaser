@@ -17,11 +17,14 @@ vignette: >
 
 ```{r library, include=FALSE}
 library(bedbaser)
+library(rtracklayer)
+library(R.utils)
+library(liftOver)
 ```
 
-bedbaser is an R client for [BEDbase](https://bedbase.org) that provides access
-to the [BEDbase API](https://api.bedbase.org) and includes convenience functions
-to create GRanges and GRangesList objects.
+bedbaser is an R api for [BEDbase](https://bedbase.org) that provides access
+to the [BEDbase API](https://api.bedbase.org) and includes convenience
+functions, such for creating GRanges and GRangesList objects.
 
 # Install bedbaser
 
@@ -33,43 +36,47 @@ if (!"BiocManager" %in% rownames(installed.packages()))
 BiocManager::install("bedbaser", dependencies=TRUE)
 ```
 
-# Create a bedbaser client
+# Create a bedbaser api
 
 bedbaser uses the `r Biocpkg("AnVIL")` Service class to create a `BEDbase`
-client, which allows access to the API directly.
+api, which allows access to the API directly.
 
 ```{r bedbase}
-client <- BEDbase()
-show(client)
+api <- bedbaser()
+show(api)
 ```
 
 End points can be accessed with `$` and their results can be retrieved
 with `r CRANpkg("httr")`.
 
-```{r count_bed_record_bed_count_get}
+```{r count_bed_record_bed_count_get, eval=FALSE}
 library(httr)
-rsp <- client$get_example_bed_record_v1_bed_example_get()
-example_bed <- content(rsp)
+rsp <- api$get_example_bed_record_v1_bed_example_get()
+ex_bed <- content(rsp)
 ```
 
 bedbaser includes convenience functions prefixed with *bb_* to facilitate
-finding BEDs, exploring their metadata, and download files.
+finding BED files, exploring their metadata, and download files.
 
 ## Set the cache
 
-Set cache path with the environment variable `BEDBASER_CACHE`; otherwise,
+Set the cache path with the environment variable `BEDBASER_CACHE`; otherwise,
 bedbaser will choose the default cache location.
+
+```{r BEDBASER_CACHE, eval=FALSE}
+Sys.setenv("BEDBASER_CACHE" = tempdir())
+```
 
 # Find a BED file or BEDset
 
-Use `bb_list()` to browse available resources in BEDbase. `bb_list()`
-displays the record identifiers and names of BED files and BEDsets.
-Record identifiers can be used to access a specific resource.
+Use `bb_list_beds()` and `bb_list_bedsets()` to browse available resources in
+BEDbase. Both functions display the record identifiers and names of BED files 
+and BEDsets. A record identifier can be used to access a specific resource.
 
 ```{r bb_list_beds}
-bb_list_beds(client)
+bb_list_beds(api)
 
-bb_list_bedsets(client)
+bb_list_bedsets(api)
 ```
 
 # Examine metadata
@@ -78,7 +85,8 @@ Use `bb_metadata()` to learn more about a BED or BEDset associated with
 a record identifier.
 
 ```{r bb_metadata}
-md <- bb_metadata(client, example_bed$id, "bed")
+ex_bed <- bb_example(api, "bed")
+md <- bb_metadata(api, ex_bed$id)
 head(md)
 ```
 
@@ -88,7 +96,7 @@ Use `bb_beds_in_bedset()` to display the record identifiers of BEDs in a
 BEDset. 
 
 ```{r bb_beds_in_bedset}
-bb_beds_in_bedset(client, "excluderanges")
+bb_beds_in_bedset(api, "excluderanges")
 ```
 
 # Search for a BED file by keyword
@@ -97,20 +105,20 @@ Search for BED files by keywords. `bb_bed_text_search()` returns all BED files
 scored against a query.
 
 ```{r bb_search}
-bb_bed_text_search(client, "cancer", limit = 10)
+bb_bed_text_search(api, "cancer", limit = 10)
 ```
 
 # Import a BED into a GRanges object
 
-`bb_to_granges` downloads and imports a BED file using `rtracklayer` to
-create a `GRanges` object when given a BED file record identifier. 
-`bb_to_granges` also attempts to pass the genome to `rtracklayer`
+Create a GRanges object with a BED record identifier with `bb_to_granges`, which
+downloads and imports a BED file using `rtracklayer`. `bb_to_granges` also
+attempts to pass the genome to `rtracklayer`
 
-```{r bb_to_granges}
-ex_bed <- bb_example(client, "bed")
+```{r bb_to_granges, message=FALSE}
+ex_bed <- bb_example(api, "bed")
 head(ex_bed)
 # Allow bedbaser to assign column names and types
-bb_to_granges(client, ex_bed$id, "bed")
+bb_to_granges(api, ex_bed$id, quietly = FALSE)
 ```
 
 For BEDX+Y formats, a named list with column types may be passed through
@@ -119,34 +127,64 @@ guesses the column types and assigns column names.
 
 ```{r bb_to_granges_manual, eval=FALSE}
 # Manually assign column name and type using `extra_cols`
-bb_to_granges(client, ex_bed$id, "bed", extra_cols = c("column_name" = "character"))
+bb_to_granges(api, ex_bed$id, extra_cols = c("column_name" = "character"))
 ```
 
 `bb_to_granges` automatically assigns the column names and types for broad peak
 and narrow peak files.
 
-```{r bb_to_granges_narrowpeak}
+```{r bb_to_granges_narrowpeak, message=FALSE}
 bed_id <- "bbad85f21962bb8d972444f7f9a3a932"
-md <- bb_metadata(client, bed_id, "bed")
+md <- bb_metadata(api, bed_id)
 head(md)
-bb_to_granges(client, bed_id, "bed")
+bb_to_granges(api, bed_id)
 ```
 
 `bb_to_granges` can also import big BED files.
 
 ```{r bb_to_granges_big_bed}
-ex_bed <- bb_example(client, "bed")
-bb_to_granges(client, ex_bed$id, "bigbed")
+ex_bed <- bb_example(api, "bed")
+bb_to_granges(api, ex_bed$id, "bigbed")
 ```
 
 # Import a BEDset into a GRangesList
 
-`bb_to_grangeslist` creates a `GRangesList` object given a BEDset record
-identifier.
+Create a GRangesList given a BEDset record identifier with `bb_to_grangeslist`.
 
-```{r bb_to_grangeslist}
+```{r bb_to_grangeslist, message=FALSE}
 bedset_id <- "lola_hg38_ucsc_features"
-bb_to_grangeslist(client, bedset_id)
+bb_to_grangeslist(api, bedset_id)
+```
+
+# Change genomic coordinate system with liftOver
+
+Use `liftOver` to convert one genomic coordinate system to another.
+Download the chain file from [UCSC](https://hgdownload.cse.ucsc.edu/downloads.html#liftover).
+
+```{r liftOver, eval=FALSE}
+if (!"BiocManager" %in% rownames(installed.packages()))
+    install.packages("BiocManager")
+BiocManager::install("liftOver", dependencies=TRUE)
+```
+
+```{r convertCoordinates, message=FALSE}
+id <- "7816f807ffe1022f438e1f5b094acf1a"
+md <- bb_metadata(api, id, TRUE)
+gro <- bb_to_granges(api, id)
+gro
+
+chain_url <- "https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/mm10ToMm39.over.chain.gz"
+tmpdir <- tempdir()
+gz <- file.path(tmpdir, "mm10ToMm39.over.chain.gz")
+download.file(chain_url, gz)
+gunzip(gz, remove = FALSE)
+
+ch <- import.chain(file.path(tmpdir, "mm10ToMm39.over.chain"))
+seqlevelsStyle(gro) <- "UCSC"
+gro39 <- liftOver(gro, ch)
+gro39 <- unlist(gro39)
+genome(gro39) <- "mm39"
+gro39
 ```
 
 # SessionInfo()

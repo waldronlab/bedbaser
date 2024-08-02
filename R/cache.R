@@ -3,18 +3,19 @@
 #' Uses BEDBASER_CACHE for cache path if set; otherwise, it uses the default R
 #' cache path for bedbaser.
 #'
-#' @param quietly logical() display message
+#' @param quietly logical() (default TRUE) display message
 #'
 #' @importFrom BiocFileCache BiocFileCache bfccache
 #' @importFrom tools R_user_dir
 #'
-#' @return BiocFileCache object
+#' @returns BiocFileCache object
 #'
 #' @examples
 #' Sys.setenv("BEDBASER_CACHE"=".cache/bedbaser")
-#' bfc <- .get_cache()
+#' .get_cache()
+#'
 #' @noRd
-.get_cache <- function(quietly = FALSE) {
+.get_cache <- function(quietly = TRUE) {
     bfc <- ifelse(Sys.getenv("BEDBASER_CACHE") != "",
                   Sys.getenv("BEDBASER_CACHE"),
                   R_user_dir("bedbaser", which="cache"))
@@ -29,18 +30,21 @@
 #' This function is described in the BiocFileCache vignette.
 #'
 #' @param url character() remote resource
-#' @param quietly logical() display message
+#' @param quietly logical() (default TRUE) display message
 #'
 #' @importFrom BiocFileCache BiocFileCache bfcadd bfcdownload bfcneedsupdate
 #'     bfcquery bfcrpath
 #' @importFrom rlang inform
 #'
-#' @return filepath character()
+#' @returns filepath character()
 #'
 #' @examples
-#' url <- "https://data2.bedbase.org/bed_files/hg38_UCSC_telomere.bed.gz"
-#' filepath <- .download_and_cache(url)
-.download_and_cache <- function(url, quietly = FALSE) {
+#' url <- paste0("https://data2.bedbase.org/files/2/6/",
+#'               "26a57da7c732a8e63a1dda7ea18af021.bed.gz")
+#' .download_and_cache(url)
+#'
+#' @noRd
+.download_and_cache <- function(url, quietly = TRUE) {
     bfc <- .get_cache()
     rid <- bfcquery(bfc, url)$rid
     if (!length(rid)) {

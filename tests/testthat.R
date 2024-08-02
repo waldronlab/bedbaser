@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(BEDbaseR)
+library(bedbaser)
 
-test_check("BEDbaseR")
+test_check("bedbaser")

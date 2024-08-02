@@ -5,13 +5,15 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom tidyr unnest_wider
 #'
-#' @return tibble() file metadata
+#' @returns tibble() file metadata
 #'
 #' @examples
-#' client <- BEDbase()
-#' ex_bed <- bb_example(client, "bed")
-#' ex_metadata <-bb_metadata(client, ex_bed$id, "bed", TRUE)
+#' api <- bedbaser()
+#' ex_bed <- bb_example(api, "bed")
+#' ex_metadata <-bb_metadata(api, ex_bed$id, TRUE)
 #' .format_metadata_files(ex_bed$files)
+#' 
+#' @noRd
 .format_metadata_files <- function(metadata) {
     bind_rows(metadata) |>
         unnest_wider(access_methods) |>
@@ -23,20 +25,22 @@
 #' @param metadata list() full metadata
 #' @param file_type character() bed or bigbed
 #' @param access_type character() s3 or http
-#' @param quietly logical() (defaults to FALSE) display messages
+#' @param quietly logical() (default TRUE) display messages
 #'
 #' @importFrom R.utils gunzip
 #' @importFrom dplyr filter
 #'
-#' @return character() file path
+#' @returns character() file path
 #'
 #' @examples
-#' client <- BEDbase()
-#' ex_bed <- bb_example(client, "bed")
-#' md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
+#' api <- bedbaser()
+#' ex_bed <- bb_example(api, "bed")
+#' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' .get_file(md, "bed", "http")
+#' 
+#' @noRd
 .get_file <- function(metadata, file_type = c("bed", "bigbed"),
-                      access_type = c("s3", "http"), quietly = FALSE) {
+                      access_type = c("s3", "http"), quietly = TRUE) {
     file_details <- .format_metadata_files(metadata$files) |>
                      filter(name == paste(file_type, "file", sep = "_"),
                             access_id == access_type)
@@ -54,18 +58,21 @@
 #' @param x double() the x in BEDX+Y
 #' @param y double() the y in BEDX+Y
 #'
+#' @importFrom stats setNames
 #' @importFrom utils read.table
 #'
-#' @return vector representing extraCols for rtracklayer
+#' @returns vector representing extraCols for rtracklayer
 #'
 #' @examples
 #' id <- "608827efc82fcaa4b0bfc65f590ffef8"
-#' md <- bb_metadata(client, id, "bed", TRUE)
+#' md <- bb_metadata(api, id, TRUE)
 #' file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
 #'                             "bed")
 #' .get_extra_cols(file_path, 3, 9)
+#' 
+#' @noRd
 .get_extra_cols <- function(file_path, x, y) {
-    t <- read.table(file_path)
+    t <- read.table(file_path, sep = "\t")
     extra_cols <- c()
     stopifnot(x + y == dim(t)[2])
     t_seq <- seq(from = x+1, to = x+y)
@@ -94,22 +101,24 @@
 #' @param metadata list() full metadata
 #' @param extra_cols character() (defaults to NULL) extra column names to
 #'        construct GRanges objects
-#' @param quietly boolean() (default FALSE) Display information messages
+#' @param quietly boolean() (default TRUE) Display information messages
 #'
 #' @importFrom rlang abort inform
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_replace str_split_1
 #'
-#' @return GRanges() object representing BED
+#' @returns GRanges() object representing BED
 #'
 #' @examples
-#' client <- BEDbase()
-#' ex_bed <- bb_example(client, "bed")
-#' md <- bb_metadata(client, ex_bed$id, "bed", TRUE)
+#' api <- bedbaser()
+#' ex_bed <- bb_example(api, "bed")
+#' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' file_path <- .get_file(md, "bed", "http")
 #' .bed_file_to_granges(file_path, md)
+#' 
+#' @noRd
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
-                                 quietly = FALSE) {
+                                 quietly = TRUE) {
     bed_format <- metadata$bed_format
     nums <- str_replace(metadata$bed_type, "bed", "") |>
             str_split_1("\\+") |>
@@ -138,36 +147,32 @@
         extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
     }
 
-    if (!quietly && bed_format != "bed") {
+    if (!quietly) {
         inform(paste("Detected", bed_format, "BED file."))
-        if (bed_format == "nonstandard") {
-            inform(paste("Detecting column and types. Assigning column names.",
-                         "Use `extra_cols` to set name and column type."))
-        }
+        if (bed_format == "nonstandard")
+            inform("Assigning column names and types. Use `extra_cols` to set manually.")
     }
 
     genome <- ifelse(!is.null(metadata$genome_alias), metadata$genome_alias, NA)
     
     tryCatch({
-            if (!quietly) {
-                inform(paste0("Attempting to pass `genome = ",
-                              genome, "` when importing."))
-                }
-            if (bed_format %in% c("broadPeak", "narrowPeak")) {
+            if (!quietly)
+                inform(paste0("Attempting to pass `genome = ", genome, "`."))
+
+            if (bed_format %in% c("broadPeak", "narrowPeak"))
                 import(file_path, format = bed_format, genome = genome)
-            } else {
+            else {
                 import(file_path, format = "bed", extraCols = extra_cols,
                        genome =  genome)
             }
         }, error = function(e) {
-            if (!quietly) {
+            if (!quietly)
                 inform("Importing without passing `genome`.")
-            }
-            if (bed_format %in% c("broadPeak", "narrowPeak")) {
+
+            if (bed_format %in% c("broadPeak", "narrowPeak"))
                 import(file_path, format = bed_format)
-            } else {
+            else
                 import(file_path, format = "bed", extraCols = extra_cols)
-            }
-          
+
         })
 }
