@@ -11,7 +11,7 @@ BEDbase object
 }
 \description{
 bedbaser exposes the BEDbase API and includes convenience
-functions for common tasks, including importing a BED id into \code{GRanges}
+functions for common tasks, including importing a BED id into a \code{GRanges}
 object and a BEDset id into a \code{GRangesList}.
 }
 \details{

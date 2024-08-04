@@ -52,7 +52,7 @@
         })
 }
 
-#' Return a named vector with type
+#' Get extra_cols
 #'
 #' @param file_path character() path to BED
 #' @param x double() the x in BEDX+Y
@@ -92,15 +92,12 @@
 #' and type. For example, `extra_cols = c(signalValue = "numeric",
 #' pValue = "numeric", qValue = "numeric")`.
 #'
-#' It will also attempt to supply the `genome` if `genome_alias` exists in the
-#' metadata.
-#'
 #' Aborts if the length of `extra_cols` is not equal to Y in BEDX+Y.
 #'
 #' @param file_path character() path to BED file
 #' @param metadata list() full metadata
-#' @param extra_cols character() (defaults to NULL) extra column names to
-#'        construct GRanges objects
+#' @param extra_cols character() (default NULL) extra column names to construct
+#'     GRanges objects
 #' @param quietly boolean() (default TRUE) Display information messages
 #'
 #' @importFrom rlang abort inform
@@ -119,60 +116,30 @@
 #' @noRd
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
                                  quietly = TRUE) {
-    bed_format <- metadata$bed_format
+    bed_format <- gsub("peak", "Peak", metadata$bed_format)
     nums <- str_replace(metadata$bed_type, "bed", "") |>
             str_split_1("\\+") |>
             as.double()
 
-    if (is.null(extra_cols)) {
-        extra_cols <- c()
-    } else if ((length(extra_cols) > 0) && (nums[2] != length(extra_cols))) {
-        abort(paste("The length of `extra_cols` must match the Y value in the",
-                    "`bed_type`."))
-    }
+     if (!is.null(extra_cols) && (nums[2] != length(extra_cols)))
+        abort("`extra_cols` length must match the Y value in `bed_type`.")
+    
 
-    if (metadata$bed_type == "bed12+3") {
-        bed_format <- "gappedPeak"
-        extra_cols <- c(signalValue = "numeric", pValue = "numeric",
-                        qValue = "numeric")
-    } else if ((bed_format == "broadpeak" && metadata$bed_type == "bed6+3") ||
-               (bed_format == "narrowpeak" && metadata$bed_type == "bed6+4")) {
-        bed_format <- gsub("peak", "Peak", bed_format)
-    } else if (bed_format != "broadpeak" && metadata$bed_type == "bed6+3") {
-        bed_format <- "RNA elements"
-        extra_cols <- c(level = "character", signif = "character",
-                        score2 = "numeric")
-    } else if (nums[2] != length(extra_cols)) {
-        bed_format <- "nonstandard"
+    if (is.null(extra_cols) && !(grepl("Peak", bed_format)) && nums[2] != 0)
         extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
-    }
 
     if (!quietly) {
         inform(paste("Detected", bed_format, "BED file."))
         if (bed_format == "nonstandard")
-            inform("Assigning column names and types. Use `extra_cols` to set manually.")
+            inform("Assigning column names and types.")
     }
 
     genome <- ifelse(!is.null(metadata$genome_alias), metadata$genome_alias, NA)
-    
-    tryCatch({
-            if (!quietly)
-                inform(paste0("Attempting to pass `genome = ", genome, "`."))
 
-            if (bed_format %in% c("broadPeak", "narrowPeak"))
-                import(file_path, format = bed_format, genome = genome)
-            else {
-                import(file_path, format = "bed", extraCols = extra_cols,
-                       genome =  genome)
-            }
-        }, error = function(e) {
-            if (!quietly)
-                inform("Importing without passing `genome`.")
-
-            if (bed_format %in% c("broadPeak", "narrowPeak"))
-                import(file_path, format = bed_format)
-            else
-                import(file_path, format = "bed", extraCols = extra_cols)
-
-        })
+    if (grepl("Peak", bed_format) || nums[2] == 0)
+        import(file_path, format = bed_format, genome = genome)
+    else {
+        import(file_path, format = "bed", extraCols = extra_cols, 
+               genome = genome)
+    }
 }
