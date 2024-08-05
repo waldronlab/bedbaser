@@ -123,7 +123,6 @@
 
      if (!is.null(extra_cols) && (nums[2] != length(extra_cols)))
         abort("`extra_cols` length must match the Y value in `bed_type`.")
-    
 
     if (is.null(extra_cols) && !(grepl("Peak", bed_format)) && nums[2] != 0)
         extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
@@ -134,12 +133,10 @@
             inform("Assigning column names and types.")
     }
 
-    genome <- ifelse(!is.null(metadata$genome_alias), metadata$genome_alias, NA)
-
     if (grepl("Peak", bed_format) || nums[2] == 0)
-        import(file_path, format = bed_format, genome = genome)
+        import(file_path, format = bed_format, genome = metadata$genome_alias)
     else {
         import(file_path, format = "bed", extraCols = extra_cols, 
-               genome = genome)
+               genome = metadata$genome_alias)
     }
 }
