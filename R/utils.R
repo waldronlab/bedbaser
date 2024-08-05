@@ -10,9 +10,9 @@
 #' @examples
 #' api <- bedbaser()
 #' ex_bed <- bb_example(api, "bed")
-#' ex_metadata <-bb_metadata(api, ex_bed$id, TRUE)
+#' ex_metadata <- bb_metadata(api, ex_bed$id, TRUE)
 #' .format_metadata_files(ex_bed$files)
-#' 
+#'
 #' @noRd
 .format_metadata_files <- function(metadata) {
     bind_rows(metadata) |>
@@ -37,19 +37,22 @@
 #' ex_bed <- bb_example(api, "bed")
 #' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' .get_file(md, "bed", "http")
-#' 
+#'
 #' @noRd
 .get_file <- function(metadata, file_type = c("bed", "bigbed"),
-                      access_type = c("s3", "http"), quietly = TRUE) {
+    access_type = c("s3", "http"), quietly = TRUE) {
     file_details <- .format_metadata_files(metadata$files) |>
-                     filter(name == paste(file_type, "file", sep = "_"),
-                            access_id == access_type)
+        filter(
+            name == paste(file_type, "file", sep = "_"),
+            access_id == access_type
+        )
     gzipfile <- .download_and_cache(file_details$url, quietly)
     tryCatch(
         gunzip(gzipfile, remove = FALSE),
         error = function(e) {
             gsub(".gz", "", gzipfile)
-        })
+        }
+    )
 }
 
 #' Get extra_cols
@@ -66,21 +69,24 @@
 #' @examples
 #' id <- "608827efc82fcaa4b0bfc65f590ffef8"
 #' md <- bb_metadata(api, id, TRUE)
-#' file_path <- .get_file_path(md$files$bed_file$access_methods[[1]]$access_url$url,
-#'                             "bed")
+#' file_path <- .get_file_path(
+#'     md$files$bed_file$access_methods[[1]]$access_url$url,
+#'     "bed"
+#' )
 #' .get_extra_cols(file_path, 3, 9)
-#' 
+#'
 #' @noRd
 .get_extra_cols <- function(file_path, x, y) {
     t <- read.table(file_path, sep = "\t")
     extra_cols <- c()
     stopifnot(x + y == dim(t)[2])
-    t_seq <- seq(from = x+1, to = x+y)
+    t_seq <- seq(from = x + 1, to = x + y)
     for (i in t[t_seq]) {
-        if (typeof(i) == "integer")
+        if (typeof(i) == "integer") {
             col_type <- "numeric"
-        else
+        } else {
             col_type <- typeof(i)
+        }
         extra_cols <- c(extra_cols, col_type)
     }
     setNames(extra_cols, names(t[t_seq]))
@@ -112,31 +118,36 @@
 #' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' file_path <- .get_file(md, "bed", "http")
 #' .bed_file_to_granges(file_path, md)
-#' 
+#'
 #' @noRd
 .bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
-                                 quietly = TRUE) {
+    quietly = TRUE) {
     bed_format <- gsub("peak", "Peak", metadata$bed_format)
     nums <- str_replace(metadata$bed_type, "bed", "") |>
-            str_split_1("\\+") |>
-            as.double()
+        str_split_1("\\+") |>
+        as.double()
 
-     if (!is.null(extra_cols) && (nums[2] != length(extra_cols)))
+    if (!is.null(extra_cols) && (nums[2] != length(extra_cols))) {
         abort("`extra_cols` length must match the Y value in `bed_type`.")
+    }
 
-    if (is.null(extra_cols) && !(grepl("Peak", bed_format)) && nums[2] != 0)
+    if (is.null(extra_cols) && !(grepl("Peak", bed_format)) && nums[2] != 0) {
         extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
+    }
 
     if (!quietly) {
         inform(paste("Detected", bed_format, "BED file."))
-        if (bed_format == "nonstandard")
+        if (bed_format == "nonstandard") {
             inform("Assigning column names and types.")
+        }
     }
 
-    if (grepl("Peak", bed_format) || nums[2] == 0)
+    if (grepl("Peak", bed_format) || nums[2] == 0) {
         import(file_path, format = bed_format, genome = metadata$genome_alias)
-    else {
-        import(file_path, format = "bed", extraCols = extra_cols, 
-               genome = metadata$genome_alias)
+    } else {
+        import(file_path,
+            format = "bed", extraCols = extra_cols,
+            genome = metadata$genome_alias
+        )
     }
 }

@@ -6,21 +6,23 @@
 #' @param quietly logical() (default TRUE) display message
 #'
 #' @importFrom BiocFileCache BiocFileCache bfccache
+#' @importFrom rlang inform
 #' @importFrom tools R_user_dir
 #'
 #' @returns BiocFileCache object
 #'
 #' @examples
-#' Sys.setenv("BEDBASER_CACHE"=".cache/bedbaser")
+#' Sys.setenv("BEDBASER_CACHE" = ".cache/bedbaser")
 #' .get_cache()
 #'
 #' @noRd
 .get_cache <- function(quietly = TRUE) {
     bfc <- ifelse(Sys.getenv("BEDBASER_CACHE") != "",
-                  Sys.getenv("BEDBASER_CACHE"),
-                  R_user_dir("bedbaser", which="cache"))
+        Sys.getenv("BEDBASER_CACHE"),
+        R_user_dir("bedbaser", which = "cache")
+    )
     if (!quietly) {
-        print(paste("Using", bfccache()))
+        inform(paste("Using", bfccache()))
     }
     BiocFileCache(bfc)
 }
@@ -39,8 +41,10 @@
 #' @returns filepath character()
 #'
 #' @examples
-#' url <- paste0("https://data2.bedbase.org/files/2/6/",
-#'               "26a57da7c732a8e63a1dda7ea18af021.bed.gz")
+#' url <- paste0(
+#'     "https://data2.bedbase.org/files/2/6/",
+#'     "26a57da7c732a8e63a1dda7ea18af021.bed.gz"
+#' )
 #' .download_and_cache(url)
 #'
 #' @noRd
@@ -48,11 +52,13 @@
     bfc <- .get_cache()
     rid <- bfcquery(bfc, url)$rid
     if (!length(rid)) {
-        if (!quietly)
+        if (!quietly) {
             inform(paste("Downloading", url, "..."))
+        }
         rid <- names(bfcadd(bfc, url))
     }
-    if (!isFALSE(bfcneedsupdate(bfc, rid)))
-    bfcdownload(bfc, rid, ask = FALSE)
+    if (!isFALSE(bfcneedsupdate(bfc, rid))) {
+        bfcdownload(bfc, rid, ask = FALSE)
+    }
     bfcrpath(bfc, rids = rid)
 }

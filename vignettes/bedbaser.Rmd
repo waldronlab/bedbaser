@@ -31,9 +31,10 @@ functions, such for creating GRanges and GRangesList objects.
 Install bedbaser using `r CRANpkg("BiocManager")`.
 
 ```{r install, eval=FALSE}
-if (!"BiocManager" %in% rownames(installed.packages()))
+if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
-BiocManager::install("bedbaser", dependencies=TRUE)
+}
+BiocManager::install("bedbaser", dependencies = TRUE)
 ```
 
 # Create a bedbaser api
@@ -162,9 +163,10 @@ Use `liftOver` to convert one genomic coordinate system to another.
 Download the chain file from [UCSC](https://hgdownload.cse.ucsc.edu/downloads.html#liftover).
 
 ```{r liftOver, eval=FALSE}
-if (!"BiocManager" %in% rownames(installed.packages()))
+if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
-BiocManager::install("liftOver", dependencies=TRUE)
+}
+BiocManager::install("liftOver", dependencies = TRUE)
 ```
 
 ```{r convertCoordinates, message=FALSE}

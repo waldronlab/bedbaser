@@ -20,7 +20,7 @@ test_that("bb_metadata returns metadata for BEDs", {
 
 test_that("bb_metadata returns metadata for BEDsets", {
     api <- bedbaser()
-    ex_bedset <-bb_example(api, "bedset")
+    ex_bedset <- bb_example(api, "bedset")
     ex_bedset_metadata <- content(api$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(ex_bedset$id, TRUE))
     bedset_metadata <- bb_metadata(api, ex_bedset$id, TRUE)
     expect_identical(ex_bedset_metadata, bedset_metadata)
@@ -33,9 +33,10 @@ test_that("bb_metadata errors on invalid input", {
 
 test_that("bb_list_beds returns same number of results for the hg19 genome", {
     api <- bedbaser()
-    hg19_beds_raw <-content(api$list_beds_v1_bed_list_get(genome = "hg19"))
-    hg19_bed_names <- unlist(lapply(hg19_beds_raw$results, `[`, c('name')),
-                             use.names = FALSE)
+    hg19_beds_raw <- content(api$list_beds_v1_bed_list_get(genome = "hg19"))
+    hg19_bed_names <- unlist(lapply(hg19_beds_raw$results, `[`, c("name")),
+        use.names = FALSE
+    )
     hg19_beds <- bb_list_beds(api, genome = "hg19")
     expect_equal(hg19_bed_names, hg19_beds$name)
     expect_true(all(hg19_beds$genome_alias == "hg19"))
@@ -44,9 +45,9 @@ test_that("bb_list_beds returns same number of results for the hg19 genome", {
 test_that("bb_list_bedsets returns same number for query hg19", {
     api <- bedbaser()
     bedsets_raw <- content(api$list_bedsets_v1_bedset_list_get(query = "hg19"))
-    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c('id', 'bed_ids'))
+    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
     bedsets_names_bed_ids <- bind_rows(bedsets_names_bed_ids_list) |>
-                             unnest(cols = c(bed_ids))
+        unnest(cols = c(bed_ids))
     bedsets <- bb_list_bedsets(api, query = "hg19")
     expect_equal(bedsets_names_bed_ids$bed_ids, bedsets$bed_ids)
 })
@@ -54,9 +55,9 @@ test_that("bb_list_bedsets returns same number for query hg19", {
 test_that("bb_list_bedsets returns number of bed ids", {
     api <- bedbaser()
     bedsets_raw <- content(api$list_bedsets_v1_bedset_list_get(limit = 1))
-    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c('id', 'bed_ids'))
+    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
     bedsets_names_bed_ids <- bind_rows(bedsets_names_bed_ids_list) |>
-                             unnest(cols = c(bed_ids))
+        unnest(cols = c(bed_ids))
     bedsets <- bb_list_bedsets(api, limit = 1)
     expect_equal(bedsets$bed_ids, bedsets_names_bed_ids$bed_ids)
 })
@@ -65,7 +66,7 @@ test_that("bb_beds_in_bedset returns expected bed_ids", {
     api <- bedbaser()
     ex_bedset <- content(api$get_example_bedset_record_v1_bedset_example_get())
     ex_bedset_raw <- content(api$get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get(ex_bedset$id))
-    ex_bed_ids_list <- lapply(ex_bedset_raw$results, `[`, c('id'))
+    ex_bed_ids_list <- lapply(ex_bedset_raw$results, `[`, c("id"))
     ex_bed_ids <- unlist(ex_bed_ids_list, use.names = FALSE)
     bed_ids <- bb_beds_in_bedset(api, ex_bedset$id)$id
     expect_equal(ex_bed_ids, bed_ids)
@@ -77,7 +78,8 @@ test_that("bb_bed_text_search returns results scored against the query", {
     ex_beds <- content(api$text_to_bed_search_v1_bed_search_text_post(
         query = "hg38",
         limit = 10,
-        offset = 0))
+        offset = 0
+    ))
     ex_beds <- map_depth(.x = ex_beds$results, 1, \(y) unlist(y)) |>
         bind_rows()
     expect_equal(ex_beds, beds)
@@ -108,9 +110,13 @@ test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", 
     gro <- bb_to_granges(api, id)
     expect_equal("GRanges", class(gro)[1])
     df <- as.data.frame(gro)
-    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
-                      "score", "signalValue", "pValue", "qValue", "peak"),
-                    names(df))
+    expect_contains(
+        c(
+            "seqnames", "start", "end", "width", "strand", "name",
+            "score", "signalValue", "pValue", "qValue", "peak"
+        ),
+        names(df)
+    )
 })
 
 test_that("bb_to_granges returns a GRanges object given bed3+9 file using genome", {
@@ -120,9 +126,13 @@ test_that("bb_to_granges returns a GRanges object given bed3+9 file using genome
     expect_equal("bed3+9", md$bed_type)
     gro <- bb_to_granges(api, id)
     df <- as.data.frame(gro)
-    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
-                      "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12"),
-                    names(df))
+    expect_contains(
+        c(
+            "seqnames", "start", "end", "width", "strand", "name",
+            "V4", "V5", "V6", "V7", "V8", "V9", "V10", "V11", "V12"
+        ),
+        names(df)
+    )
 })
 
 test_that("bb_to_granges allows passing extra_cols", {
@@ -131,10 +141,13 @@ test_that("bb_to_granges allows passing extra_cols", {
     md <- bb_metadata(api, ex_bed$id, TRUE)
     expect_equal("bed4+1", md$bed_type)
     gro <- bb_to_granges(api, ex_bed$id,
-                         extra_cols = c("testing" = "character"))
+        extra_cols = c("testing" = "character")
+    )
     df <- as.data.frame(gro)
-    expect_contains(c("seqnames", "start", "end", "width", "strand", "name",
-                      "testing"), names(df))
+    expect_contains(c(
+        "seqnames", "start", "end", "width", "strand", "name",
+        "testing"
+    ), names(df))
 })
 
 test_that("bb_to_grangeslist creates a GRangesList", {
