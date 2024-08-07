@@ -3,7 +3,7 @@ Title: A BEDbase client
 Version: 0.99.0
 Authors@R: c(
     person(
-        given = "Jennifer",
+        given = "Jen",
         family = "Wokaty",
         role = c("aut", "cre"),
         email = "jennifer.wokaty@sph.cuny.edu",
