@@ -28,7 +28,7 @@ construct GRanges objects}
 GRanges() object
 }
 \description{
-Create a GRanges object given a BED id
+Generates the column and types for broad and narrow peak files.
 }
 \examples{
 api <- bedbaser()

@@ -160,7 +160,8 @@ bb_to_grangeslist(api, bedset_id)
 # Change genomic coordinate system with liftOver
 
 Use `liftOver` to convert one genomic coordinate system to another.
-Download the chain file from [UCSC](https://hgdownload.cse.ucsc.edu/downloads.html#liftover).
+Download the chain file from
+[UCSC](https://hgdownload.cse.ucsc.edu/downloads.html#liftover).
 
 ```{r liftOver, eval=FALSE}
 if (!"BiocManager" %in% rownames(installed.packages())) {
@@ -175,7 +176,8 @@ md <- bb_metadata(api, id, TRUE)
 gro <- bb_to_granges(api, id)
 gro
 
-chain_url <- "https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/mm10ToMm39.over.chain.gz"
+chain_url <- paste0("https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/",
+                    "mm10ToMm39.over.chain.gz")
 tmpdir <- tempdir()
 gz <- file.path(tmpdir, "mm10ToMm39.over.chain.gz")
 download.file(chain_url, gz)

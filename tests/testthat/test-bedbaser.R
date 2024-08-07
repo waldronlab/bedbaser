@@ -98,8 +98,12 @@ test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
 test_that("bb_to_granges returns a GRanges object given a bigBed file", {
     api <- bedbaser()
     ex_bed <- bb_example(api, "bed")
-    gro <- bb_to_granges(api, ex_bed$id, "bigbed")
-    expect_equal("GRanges", class(gro)[1])
+    if (.Platform$OS.type != "windows") {
+        gro <- bb_to_granges(api, ex_bed$id, "bigbed")
+        expect_equal("GRanges", class(gro)[1])
+    } else {
+        expect_message("This feature does not work on Windows.")
+    }
 })
 
 test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", {
@@ -119,7 +123,7 @@ test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", 
     )
 })
 
-test_that("bb_to_granges returns a GRanges object given bed3+9 file using genome", {
+test_that("bb_to_granges returns GRanges object given bed3+9 with genome", {
     api <- bedbaser()
     id <- "608827efc82fcaa4b0bfc65f590ffef8"
     md <- bb_metadata(api, id, TRUE)

@@ -131,23 +131,19 @@
         abort("`extra_cols` length must match the Y value in `bed_type`.")
     }
 
-    if (is.null(extra_cols) && !(grepl("Peak", bed_format)) && nums[2] != 0) {
-        extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
-    }
-
-    if (!quietly) {
-        inform(paste("Detected", bed_format, "BED file."))
-        if (bed_format == "nonstandard") {
-            inform("Assigning column names and types.")
+    if (!grepl("Peak", bed_format) && nums[2] != 0) {
+        if (is.null(extra_cols)) {
+            if (!quietly) {
+                inform("Assigning column names and types.")
+            }
+            extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
         }
-    }
-
-    if (grepl("Peak", bed_format) || nums[2] == 0) {
-        import(file_path, format = bed_format, genome = metadata$genome_alias)
-    } else {
         import(file_path,
-            format = "bed", extraCols = extra_cols,
-            genome = metadata$genome_alias
+               format = "bed",
+               extraCols = extra_cols,
+               genome = metadata$genome_alias
         )
+    } else {
+        import(file_path, format = bed_format, genome = metadata$genome_alias)
     }
 }

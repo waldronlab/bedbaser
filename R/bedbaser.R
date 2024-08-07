@@ -262,6 +262,8 @@ bb_bed_text_search <- function(api, query, limit = 10, offset = 0) {
 
 #' Create a GRanges object given a BED id
 #'
+#' Generates the column and types for broad and narrow peak files.
+#'
 #' @rdname bb_to_granges
 #'
 #' @param api API object of BEDbase created from bedbaser()
