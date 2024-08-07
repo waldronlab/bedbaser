@@ -102,7 +102,8 @@ test_that("bb_to_granges returns a GRanges object given a bigBed file", {
         gro <- bb_to_granges(api, ex_bed$id, "bigbed")
         expect_equal("GRanges", class(gro)[1])
     } else {
-        expect_message("This feature does not work on Windows.")
+        expect_warning(rlang::warn("This feature does not work on Windows."),
+                       bb_to_granges(api, ex_bed$id, "bigbed"))
     }
 })
 
