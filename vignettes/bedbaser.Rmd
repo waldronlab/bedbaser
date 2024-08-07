@@ -39,8 +39,7 @@ BiocManager::install("bedbaser", dependencies = TRUE)
 
 # Create a bedbaser api
 
-bedbaser uses the `r Biocpkg("AnVIL")` Service class to create a `BEDbase`
-api, which allows access to the API directly.
+bedbaser uses the `r Biocpkg("AnVIL")` Service class to expose the BEDbase API.
 
 ```{r bedbase}
 api <- bedbaser()
