@@ -16,7 +16,7 @@ Useful links:
 
 }
 \author{
-\strong{Maintainer}: Jennifer Wokaty \email{jennifer.wokaty@sph.cuny.edu} (\href{https://orcid.org/0009-0008-0900-8793}{ORCID})
+\strong{Maintainer}: Jen Wokaty \email{jennifer.wokaty@sph.cuny.edu} (\href{https://orcid.org/0009-0008-0900-8793}{ORCID})
 
 Authors:
 \itemize{
