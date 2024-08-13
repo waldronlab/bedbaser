@@ -1,0 +1,1622 @@
+swagger: '2.0'
+info:
+  description: BED file/sets statistics and image server API
+  title: bedhost
+  version: 0.5.0
+paths:
+  /:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema: {}
+      operationId: lending_page__get
+      summary: Lending Page
+  /v1:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema: {}
+      tags:
+        - home
+      description: Display the index UI page
+      operationId: index_v1_get
+      summary: API intro page
+  /v1/bed/example:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedMetadata'
+      tags:
+        - bed
+      description: Get metadata for an example BED record.
+      operationId: get_example_bed_record_v1_bed_example_get
+      summary: Get example BED record metadata
+  /v1/bed/list:
+    get:
+      produces:
+        - application/json
+      parameters:
+        - default: 1000
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - default: 0
+          in: query
+          name: offset
+          required: false
+          type: integer
+        - description: filter by genome of the bed file. e.g. 'hg38'
+          in: query
+          name: genome
+          required: false
+          type: string
+        - description: filter by bed type. e.g. 'bed6+4'
+          in: query
+          name: bed_type
+          required: false
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedListResult'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: Returns list of BED files in the database with optional filters.
+      operationId: list_beds_v1_bed_list_get
+      summary: Paged list of all BED records
+  /v1/bed/search/bed:
+    post:
+      consumes:
+        - multipart/form-data
+      produces:
+        - application/json
+      parameters:
+        - default: 10
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - default: 0
+          in: query
+          name: offset
+          required: false
+          type: integer
+        - in: formData
+          name: body
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedListSearchResult'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+        - search
+      operationId: bed_to_bed_search_v1_bed_search_bed_post
+      summary: Search for similar bed files
+  /v1/bed/search/text:
+    post:
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: query
+          required: true
+        - default: 10
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - default: 0
+          in: query
+          name: offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedListSearchResult'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+        - search
+      description: |-
+        Search for a BedFile by a text query.
+        Example: query="cancer"
+      operationId: text_to_bed_search_v1_bed_search_text_post
+      summary: Search for a BedFile
+  '/v1/bed/{bed_id}/embedding':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedEmbeddingResult'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: Returns embeddings for a single BED record.
+      operationId: get_bed_embedding_v1_bed__bed_id__embedding_get
+      summary: Get embeddings for a single BED record
+  '/v1/bed/{bed_id}/metadata':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+        - default: false
+          description: 'Return full record with stats, plots, files and metadata'
+          in: query
+          name: full
+          required: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedMetadata'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: |-
+        Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_metadata_v1_bed__bed_id__metadata_get
+      summary: Get metadata for a single BED record
+  '/v1/bed/{bed_id}/metadata/classification':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedClassification'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: |-
+        Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_classification_v1_bed__bed_id__metadata_classification_get
+      summary: Get classification of single BED file
+  '/v1/bed/{bed_id}/metadata/files':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedFiles'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: |-
+        Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_files_v1_bed__bed_id__metadata_files_get
+      summary: Get metadata for a single BED record
+  '/v1/bed/{bed_id}/metadata/plots':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedPlots'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: |-
+        Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_plots_v1_bed__bed_id__metadata_plots_get
+      summary: Get plots for a single BED record
+  '/v1/bed/{bed_id}/metadata/raw':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedPEPHubRestrict'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: >-
+        Returns raw metadata for a single BED record. This metadata is stored in
+        PEPHub. And is not verified.Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_pephub_v1_bed__bed_id__metadata_raw_get
+      summary: Get raw metadata for a single BED record
+  '/v1/bed/{bed_id}/metadata/stats':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedStatsModel'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: |-
+        Example
+         bed_id: bbad85f21962bb8d972444f7f9a3a932
+      operationId: get_bed_stats_v1_bed__bed_id__metadata_stats_get
+      summary: Get stats for a single BED record
+  '/v1/bed/{bed_id}/regions/{chr_num}':
+    get:
+      produces:
+        - text/plain
+        - application/json
+      parameters:
+        - description: BED digest
+          in: path
+          maxLength: 32
+          minLength: 32
+          name: bed_id
+          pattern: ^\w+$
+          required: true
+          type: string
+        - description: Chromosome number
+          in: path
+          name: chr_num
+          pattern: ^\S+$
+          required: true
+          type: string
+          x-example: chr1
+        - description: 'query range: start coordinate'
+          in: query
+          name: start
+          required: false
+        - description: 'query range: start coordinate'
+          in: query
+          name: end
+          required: false
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            type: string
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: >-
+        Returns the queried regions with provided ID and optional query
+        parameters
+      operationId: get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get
+      summary: Get regions from a BED file that overlap a query region.
+  '/v1/bed/{bed_id}/tokens/{universe_id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bed_id
+          required: true
+          type: string
+        - in: path
+          name: universe_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/TokenizedBedResponse'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: >-
+        Return univers of bed file
+
+        Example: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe:
+        58dee1672b7e581c8e1312bd4ca6b3c7
+      operationId: get_tokens_v1_bed__bed_id__tokens__universe_id__get
+      summary: Get tokenized of bed file
+  '/v1/bed/{bed_id}/tokens/{universe_id}/info':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bed_id
+          required: true
+          type: string
+        - in: path
+          name: universe_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/TokenizedPathResponse'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bed
+      description: >-
+        Return link to tokenized bed file
+
+        Example: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe:
+        58dee1672b7e581c8e1312bd4ca6b3c7
+      operationId: get_tokens_v1_bed__bed_id__tokens__universe_id__info_get
+      summary: Get link to tokenized bed file
+  /v1/bedset/example:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetMetadata'
+      tags:
+        - bedset
+      operationId: get_example_bedset_record_v1_bedset_example_get
+      summary: Get metadata for an example BEDset record
+  /v1/bedset/list:
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: query
+          name: query
+          required: false
+          type: string
+        - default: 1000
+          in: query
+          name: limit
+          required: false
+          type: integer
+        - default: 0
+          in: query
+          name: offset
+          required: false
+          type: integer
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetListResult'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bedset
+        - search
+      description: >-
+        Returns a list of BEDset records in the database with optional filters
+        and search.
+      operationId: list_bedsets_v1_bedset_list_get
+      summary: Paged list of all BEDset records
+  '/v1/bedset/{bedset_id}/bedfiles':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bedset_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetBedFiles'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bedset
+      description: |-
+        Example
+         bed_id: gse218680
+      operationId: get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get
+      summary: Get Bedfiles In Bedset
+  '/v1/bedset/{bedset_id}/metadata':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bedset_id
+          required: true
+          type: string
+        - default: true
+          in: query
+          name: full
+          required: false
+          type: boolean
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetMetadata'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bedset
+      description: |-
+        Example
+         bed_id: gse218680
+      operationId: get_bedset_metadata_v1_bedset__bedset_id__metadata_get
+      summary: Get all metadata for a single BEDset record
+  '/v1/bedset/{bedset_id}/metadata/plots':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bedset_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetPlots'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bedset
+      description: |-
+        Example
+         bed_id: gse218680
+      operationId: get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get
+      summary: Get plots for single bedset record
+  '/v1/bedset/{bedset_id}/metadata/stats':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: bedset_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/BedSetStats'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - bedset
+      description: |-
+        Example
+         bed_id: gse218680
+      operationId: get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get
+      summary: Get stats for a single BEDSET record
+  /v1/docs/changelog:
+    get:
+      produces:
+        - text/html
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            type: string
+      tags:
+        - home
+      operationId: changelog_v1_docs_changelog_get
+      summary: Release notes
+  '/v1/objects/{object_id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: object_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/DRSModel'
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - objects
+      description: Returns metadata about a DrsObject.
+      operationId: get_drs_object_metadata_v1_objects__object_id__get
+      summary: Get DRS object metadata
+  '/v1/objects/{object_id}/access/{access_id}':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: object_id
+          required: true
+          type: string
+        - in: path
+          name: access_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            title: >-
+              Response Get Object Bytes Url V1 Objects  Object Id  Access 
+              Access Id  Get
+            type: string
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - objects
+      description: Returns a URL that can be used to fetch the bytes of a DrsObject.
+      operationId: get_object_bytes_url_v1_objects__object_id__access__access_id__get
+      summary: Get URL where you can retrieve files
+  '/v1/objects/{object_id}/access/{access_id}/bytes':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: object_id
+          required: true
+          type: string
+        - in: path
+          name: access_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            format: binary
+            title: >-
+              Response Get Object Bytes V1 Objects  Object Id  Access  Access
+              Id  Bytes Get
+            type: string
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - objects
+      description: Returns the bytes of a DrsObject.
+      operationId: get_object_bytes_v1_objects__object_id__access__access_id__bytes_get
+      summary: Download actual file
+  '/v1/objects/{object_id}/access/{access_id}/thumbnail':
+    get:
+      produces:
+        - application/json
+      parameters:
+        - in: path
+          name: object_id
+          required: true
+          type: string
+        - in: path
+          name: access_id
+          required: true
+          type: string
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            format: binary
+            title: >-
+              Response Get Object Thumbnail V1 Objects  Object Id  Access 
+              Access Id  Thumbnail Get
+            type: string
+        '422':
+          description: Validation Error
+          schema:
+            $ref: '#/definitions/HTTPValidationError'
+      tags:
+        - objects
+      description: Returns the bytes of a thumbnail of a DrsObject
+      operationId: >-
+        get_object_thumbnail_v1_objects__object_id__access__access_id__thumbnail_get
+      summary: Download thumbnail file
+  /v1/service-info:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/ServiceInfoResponse'
+      tags:
+        - base
+      description: 'Returns information about this service, such as versions, name, etc.'
+      operationId: service_info_v1_service_info_get
+      summary: GA4GH service info
+  /v1/stats:
+    get:
+      produces:
+        - application/json
+      parameters: []
+      responses:
+        '200':
+          description: Successful Response
+          schema:
+            $ref: '#/definitions/StatsReturn'
+      tags:
+        - base
+      description: Returns statistics
+      operationId: get_bedbase_db_stats_v1_stats_get
+      summary: Get summary statistics for the DRS object store
+definitions:
+  AccessMethod:
+    properties:
+      access_id:
+        title: Access Id
+      access_url: {}
+      region:
+        title: Region
+      type:
+        title: Type
+        type: string
+    required:
+      - type
+    title: AccessMethod
+    type: object
+  AccessURL:
+    properties:
+      headers:
+        title: Headers
+      url:
+        title: Url
+        type: string
+    required:
+      - url
+    title: AccessURL
+    type: object
+  BedClassification:
+    properties:
+      bed_format:
+        title: Bed Format
+        type: string
+      bed_type:
+        default: bed3
+        pattern: '^bed(?:[3-9]|1[0-5])(?:\+|$)[0-9]?+$'
+        title: Bed Type
+        type: string
+      genome_alias:
+        title: Genome Alias
+        type: string
+      genome_digest:
+        title: Genome Digest
+      name:
+        title: Name
+    title: BedClassification
+    type: object
+  BedEmbeddingResult:
+    properties:
+      embedding:
+        items:
+          type: number
+        title: Embedding
+        type: array
+      identifier:
+        title: Identifier
+        type: string
+      payload:
+        title: Payload
+        type: object
+    required:
+      - identifier
+      - payload
+      - embedding
+    title: BedEmbeddingResult
+    type: object
+  BedFiles:
+    properties:
+      bed_file: {}
+      bigbed_file: {}
+    title: BedFiles
+    type: object
+  BedListResult:
+    properties:
+      count:
+        title: Count
+        type: integer
+      limit:
+        title: Limit
+        type: integer
+      offset:
+        title: Offset
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/BedMetadataBasic'
+        title: Results
+        type: array
+    required:
+      - count
+      - limit
+      - offset
+      - results
+    title: BedListResult
+    type: object
+  BedListSearchResult:
+    properties:
+      count:
+        title: Count
+        type: integer
+      limit:
+        title: Limit
+        type: integer
+      offset:
+        title: Offset
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/QdrantSearchResult'
+        title: Results
+        type: array
+    required:
+      - count
+      - limit
+      - offset
+    title: BedListSearchResult
+    type: object
+  BedMetadata:
+    properties:
+      bed_format:
+        title: Bed Format
+        type: string
+      bed_type:
+        default: bed3
+        pattern: '^bed(?:[3-9]|1[0-5])(?:\+|$)[0-9]?+$'
+        title: Bed Type
+        type: string
+      bedsets:
+        title: Bedsets
+      description:
+        title: Description
+      files: {}
+      genome_alias:
+        title: Genome Alias
+        type: string
+      genome_digest:
+        title: Genome Digest
+      id:
+        title: Id
+        type: string
+      is_universe:
+        default: false
+        title: Is Universe
+      last_update_date:
+        title: Last Update Date
+      license_id:
+        default: 'DUO:0000042'
+        title: License Id
+      name:
+        default: ''
+        title: Name
+      plots: {}
+      raw_metadata:
+        title: Raw Metadata
+      stats: {}
+      submission_date:
+        format: date-time
+        title: Submission Date
+        type: string
+      universe_metadata: {}
+    required:
+      - id
+    title: BedMetadata
+    type: object
+  BedMetadataBasic:
+    properties:
+      bed_format:
+        title: Bed Format
+        type: string
+      bed_type:
+        default: bed3
+        pattern: '^bed(?:[3-9]|1[0-5])(?:\+|$)[0-9]?+$'
+        title: Bed Type
+        type: string
+      description:
+        title: Description
+      genome_alias:
+        title: Genome Alias
+        type: string
+      genome_digest:
+        title: Genome Digest
+      id:
+        title: Id
+        type: string
+      is_universe:
+        default: false
+        title: Is Universe
+      last_update_date:
+        title: Last Update Date
+      license_id:
+        default: 'DUO:0000042'
+        title: License Id
+      name:
+        default: ''
+        title: Name
+      submission_date:
+        format: date-time
+        title: Submission Date
+        type: string
+    required:
+      - id
+    title: BedMetadataBasic
+    type: object
+  BedPEPHub:
+    additionalProperties: true
+    properties:
+      antibody:
+        default: ''
+        description: Antibody used in the assay
+        title: Antibody
+        type: string
+      cell_line:
+        default: ''
+        title: Cell Line
+        type: string
+      cell_type:
+        default: ''
+        title: Cell Type
+        type: string
+      description:
+        default: ''
+        description: Description of the sample
+        title: Description
+        type: string
+      exp_protocol:
+        default: ''
+        description: Experimental protocol (e.g. ChIP-seq)
+        title: Exp Protocol
+        type: string
+      genome:
+        default: ''
+        title: Genome
+        type: string
+      genotype:
+        default: ''
+        description: Genotype of the sample
+        title: Genotype
+        type: string
+      global_experiment_id:
+        default: ''
+        description: Global experiment identifier
+        title: Global Experiment Id
+        type: string
+      global_sample_id:
+        default: ''
+        description: Global sample identifier
+        title: Global Sample Id
+        type: string
+      library_source:
+        default: ''
+        description: 'Library source (e.g. genomic, transcriptomic)'
+        title: Library Source
+        type: string
+      organism:
+        default: ''
+        title: Organism
+        type: string
+      sample_name:
+        title: Sample Name
+        type: string
+      species_id:
+        default: ''
+        title: Species Id
+        type: string
+      target:
+        default: ''
+        description: Target of the assay (e.g. H3K4me3)
+        title: Target
+        type: string
+      tissue:
+        default: ''
+        description: Tissue type
+        title: Tissue
+        type: string
+      treatment:
+        default: ''
+        description: Treatment of the sample (e.g. drug treatment)
+        title: Treatment
+        type: string
+    required:
+      - sample_name
+    title: BedPEPHub
+    type: object
+  BedPEPHubRestrict:
+    properties:
+      antibody:
+        default: ''
+        description: Antibody used in the assay
+        title: Antibody
+        type: string
+      cell_line:
+        default: ''
+        title: Cell Line
+        type: string
+      cell_type:
+        default: ''
+        title: Cell Type
+        type: string
+      description:
+        default: ''
+        description: Description of the sample
+        title: Description
+        type: string
+      exp_protocol:
+        default: ''
+        description: Experimental protocol (e.g. ChIP-seq)
+        title: Exp Protocol
+        type: string
+      genome:
+        default: ''
+        title: Genome
+        type: string
+      genotype:
+        default: ''
+        description: Genotype of the sample
+        title: Genotype
+        type: string
+      global_experiment_id:
+        default: ''
+        description: Global experiment identifier
+        title: Global Experiment Id
+        type: string
+      global_sample_id:
+        default: ''
+        description: Global sample identifier
+        title: Global Sample Id
+        type: string
+      library_source:
+        default: ''
+        description: 'Library source (e.g. genomic, transcriptomic)'
+        title: Library Source
+        type: string
+      organism:
+        default: ''
+        title: Organism
+        type: string
+      sample_name:
+        title: Sample Name
+        type: string
+      species_id:
+        default: ''
+        title: Species Id
+        type: string
+      target:
+        default: ''
+        description: Target of the assay (e.g. H3K4me3)
+        title: Target
+        type: string
+      tissue:
+        default: ''
+        description: Tissue type
+        title: Tissue
+        type: string
+      treatment:
+        default: ''
+        description: Treatment of the sample (e.g. drug treatment)
+        title: Treatment
+        type: string
+    required:
+      - sample_name
+    title: BedPEPHubRestrict
+    type: object
+  BedPlots:
+    properties:
+      chrombins:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      cumulative_partitions:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      expected_partitions:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      gccontent:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      neighbor_distances:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      open_chromatin:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      partitions:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+      widths_histogram:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+    title: BedPlots
+    type: object
+  BedSetBedFiles:
+    properties:
+      count:
+        title: Count
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/BedMetadataBasic'
+        title: Results
+        type: array
+    required:
+      - count
+      - results
+    title: BedSetBedFiles
+    type: object
+  BedSetListResult:
+    properties:
+      count:
+        title: Count
+        type: integer
+      limit:
+        title: Limit
+        type: integer
+      offset:
+        title: Offset
+        type: integer
+      results:
+        items:
+          $ref: '#/definitions/BedSetMetadata'
+        title: Results
+        type: array
+    required:
+      - count
+      - limit
+      - offset
+      - results
+    title: BedSetListResult
+    type: object
+  BedSetMetadata:
+    properties:
+      bed_ids:
+        items:
+          type: string
+        title: Bed Ids
+        type: array
+      description:
+        title: Description
+        type: string
+      id:
+        title: Id
+        type: string
+      md5sum:
+        title: Md5Sum
+        type: string
+      name:
+        title: Name
+        type: string
+      plots: {}
+      statistics: {}
+    required:
+      - id
+      - name
+      - md5sum
+    title: BedSetMetadata
+    type: object
+  BedSetMinimal:
+    properties:
+      description:
+        title: Description
+      id:
+        title: Id
+        type: string
+      name:
+        title: Name
+    required:
+      - id
+    title: BedSetMinimal
+    type: object
+  BedSetPlots:
+    properties:
+      region_commonality:
+        allOf:
+          - $ref: '#/definitions/FileModel'
+    title: BedSetPlots
+    type: object
+  BedSetStats:
+    properties:
+      mean:
+        allOf:
+          - $ref: '#/definitions/BedStatsModel'
+      sd:
+        allOf:
+          - $ref: '#/definitions/BedStatsModel'
+    title: BedSetStats
+    type: object
+  BedStatsModel:
+    properties:
+      exon_frequency:
+        title: Exon Frequency
+      exon_percentage:
+        title: Exon Percentage
+      fiveutr_frequency:
+        title: Fiveutr Frequency
+      fiveutr_percentage:
+        title: Fiveutr Percentage
+      gc_content:
+        title: Gc Content
+      intergenic_frequency:
+        title: Intergenic Frequency
+      intergenic_percentage:
+        title: Intergenic Percentage
+      intron_frequency:
+        title: Intron Frequency
+      intron_percentage:
+        title: Intron Percentage
+      mean_region_width:
+        title: Mean Region Width
+      median_tss_dist:
+        title: Median Tss Dist
+      promotercore_frequency:
+        title: Promotercore Frequency
+      promotercore_percentage:
+        title: Promotercore Percentage
+      promoterprox_frequency:
+        title: Promoterprox Frequency
+      promoterprox_percentage:
+        title: Promoterprox Percentage
+      regions_no:
+        title: Regions No
+      threeutr_frequency:
+        title: Threeutr Frequency
+      threeutr_percentage:
+        title: Threeutr Percentage
+    title: BedStatsModel
+    type: object
+  Body_bed_to_bed_search_v1_bed_search_bed_post:
+    properties:
+      file:
+        format: binary
+        title: File
+        type: string
+    title: Body_bed_to_bed_search_v1_bed_search_bed_post
+    type: object
+  ComponentVersions:
+    properties:
+      bbconf_version:
+        title: Bbconf Version
+        type: string
+      bedhost_version:
+        title: Bedhost Version
+        type: string
+      geniml_version:
+        title: Geniml Version
+        type: string
+      openapi_version:
+        title: Openapi Version
+        type: string
+      python_version:
+        title: Python Version
+        type: string
+    required:
+      - bedhost_version
+      - bbconf_version
+      - python_version
+      - geniml_version
+      - openapi_version
+    title: ComponentVersions
+    type: object
+  DRSModel:
+    properties:
+      access_methods:
+        items:
+          $ref: '#/definitions/AccessMethod'
+        title: Access Methods
+        type: array
+      checksums:
+        title: Checksums
+        type: string
+      created_time:
+        title: Created Time
+      description:
+        title: Description
+      id:
+        title: Id
+        type: string
+      name:
+        title: Name
+      self_uri:
+        title: Self Uri
+        type: string
+      size:
+        title: Size
+      updated_time:
+        title: Updated Time
+    required:
+      - id
+      - self_uri
+      - checksums
+      - access_methods
+    title: DRSModel
+    type: object
+  EmbeddingModels:
+    properties:
+      region2vec:
+        title: Region2Vec
+        type: string
+      text2vec:
+        title: Text2Vec
+        type: string
+      vec2vec:
+        title: Vec2Vec
+        type: string
+    required:
+      - vec2vec
+      - region2vec
+      - text2vec
+    title: EmbeddingModels
+    type: object
+  FileModel:
+    properties:
+      access_methods:
+        items:
+          $ref: '#/definitions/AccessMethod'
+        title: Access Methods
+        type: array
+      description:
+        title: Description
+      name:
+        title: Name
+        type: string
+      object_id:
+        title: Object Id
+      path:
+        title: Path
+        type: string
+      size:
+        title: Size
+      thumbnail_path:
+        title: Thumbnail Path
+      title:
+        title: Title
+    required:
+      - name
+      - path
+    title: FileModel
+    type: object
+  HTTPValidationError:
+    properties:
+      detail:
+        items:
+          $ref: '#/definitions/ValidationError'
+        title: Detail
+        type: array
+    title: HTTPValidationError
+    type: object
+  Organization:
+    properties:
+      name:
+        title: Name
+        type: string
+      url:
+        title: Url
+        type: string
+    required:
+      - name
+      - url
+    title: Organization
+    type: object
+  QdrantSearchResult:
+    properties:
+      id:
+        title: Id
+        type: string
+      metadata: {}
+      payload:
+        title: Payload
+        type: object
+      score:
+        title: Score
+        type: number
+    required:
+      - id
+      - payload
+      - score
+    title: QdrantSearchResult
+    type: object
+  ServiceInfoResponse:
+    properties:
+      component_versions:
+        $ref: '#/definitions/ComponentVersions'
+      contactUrl:
+        title: Contacturl
+        type: string
+      description:
+        title: Description
+        type: string
+      documentationUrl:
+        title: Documentationurl
+        type: string
+      embedding_models:
+        $ref: '#/definitions/EmbeddingModels'
+      environment:
+        title: Environment
+        type: string
+      id:
+        title: Id
+        type: string
+      name:
+        title: Name
+        type: string
+      organization:
+        $ref: '#/definitions/Organization'
+      type:
+        $ref: '#/definitions/Type'
+      updatedAt:
+        title: Updatedat
+        type: string
+      version:
+        title: Version
+        type: string
+    required:
+      - id
+      - name
+      - type
+      - description
+      - organization
+      - contactUrl
+      - documentationUrl
+      - updatedAt
+      - environment
+      - version
+      - component_versions
+      - embedding_models
+    title: ServiceInfoResponse
+    type: object
+  StatsReturn:
+    properties:
+      bedfiles_number:
+        default: 0
+        title: Bedfiles Number
+        type: integer
+      bedsets_number:
+        default: 0
+        title: Bedsets Number
+        type: integer
+      genomes_number:
+        default: 0
+        title: Genomes Number
+        type: integer
+    title: StatsReturn
+    type: object
+  TokenizedBedResponse:
+    properties:
+      bed_id:
+        title: Bed Id
+        type: string
+      tokenized_bed:
+        items:
+          type: integer
+        title: Tokenized Bed
+        type: array
+      universe_id:
+        title: Universe Id
+        type: string
+    required:
+      - universe_id
+      - bed_id
+      - tokenized_bed
+    title: TokenizedBedResponse
+    type: object
+  TokenizedPathResponse:
+    properties:
+      bed_id:
+        title: Bed Id
+        type: string
+      endpoint_url:
+        title: Endpoint Url
+        type: string
+      file_path:
+        title: File Path
+        type: string
+      universe_id:
+        title: Universe Id
+        type: string
+    required:
+      - bed_id
+      - universe_id
+      - file_path
+      - endpoint_url
+    title: TokenizedPathResponse
+    type: object
+  Type:
+    properties:
+      artifact:
+        title: Artifact
+        type: string
+      group:
+        title: Group
+        type: string
+      version:
+        title: Version
+        type: string
+    required:
+      - group
+      - artifact
+      - version
+    title: Type
+    type: object
+  UniverseMetadata:
+    properties:
+      bedset_id:
+        title: Bedset Id
+      construct_method:
+        title: Construct Method
+    title: UniverseMetadata
+    type: object
+  ValidationError:
+    properties:
+      loc:
+        items: {}
+        title: Location
+        type: array
+      msg:
+        title: Message
+        type: string
+      type:
+        title: Error Type
+        type: string
+    required:
+      - loc
+      - msg
+      - type
+    title: ValidationError
+    type: object
+tags:
+  - description: General landing page and service info
+    name: home
+  - description: Basic endpoints for the service and statistics.
+    name: base
+  - description: >-
+      Download BED files or BEDSET files via [GA4GH DRS
+      standard](https://ga4gh.github.io/data-repository-service-schemas/). For
+      details, see [BEDbase Developer Guide](/docs/guide).
+    name: objects
+  - description: Endpoints for retrieving metadata for BED records
+    name: bed
+  - description: Endpoints for retrieving metadata for BEDSET records
+    name: bedset
+  - description: Discovery-oriented endpoints for finding records of interest
+    name: search
+x-components: {}
+
