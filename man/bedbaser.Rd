@@ -15,7 +15,7 @@ functions for common tasks, including importing a BED id into a \code{GRanges}
 object and a BEDset id into a \code{GRangesList}.
 }
 \details{
-The main functions are as follows
+The convenience functions are as follows
 \itemize{
 \item \code{bedbaser::bedbaser()}: API constructor
 \item \code{bedbaser::bb_example()}: Retrieve an example BED file or BEDset

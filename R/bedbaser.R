@@ -1,3 +1,14 @@
+#' BEDbase class
+#' 
+#' @importFrom methods new
+#' 
+#' @export
+.BEDbase <- setClass(
+  "BEDbase",
+  contains = "Service"
+)
+
+
 #' @rdname bedbaser
 #'
 #' @title An R client for BEDbase
@@ -8,7 +19,7 @@
 #'
 #' @details
 #'
-#' The main functions are as follows
+#' The convenience functions are as follows
 #' * `bedbaser::bedbaser()`: API constructor
 #' * `bedbaser::bb_example()`: Retrieve an example BED file or BEDset
 #' * `bedbaser::bb_metadata()`: Retrieve metadata for a BED file or BEDset
@@ -34,12 +45,21 @@ bedbaser <- function() {
         Service(
             service = "BEDbase",
             host = "api.bedbase.org",
+            api_reference_version = .BEDBASE_API_REFERENCE_VERSION,
             authenticate = FALSE,
             api_url = "https://api.bedbase.org/openapi.json",
             package = "bedbaser"
         )
     )
 }
+
+
+## Copied from the AnVIL package
+.api_header <- function(api) api@api_header
+
+.BEDBASE_API_REFERENCE_VERSION <- "0.5.0"
+
+
 
 #' Get the example BED file or BEDset with metadata
 #'
