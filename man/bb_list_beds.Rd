@@ -7,7 +7,7 @@
 bb_list_beds(api, genome = NULL, bed_type = NULL, limit = 1000, offset = 0)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{genome}{character() (default NULL) genome keyword}
 
@@ -24,7 +24,7 @@ tibble() of BED records
 List BEDs
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 bb_list_beds(api)
 
 }

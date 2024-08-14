@@ -7,7 +7,7 @@
 bb_list_bedsets(api, query = NULL, limit = 1000, offset = 0)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{query}{character() (default NULL) keyword}
 
@@ -22,7 +22,7 @@ tibble() of BEDset records
 List BEDsets
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 bb_list_bedsets(api)
 
 }

@@ -7,7 +7,7 @@
 bb_metadata(api, id, full = FALSE)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{id}{integer() record or object identifier}
 
@@ -22,7 +22,7 @@ Get metadata for a BED file or BEDset. Abort
 if not found or id is not not 32 characters
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 
 ex_bed <- bb_example(api, "bed")
 bb_metadata(api, ex_bed$id)

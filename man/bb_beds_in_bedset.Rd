@@ -7,7 +7,7 @@
 bb_beds_in_bedset(api, bedset_id)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{bedset_id}{integer() BEDset record identifier}
 }
@@ -18,7 +18,7 @@ list() BED record identifiers
 Get BEDs associated with BEDset
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 ex_bedset <- bb_example(api, "bedset")
 bb_beds_in_bedset(api, ex_bedset$id)
 

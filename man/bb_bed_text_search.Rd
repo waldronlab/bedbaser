@@ -7,7 +7,7 @@
 bb_bed_text_search(api, query, limit = 10, offset = 0)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{query}{character() keywords to search}
 
@@ -22,7 +22,7 @@ tibble()
 Returns all available results scored.
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 bb_bed_text_search(api, "hg38")
 
 }

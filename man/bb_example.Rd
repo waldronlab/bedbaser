@@ -7,7 +7,7 @@
 bb_example(api, rec_type = c("bed", "bedset"))
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{rec_type}{character() bed or bedset}
 }
@@ -18,7 +18,7 @@ list() bed or bedset
 Get the example BED file or BEDset with metadata
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 bb_example(api, "bed")
 bb_example(api, "bedset")
 

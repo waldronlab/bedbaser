@@ -1,7 +1,7 @@
 test_that("BEDBASER_CACHE is used if set", {
     Sys.setenv("BEDBASER_CACHE" = tempdir())
     cache_path <- Sys.getenv("BEDBASER_CACHE")
-    api <- bedbaser()
+    api <- BEDbase()
     id <- "bbad85f21962bb8d972444f7f9a3a932"
     gro <- bb_to_granges(api, id, "bed")
     bfc <- BiocFileCache::BiocFileCache(cache_path)

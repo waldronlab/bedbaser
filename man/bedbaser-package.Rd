@@ -2,6 +2,7 @@
 % Please edit documentation in R/bedbaser-package.R
 \docType{package}
 \name{bedbaser-package}
+\alias{bedbaser}
 \alias{bedbaser-package}
 \title{bedbaser: A BEDbase client}
 \description{

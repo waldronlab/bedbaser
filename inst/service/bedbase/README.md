@@ -26,4 +26,4 @@ Convert openapi.json from OpenAPI 3.1 to 3.0:
 Convert from OpenAPI 3.0 to Swagger 2.0 and render in YAML:
 
     api-spec-converter -f openapi_3 -t swagger_2 openapi_3_0.json \
-        --syntax yaml > openapi.yaml
+        --syntax yaml > api.yaml

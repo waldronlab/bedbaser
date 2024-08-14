@@ -7,7 +7,7 @@
 bb_to_grangeslist(api, bedset_id, quietly = TRUE)
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{bedset_id}{integer() BEDset record identifier}
 
@@ -20,7 +20,7 @@ GRangesList() object
 Create a GRangesList object given a BEDset id
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 id <- "lola_hg38_ucsc_features"
 bb_to_grangeslist(api, id)
 

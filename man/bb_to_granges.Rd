@@ -13,7 +13,7 @@ bb_to_granges(
 )
 }
 \arguments{
-\item{api}{API object of BEDbase created from bedbaser()}
+\item{api}{API object of BEDbase created from BEDbase()}
 
 \item{bed_id}{integer() BED record identifier}
 
@@ -31,7 +31,7 @@ GRanges() object
 Generates the column and types for broad and narrow peak files.
 }
 \examples{
-api <- bedbaser()
+api <- BEDbase()
 ex_bed <- bb_example(api, "bed")
 bb_to_granges(api, ex_bed$id)
 

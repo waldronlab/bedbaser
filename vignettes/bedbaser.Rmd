@@ -37,13 +37,13 @@ if (!"BiocManager" %in% rownames(installed.packages())) {
 BiocManager::install("bedbaser", dependencies = TRUE)
 ```
 
-# Create a bedbaser api
+# Create the BEDbase Service instance
 
 bedbaser uses the `r Biocpkg("AnVIL")` Service class to expose the BEDbase API.
 
 ```{r bedbase}
-api <- bedbaser()
-show(api)
+api <- BEDbase()
+operations(api)
 ```
 
 End points can be accessed with `$` and their results can be retrieved
