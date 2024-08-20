@@ -6,6 +6,7 @@
 <url><loc>/index.html</loc></url>
 <url><loc>/news/index.html</loc></url>
 <url><loc>/reference/BEDbase-class.html</loc></url>
+<url><loc>/reference/BEDbase.html</loc></url>
 <url><loc>/reference/bb_bed_text_search.html</loc></url>
 <url><loc>/reference/bb_beds_in_bedset.html</loc></url>
 <url><loc>/reference/bb_example.html</loc></url>
@@ -15,7 +16,7 @@
 <url><loc>/reference/bb_to_granges.html</loc></url>
 <url><loc>/reference/bb_to_grangeslist.html</loc></url>
 <url><loc>/reference/bedbaser-package.html</loc></url>
-<url><loc>/reference/bedbaser.html</loc></url>
 <url><loc>/reference/index.html</loc></url>
+<url><loc>/reference/operations-BEDbase-method.html</loc></url>
 </urlset>
 

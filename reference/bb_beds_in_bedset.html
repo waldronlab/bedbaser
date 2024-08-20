@@ -64,7 +64,7 @@
 
 
 <dl><dt id="arg-api">api<a class="anchor" aria-label="anchor" href="#arg-api"></a></dt>
-<dd><p>API object of BEDbase created from bedbaser()</p></dd>
+<dd><p>API object of BEDbase created from BEDbase()</p></dd>
 
 
 <dt id="arg-bedset-id">bedset_id<a class="anchor" aria-label="anchor" href="#arg-bedset-id"></a></dt>
@@ -78,25 +78,25 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="bedbaser.html">bedbaser</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpiZEoQy/file133b7f5aeff5'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpoOvgkM/filed327fe73f08'</span>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">api</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_beds_in_bedset</span><span class="op">(</span><span class="va">api</span>, <span class="va">ex_bedset</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 74 × 9</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name     genome_alias genome_digest bed_type bed_format id    submission_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        04c4… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        92f7… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        0037… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        0850… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> Human_C… hg19         baa91c8f6e27… bed4+1   bed        aa87… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        0267… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> Human_C… hg19         baa91c8f6e27… bed4+1   bed        8471… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        20c0… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        1a51… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> Human_L… hg19         baa91c8f6e27… bed4+1   bed        054b… 2024-04-09T21:…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 64 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: last_update_date &lt;chr&gt;, is_universe &lt;lgl&gt;</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 80 × 8</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name  genome_alias bed_type bed_format id    submission_date last_update_date</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mm39… mm39         bed3+8   bed        43bd… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mm39… mm39         bed3+8   bed        7d73… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mm39… mm39         bed3+8   bed        18ff… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mm10… mm10         bed3+8   bed        6bc6… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mm10… mm10         bed3+8   bed        027d… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mm10… mm10         bed3+8   bed        7e82… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mm10… mm10         bed3+8   bed        a09c… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> hg19… hg19         bed3+4   bed        3d6d… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mm10… mm10         bed3+8   bed        8d84… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mm9.… mm9          bed3+8   bed        4776… 2024-04-09T12:… 2024-04-09T12:0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 70 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1 more variable: is_universe &lt;lgl&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

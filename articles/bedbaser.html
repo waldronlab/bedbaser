@@ -102,35 +102,302 @@ and GRangesList objects.</p>
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"bedbaser"</span>, dependencies <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
-<h2 id="create-a-bedbaser-api">Create a bedbaser api<a class="anchor" aria-label="anchor" href="#create-a-bedbaser-api"></a>
+<h2 id="create-the-bedbase-service-instance">Create the BEDbase Service instance<a class="anchor" aria-label="anchor" href="#create-the-bedbase-service-instance"></a>
 </h2>
 <p>bedbaser uses the <em><a href="https://bioconductor.org/packages/3.20/AnVIL" class="external-link">AnVIL</a></em>
 Service class to expose the BEDbase API.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bedbaser.html">bedbaser</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in readLines(file, warn = readLines.warn): incomplete final line found</span></span>
-<span><span class="co">## on '/tmp/RtmpZf0aQK/file14824783c409'</span></span></code></pre>
+<span><span class="co">## on '/tmp/RtmpcBGyph/filee7c6e3639b0'</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">show</span><span class="op">(</span><span class="va">api</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## service: BEDbase</span></span>
-<span><span class="co">## tags(); use bedbase$&lt;tab completion&gt;:</span></span>
-<span><span class="co">## <span style="color: #949494;"># A tibble: 32 × 3</span></span></span>
-<span><span class="co">##    tag   operation                                                       summary</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> base  get_bedbase_db_stats_v1_stats_get                               Get su…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> base  service_info_v1_service_info_get                                GA4GH …</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> bed   bed_to_bed_search_v1_bed_search_bed_post                        Search…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> bed   get_bed_classification_v1_bed__bed_id__metadata_classification… Get cl…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> bed   get_bed_embedding_v1_bed__bed_id__embedding_get                 Get em…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> bed   get_bed_files_v1_bed__bed_id__metadata_files_get                Get me…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> bed   get_bed_metadata_v1_bed__bed_id__metadata_get                   Get me…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> bed   get_bed_pephub_v1_bed__bed_id__metadata_raw_get                 Get ra…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> bed   get_bed_plots_v1_bed__bed_id__metadata_plots_get                Get pl…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> bed   get_bed_stats_v1_bed__bed_id__metadata_stats_get                Get st…</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 22 more rows</span></span></span>
-<span><span class="co">## tag values:</span></span>
-<span><span class="co">##   base, bed, bedset, home, objects, search, NA</span></span>
-<span><span class="co">## schemas():</span></span></code></pre>
+<code class="sourceCode R"><span><span class="fu">operations</span><span class="op">(</span><span class="va">api</span><span class="op">)</span></span></code></pre></div>
+<pre><code><span><span class="co">## $lending_page__get</span></span>
+<span><span class="co">## lending_page__get </span></span>
+<span><span class="co">## Lending Page </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $index_v1_get</span></span>
+<span><span class="co">## index_v1_get </span></span>
+<span><span class="co">## API intro page </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Display the index UI page</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_example_bed_record_v1_bed_example_get</span></span>
+<span><span class="co">## get_example_bed_record_v1_bed_example_get </span></span>
+<span><span class="co">## Get example BED record metadata </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Get metadata for an example BED record.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $list_beds_v1_bed_list_get</span></span>
+<span><span class="co">## list_beds_v1_bed_list_get </span></span>
+<span><span class="co">## Paged list of all BED records </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns list of BED files in the database with optional filters.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   limit (integer)</span></span>
+<span><span class="co">##   offset (integer)</span></span>
+<span><span class="co">##   genome (string)</span></span>
+<span><span class="co">##     filter by genome of the bed file. e.g. 'hg38'</span></span>
+<span><span class="co">##   bed_type (string)</span></span>
+<span><span class="co">##     filter by bed type. e.g. 'bed6+4'</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $bed_to_bed_search_v1_bed_search_bed_post</span></span>
+<span><span class="co">## bed_to_bed_search_v1_bed_search_bed_post </span></span>
+<span><span class="co">## Search for similar bed files </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   limit (integer)</span></span>
+<span><span class="co">##   offset (integer)</span></span>
+<span><span class="co">##   body ()</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $text_to_bed_search_v1_bed_search_text_post</span></span>
+<span><span class="co">## text_to_bed_search_v1_bed_search_text_post </span></span>
+<span><span class="co">## Search for a BedFile </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Search for a BedFile by a text query. Example: query="cancer"</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   query ()</span></span>
+<span><span class="co">##   limit (integer)</span></span>
+<span><span class="co">##   offset (integer)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_embedding_v1_bed__bed_id__embedding_get</span></span>
+<span><span class="co">## get_bed_embedding_v1_bed__bed_id__embedding_get </span></span>
+<span><span class="co">## Get embeddings for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns embeddings for a single BED record.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_metadata_v1_bed__bed_id__metadata_get</span></span>
+<span><span class="co">## get_bed_metadata_v1_bed__bed_id__metadata_get </span></span>
+<span><span class="co">## Get metadata for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">##   full ()</span></span>
+<span><span class="co">##     Return full record with stats, plots, files and metadata</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_classification_v1_bed__bed_id__metadata_classification_get</span></span>
+<span><span class="co">## get_bed_classification_v1_bed__bed_id__metadata_classification_get </span></span>
+<span><span class="co">## Get classification of single BED file </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_files_v1_bed__bed_id__metadata_files_get</span></span>
+<span><span class="co">## get_bed_files_v1_bed__bed_id__metadata_files_get </span></span>
+<span><span class="co">## Get metadata for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_plots_v1_bed__bed_id__metadata_plots_get</span></span>
+<span><span class="co">## get_bed_plots_v1_bed__bed_id__metadata_plots_get </span></span>
+<span><span class="co">## Get plots for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_pephub_v1_bed__bed_id__metadata_raw_get</span></span>
+<span><span class="co">## get_bed_pephub_v1_bed__bed_id__metadata_raw_get </span></span>
+<span><span class="co">## Get raw metadata for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns raw metadata for a single BED record. This metadata is stored</span></span>
+<span><span class="co">##   in PEPHub. And is not verified.Example bed_id:</span></span>
+<span><span class="co">##   bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bed_stats_v1_bed__bed_id__metadata_stats_get</span></span>
+<span><span class="co">## get_bed_stats_v1_bed__bed_id__metadata_stats_get </span></span>
+<span><span class="co">## Get stats for a single BED record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: bbad85f21962bb8d972444f7f9a3a932</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get</span></span>
+<span><span class="co">## get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get </span></span>
+<span><span class="co">## Get regions from a BED file that overlap a query region. </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns the queried regions with provided ID and optional query</span></span>
+<span><span class="co">##   parameters</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##     BED digest</span></span>
+<span><span class="co">##   chr_num (string)</span></span>
+<span><span class="co">##     Chromosome number</span></span>
+<span><span class="co">##   start ()</span></span>
+<span><span class="co">##     query range: start coordinate</span></span>
+<span><span class="co">##   end ()</span></span>
+<span><span class="co">##     query range: start coordinate</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_tokens_v1_bed__bed_id__tokens__universe_id__get</span></span>
+<span><span class="co">## get_tokens_v1_bed__bed_id__tokens__universe_id__get </span></span>
+<span><span class="co">## Get tokenized of bed file </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Return univers of bed file Example: bed:</span></span>
+<span><span class="co">##   0dcdf8986a72a3d85805bbc9493a1302 | universe:</span></span>
+<span><span class="co">##   58dee1672b7e581c8e1312bd4ca6b3c7</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##   universe_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_tokens_v1_bed__bed_id__tokens__universe_id__info_get</span></span>
+<span><span class="co">## get_tokens_v1_bed__bed_id__tokens__universe_id__info_get </span></span>
+<span><span class="co">## Get link to tokenized bed file </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Return link to tokenized bed file Example: bed:</span></span>
+<span><span class="co">##   0dcdf8986a72a3d85805bbc9493a1302 | universe:</span></span>
+<span><span class="co">##   58dee1672b7e581c8e1312bd4ca6b3c7</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bed_id (string)</span></span>
+<span><span class="co">##   universe_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_example_bedset_record_v1_bedset_example_get</span></span>
+<span><span class="co">## get_example_bedset_record_v1_bedset_example_get </span></span>
+<span><span class="co">## Get metadata for an example BEDset record </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $list_bedsets_v1_bedset_list_get</span></span>
+<span><span class="co">## list_bedsets_v1_bedset_list_get </span></span>
+<span><span class="co">## Paged list of all BEDset records </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns a list of BEDset records in the database with optional</span></span>
+<span><span class="co">##   filters and search.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   query (string)</span></span>
+<span><span class="co">##   limit (integer)</span></span>
+<span><span class="co">##   offset (integer)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get</span></span>
+<span><span class="co">## get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get </span></span>
+<span><span class="co">## Get Bedfiles In Bedset </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: gse218680</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bedset_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bedset_metadata_v1_bedset__bedset_id__metadata_get</span></span>
+<span><span class="co">## get_bedset_metadata_v1_bedset__bedset_id__metadata_get </span></span>
+<span><span class="co">## Get all metadata for a single BEDset record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: gse218680</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bedset_id (string)</span></span>
+<span><span class="co">##   full (boolean)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get</span></span>
+<span><span class="co">## get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get </span></span>
+<span><span class="co">## Get plots for single bedset record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: gse218680</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bedset_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get</span></span>
+<span><span class="co">## get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get </span></span>
+<span><span class="co">## Get stats for a single BEDSET record </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Example bed_id: gse218680</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   bedset_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $changelog_v1_docs_changelog_get</span></span>
+<span><span class="co">## changelog_v1_docs_changelog_get </span></span>
+<span><span class="co">## Release notes </span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_drs_object_metadata_v1_objects__object_id__get</span></span>
+<span><span class="co">## get_drs_object_metadata_v1_objects__object_id__get </span></span>
+<span><span class="co">## Get DRS object metadata </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns metadata about a DrsObject.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   object_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_object_bytes_url_v1_objects__object_id__access__access_id__get</span></span>
+<span><span class="co">## get_object_bytes_url_v1_objects__object_id__access__access_id__get </span></span>
+<span><span class="co">## Get URL where you can retrieve files </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns a URL that can be used to fetch the bytes of a DrsObject.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   object_id (string)</span></span>
+<span><span class="co">##   access_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_object_bytes_v1_objects__object_id__access__access_id__bytes_get</span></span>
+<span><span class="co">## get_object_bytes_v1_objects__object_id__access__access_id__bytes_get </span></span>
+<span><span class="co">## Download actual file </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns the bytes of a DrsObject.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   object_id (string)</span></span>
+<span><span class="co">##   access_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_object_thumbnail_v1_objects__object_id__access__access_id__thumbnail_get</span></span>
+<span><span class="co">## get_object_thumbnail_v1_objects__object_id__access__access_id__thumbnail_get </span></span>
+<span><span class="co">## Download thumbnail file </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns the bytes of a thumbnail of a DrsObject</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">##   object_id (string)</span></span>
+<span><span class="co">##   access_id (string)</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $service_info_v1_service_info_get</span></span>
+<span><span class="co">## service_info_v1_service_info_get </span></span>
+<span><span class="co">## GA4GH service info </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns information about this service, such as versions, name, etc.</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## $get_bedbase_db_stats_v1_stats_get</span></span>
+<span><span class="co">## get_bedbase_db_stats_v1_stats_get </span></span>
+<span><span class="co">## Get summary statistics for the DRS object store </span></span>
+<span><span class="co">## Description:</span></span>
+<span><span class="co">##   Returns statistics</span></span>
+<span><span class="co">## </span></span>
+<span><span class="co">## Parameters:</span></span></code></pre>
 <p>End points can be accessed with <code>$</code> and their results can
 be retrieved with <em><a href="https://CRAN.R-project.org/package=httr" class="external-link">httr</a></em>.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -177,20 +444,20 @@ be used to access a specific resource.</p>
 <span><span class="co">## <span style="color: #949494;">#   is_universe &lt;lgl&gt;, license_id &lt;chr&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bb_list_bedsets.html">bb_list_bedsets</a></span><span class="op">(</span><span class="va">api</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,620 × 5</span></span></span>
-<span><span class="co">##    id                           name                  md5sum description bed_ids</span></span>
-<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … dbf256…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … ab3641…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 238423…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … bd092a…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 2b5b5d…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 054bc0…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 2e3790…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … a5bc18…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … d7cb64…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … b48547…</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1,610 more rows</span></span></span></code></pre>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,707 × 5</span></span></span>
+<span><span class="co">##    id            name          md5sum                        description bed_ids</span></span>
+<span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… e86829…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… eef2eb…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… ba5351…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 6bc6da…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… a09cb0…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 608827…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 664c47…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 2723d1…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 56ce79…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 80d2b2…</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1,697 more rows</span></span></span></code></pre>
 </div>
 <div class="section level2">
 <h2 id="examine-metadata">Examine metadata<a class="anchor" aria-label="anchor" href="#examine-metadata"></a>
@@ -569,10 +836,10 @@ another. Download the chain file from <a href="https://hgdownload.cse.ucsc.edu/d
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] jsonlite_1.8.8              magrittr_2.0.3             </span></span>
-<span><span class="co">##   [3] rmarkdown_2.27              fs_1.6.4                   </span></span>
-<span><span class="co">##   [5] BiocIO_1.15.0               zlibbioc_1.51.1            </span></span>
+<span><span class="co">##   [3] rmarkdown_2.28              fs_1.6.4                   </span></span>
+<span><span class="co">##   [5] BiocIO_1.15.1               zlibbioc_1.51.1            </span></span>
 <span><span class="co">##   [7] ragg_1.3.2                  vctrs_0.6.5                </span></span>
-<span><span class="co">##   [9] memoise_2.0.1               Rsamtools_2.21.0           </span></span>
+<span><span class="co">##   [9] memoise_2.0.1               Rsamtools_2.21.1           </span></span>
 <span><span class="co">##  [11] RCurl_1.98-1.16             progress_1.2.3             </span></span>
 <span><span class="co">##  [13] htmltools_0.5.8.1           S4Arrays_1.5.7             </span></span>
 <span><span class="co">##  [15] BiocBaseUtils_1.7.0         lambda.r_1.2.4             </span></span>
@@ -609,7 +876,7 @@ another. Download the chain file from <a href="https://hgdownload.cse.ucsc.edu/d
 <span><span class="co">##  [77] Biostrings_2.73.1           miniUI_0.1.1.1             </span></span>
 <span><span class="co">##  [79] knitr_1.48                  bookdown_0.40              </span></span>
 <span><span class="co">##  [81] SummarizedExperiment_1.35.1 snpStats_1.55.0            </span></span>
-<span><span class="co">##  [83] futile.logger_1.4.3         xfun_0.46                  </span></span>
+<span><span class="co">##  [83] futile.logger_1.4.3         xfun_0.47                  </span></span>
 <span><span class="co">##  [85] matrixStats_1.3.0           DT_0.33                    </span></span>
 <span><span class="co">##  [87] stringi_1.8.4               UCSC.utils_1.1.0           </span></span>
 <span><span class="co">##  [89] yaml_2.3.10                 evaluate_0.24.0            </span></span>

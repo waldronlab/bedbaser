@@ -64,7 +64,7 @@
 
 
 <dl><dt id="arg-api">api<a class="anchor" aria-label="anchor" href="#arg-api"></a></dt>
-<dd><p>API object of BEDbase created from bedbaser()</p></dd>
+<dd><p>API object of BEDbase created from BEDbase()</p></dd>
 
 
 <dt id="arg-query">query<a class="anchor" aria-label="anchor" href="#arg-query"></a></dt>
@@ -86,23 +86,23 @@
 
     <div id="ref-examples">
     <h2>Examples</h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="bedbaser.html">bedbaser</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpiZEoQy/file133bf9cb8a2'</span>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpoOvgkM/filed32455f7b28'</span>
 <span class="r-in"><span><span class="fu">bb_list_bedsets</span><span class="op">(</span><span class="va">api</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,620 × 5</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id                           name                  md5sum description bed_ids</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … dbf256…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … ab3641…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 238423…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … bd092a…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 2b5b5d…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 054bc0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … 2e3790…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … a5bc18…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … d7cb64…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> lola_hg19_cistrome_epigenome LOLA hg19 Cistrome E… 4e029… Epigenome … b48547…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,610 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,707 × 5</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id            name          md5sum                        description bed_ids</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… e86829…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… eef2eb…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… ba5351…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 6bc6da…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… a09cb0…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 608827…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 664c47…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 2723d1…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 56ce79…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 80d2b2…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 1,697 more rows</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
