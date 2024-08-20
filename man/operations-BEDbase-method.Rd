@@ -6,6 +6,11 @@
 \usage{
 \S4method{operations}{BEDbase}(x, ..., .deprecated = FALSE)
 }
+\arguments{
+\item{x}{BEDbase object}
+
+\item{.deprecated}{(default FALSE) if deprecated}
+}
 \description{
 Display API
 }
