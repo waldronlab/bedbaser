@@ -1,7 +1,7 @@
 # bedbaser
 
-bedbaser is an R api for [BEDbase](https://bedbase.org) that provides access
-to the [BEDbase API](https://api.bedbase.org) and includes convenience
+bedbaser is an R API client for [BEDbase](https://bedbase.org) that provides
+access to the [BEDbase API](https://api.bedbase.org) and includes convenience
 functions, such for creating GRanges and GRangesList objects.
 
 ## Install bedbaser

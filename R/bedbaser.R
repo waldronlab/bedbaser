@@ -6,15 +6,15 @@
     contains = "Service"
 )
 
-.BEDBASE_API_REFERENCE_VERSION<- "0.5.0"
+.BEDBASE_API_REFERENCE_VERSION <- "0.5.0"
 
 #' @rdname BEDbase
 #'
 #' @title An R client for BEDbase
 #'
 #' @description bedbaser exposes the BEDbase API and includes convenience
-#' functions for common tasks, including importing a BED id into a `GRanges`
-#' object and a BEDset id into a `GRangesList`.
+#' functions for common tasks, such as to import a BED file by id into a
+#' `GRanges` object and a BEDset by its id into a `GRangesList`.
 #'
 #' @details
 #'
@@ -32,6 +32,7 @@
 #' downloaded BED files.
 #'
 #' @importFrom AnVIL Service
+#' @importFrom rlang warn
 #'
 #' @returns Service object
 #'
@@ -42,12 +43,13 @@
 BEDbase <- function() {
     .BEDbase(
         Service(
-            "bedbase",
-            "api.bedbase.org",
+            service = "bedbase",
+            host = "api.bedbase.org",
             api_reference_version = .BEDBASE_API_REFERENCE_VERSION,
             authenticate = FALSE,
             package = "bedbaser",
-            api_reference_url="https://api.bedbase.org/openapi.json",
+            api_url = character(),
+            api_reference_url = "https://api.bedbase.org/openapi.json",
         )
     )
 }

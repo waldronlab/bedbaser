@@ -11,8 +11,8 @@ Service object
 }
 \description{
 bedbaser exposes the BEDbase API and includes convenience
-functions for common tasks, including importing a BED id into a \code{GRanges}
-object and a BEDset id into a \code{GRangesList}.
+functions for common tasks, such as to import a BED file by id into a
+\code{GRanges} object and a BEDset by its id into a \code{GRangesList}.
 }
 \details{
 The convenience functions are as follows

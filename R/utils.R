@@ -8,7 +8,7 @@
 #' @returns tibble() file metadata
 #'
 #' @examples
-#' api <- bedbaser()
+#' api <- BEDbase()
 #' ex_bed <- bb_example(api, "bed")
 #' ex_metadata <- bb_metadata(api, ex_bed$id, TRUE)
 #' .format_metadata_files(ex_bed$files)
@@ -33,7 +33,7 @@
 #' @returns character() file path
 #'
 #' @examples
-#' api <- bedbaser()
+#' api <- BEDbase()
 #' ex_bed <- bb_example(api, "bed")
 #' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' .get_file(md, "bed", "http")
@@ -68,6 +68,7 @@
 #'
 #' @examples
 #' id <- "608827efc82fcaa4b0bfc65f590ffef8"
+#' api <- BEDbase()
 #' md <- bb_metadata(api, id, TRUE)
 #' file_path <- .get_file_path(
 #'     md$files$bed_file$access_methods[[1]]$access_url$url,
@@ -113,7 +114,7 @@
 #' @returns GRanges() object representing BED
 #'
 #' @examples
-#' api <- bedbaser()
+#' api <- BEDbase()
 #' ex_bed <- bb_example(api, "bed")
 #' md <- bb_metadata(api, ex_bed$id, TRUE)
 #' file_path <- .get_file(md, "bed", "http")
