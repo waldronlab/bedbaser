@@ -9,6 +9,8 @@
 \arguments{
 \item{x}{BEDbase object}
 
+\item{...}{other options}
+
 \item{.deprecated}{(default FALSE) if deprecated}
 }
 \description{

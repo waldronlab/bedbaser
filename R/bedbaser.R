@@ -55,6 +55,7 @@ BEDbase <- function() {
 #' Display API
 #' 
 #' @param x BEDbase object
+#' @param ... other options
 #' @param .deprecated (default FALSE) if deprecated
 #'
 #' @importFrom AnVIL operations
