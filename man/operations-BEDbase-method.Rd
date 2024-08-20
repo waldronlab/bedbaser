@@ -13,6 +13,9 @@
 
 \item{.deprecated}{(default FALSE) if deprecated}
 }
+\value{
+list() API end points
+}
 \description{
 Display API
 }

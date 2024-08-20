@@ -5,6 +5,12 @@
 \alias{BEDbase-class}
 \alias{.BEDbase}
 \title{BEDbase class}
+\value{
+BEDbase class instance
+}
 \description{
 BEDbase class
+}
+\examples{
+.BEDbase()
 }
