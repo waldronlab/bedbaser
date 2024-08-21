@@ -3,9 +3,6 @@
 #' @importFrom methods new
 #'
 #' @returns BEDbase class instance
-#'
-#' @examples
-#' .BEDbase()
 .BEDbase <- setClass(
     "BEDbase",
     contains = "Service"

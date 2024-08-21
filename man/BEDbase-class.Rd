@@ -11,6 +11,3 @@ BEDbase class instance
 \description{
 BEDbase class
 }
-\examples{
-.BEDbase()
-}
