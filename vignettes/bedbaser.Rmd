@@ -191,8 +191,10 @@ Download the
 [chain file](https://hgdownload.cse.ucsc.edu/downloads.html#liftover) from UCSC.
 
 ```{r convertCoordinates_getTheChain, message=FALSE}
-chain_url <- paste0("https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/",
-                    "mm10ToMm39.over.chain.gz")
+chain_url <- paste0(
+    "https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/",
+    "mm10ToMm39.over.chain.gz"
+)
 tmpdir <- tempdir()
 gz <- file.path(tmpdir, "mm10ToMm39.over.chain.gz")
 download.file(chain_url, gz)

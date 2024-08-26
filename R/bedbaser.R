@@ -57,7 +57,7 @@ BEDbase <- function() {
 }
 
 #' Display API
-#' 
+#'
 #' @param x BEDbase object
 #' @param ... other options
 #' @param .deprecated (default FALSE) if deprecated
@@ -76,7 +76,8 @@ setMethod(
     "operations", "BEDbase",
     function(x, ..., .deprecated = FALSE) {
         callNextMethod(x, ..., .deprecated = .deprecated)
-    })
+    }
+)
 
 #' Get the example BED file or BEDset with metadata
 #'
@@ -172,8 +173,9 @@ bb_metadata <- function(api, id, full = FALSE) {
 #' bb_list_beds(api)
 #'
 #' @export
-bb_list_beds <- function(api, genome = NULL, bed_type = NULL, limit = 1000,
-    offset = 0) {
+bb_list_beds <- function(
+        api, genome = NULL, bed_type = NULL, limit = 1000,
+        offset = 0) {
     rsp <- api$list_beds_v1_bed_list_get(
         genome = genome, bed_type = bed_type,
         limit = limit, offset = offset
@@ -323,8 +325,9 @@ bb_bed_text_search <- function(api, query, limit = 10, offset = 0) {
 #' bb_to_granges(api, ex_bed$id)
 #'
 #' @export
-bb_to_granges <- function(api, bed_id, file_type = "bed", extra_cols = NULL,
-    quietly = TRUE) {
+bb_to_granges <- function(
+        api, bed_id, file_type = "bed", extra_cols = NULL,
+        quietly = TRUE) {
     stopifnot(file_type %in% c("bed", "bigbed"))
     metadata <- bb_metadata(api, bed_id, TRUE)
     file_path <- .get_file(metadata, file_type, "http", quietly)

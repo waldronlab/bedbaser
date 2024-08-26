@@ -39,8 +39,9 @@
 #' .get_file(md, "bed", "http")
 #'
 #' @noRd
-.get_file <- function(metadata, file_type = c("bed", "bigbed"),
-    access_type = c("s3", "http"), quietly = TRUE) {
+.get_file <- function(
+        metadata, file_type = c("bed", "bigbed"),
+        access_type = c("s3", "http"), quietly = TRUE) {
     file_details <- .format_metadata_files(metadata$files) |>
         filter(
             name == paste(file_type, "file", sep = "_"),
@@ -121,8 +122,9 @@
 #' .bed_file_to_granges(file_path, md)
 #'
 #' @noRd
-.bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
-    quietly = TRUE) {
+.bed_file_to_granges <- function(
+        file_path, metadata, extra_cols = NULL,
+        quietly = TRUE) {
     bed_format <- gsub("peak", "Peak", metadata$bed_format)
     nums <- str_replace(metadata$bed_type, "bed", "") |>
         str_split_1("\\+") |>
@@ -140,9 +142,9 @@
             extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
         }
         import(file_path,
-               format = "bed",
-               extraCols = extra_cols,
-               genome = metadata$genome_alias
+            format = "bed",
+            extraCols = extra_cols,
+            genome = metadata$genome_alias
         )
     } else {
         import(file_path, format = bed_format, genome = metadata$genome_alias)
