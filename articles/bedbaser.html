@@ -109,7 +109,7 @@ Service class to expose the BEDbase API.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in readLines(file, warn = readLines.warn): incomplete final line found</span></span>
-<span><span class="co">## on '/tmp/Rtmpt7Y573/fileb8c3aec9267'</span></span></code></pre>
+<span><span class="co">## on '/tmp/RtmpMHD8Tg/filebce4bce12cb'</span></span></code></pre>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="fu">operations</span><span class="op">(</span><span class="va">api</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $lending_page__get</span></span>
@@ -272,7 +272,7 @@ resource.</p>
 <span><span class="co">## <span style="color: #949494;">#   is_universe &lt;lgl&gt;, license_id &lt;chr&gt;</span></span></span></code></pre>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bb_list_bedsets.html">bb_list_bedsets</a></span><span class="op">(</span><span class="va">api</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,707 × 5</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,713 × 5</span></span></span>
 <span><span class="co">##    id            name          md5sum                        description bed_ids</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… e86829…</span></span>
@@ -285,7 +285,7 @@ resource.</p>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 2723d1…</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 56ce79…</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> excluderanges Excluderanges bf618e9e98842467fad39c7f86a9… Genomic co… 80d2b2…</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 1,697 more rows</span></span></span></code></pre>
+<span><span class="co">## <span style="color: #949494;"># ℹ 1,703 more rows</span></span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="examine-metadata">Examine metadata<a class="anchor" aria-label="anchor" href="#examine-metadata"></a>
@@ -546,7 +546,7 @@ create a GRanges object from the BEDbase <code>id</code>.</p>
 <code class="sourceCode R"><span><span class="va">id</span> <span class="op">&lt;-</span> <span class="st">"7816f807ffe1022f438e1f5b094acf1a"</span></span>
 <span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## Warning in readLines(file, warn = readLines.warn): incomplete final line found</span></span>
-<span><span class="co">## on '/tmp/Rtmpt7Y573/fileb8c7076b852'</span></span></code></pre>
+<span><span class="co">## on '/tmp/RtmpMHD8Tg/filebce259123'</span></span></code></pre>
 <div class="sourceCode" id="cb38"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gro</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_to_granges.html">bb_to_granges</a></span><span class="op">(</span><span class="va">api</span>, <span class="va">id</span><span class="op">)</span></span>
 <span><span class="va">gro</span></span></code></pre></div>
@@ -582,8 +582,10 @@ create a GRanges object from the BEDbase <code>id</code>.</p>
 <p>Download the <a href="https://hgdownload.cse.ucsc.edu/downloads.html#liftover" class="external-link">chain
 file</a> from UCSC.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">chain_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span><span class="st">"https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/"</span>,</span>
-<span>                    <span class="st">"mm10ToMm39.over.chain.gz"</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="va">chain_url</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/paste.html" class="external-link">paste0</a></span><span class="op">(</span></span>
+<span>    <span class="st">"https://hgdownload.cse.ucsc.edu/goldenPath/mm10/liftOver/"</span>,</span>
+<span>    <span class="st">"mm10ToMm39.over.chain.gz"</span></span>
+<span><span class="op">)</span></span>
 <span><span class="va">tmpdir</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">gz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"mm10ToMm39.over.chain.gz"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">chain_url</span>, <span class="va">gz</span><span class="op">)</span></span>
@@ -682,16 +684,16 @@ for the GRanges object.</p>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] jsonlite_1.8.8              magrittr_2.0.3             </span></span>
 <span><span class="co">##   [3] rmarkdown_2.28              fs_1.6.4                   </span></span>
-<span><span class="co">##   [5] BiocIO_1.15.1               zlibbioc_1.51.1            </span></span>
+<span><span class="co">##   [5] BiocIO_1.15.2               zlibbioc_1.51.1            </span></span>
 <span><span class="co">##   [7] ragg_1.3.2                  vctrs_0.6.5                </span></span>
 <span><span class="co">##   [9] memoise_2.0.1               Rsamtools_2.21.1           </span></span>
 <span><span class="co">##  [11] RCurl_1.98-1.16             progress_1.2.3             </span></span>
 <span><span class="co">##  [13] htmltools_0.5.8.1           S4Arrays_1.5.7             </span></span>
-<span><span class="co">##  [15] BiocBaseUtils_1.7.0         lambda.r_1.2.4             </span></span>
+<span><span class="co">##  [15] BiocBaseUtils_1.7.1         lambda.r_1.2.4             </span></span>
 <span><span class="co">##  [17] curl_5.2.1                  SparseArray_1.5.31         </span></span>
 <span><span class="co">##  [19] sass_0.4.9                  bslib_0.8.0                </span></span>
 <span><span class="co">##  [21] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
-<span><span class="co">##  [23] httr2_1.0.2                 futile.options_1.0.1       </span></span>
+<span><span class="co">##  [23] httr2_1.0.3                 futile.options_1.0.1       </span></span>
 <span><span class="co">##  [25] cachem_1.1.0                GenomicAlignments_1.41.0   </span></span>
 <span><span class="co">##  [27] mime_0.12                   lifecycle_1.0.4            </span></span>
 <span><span class="co">##  [29] pkgconfig_2.0.3             Matrix_1.7-0               </span></span>
@@ -725,13 +727,13 @@ for the GRanges object.</p>
 <span><span class="co">##  [85] DT_0.33                     stringi_1.8.4              </span></span>
 <span><span class="co">##  [87] UCSC.utils_1.1.0            yaml_2.3.10                </span></span>
 <span><span class="co">##  [89] evaluate_0.24.0             codetools_0.2-20           </span></span>
-<span><span class="co">##  [91] tibble_3.2.1                AnVILBase_0.99.25          </span></span>
+<span><span class="co">##  [91] tibble_3.2.1                AnVILBase_0.99.26          </span></span>
 <span><span class="co">##  [93] graph_1.83.0                BiocManager_1.30.24        </span></span>
 <span><span class="co">##  [95] cli_3.6.3                   AnVIL_1.17.11              </span></span>
 <span><span class="co">##  [97] xtable_1.8-4                systemfonts_1.1.0          </span></span>
 <span><span class="co">##  [99] jquerylib_0.1.4             Rcpp_1.0.13                </span></span>
 <span><span class="co">## [101] dbplyr_2.5.0                png_0.1-8                  </span></span>
-<span><span class="co">## [103] XML_3.99-0.17               rapiclient_0.1.5           </span></span>
+<span><span class="co">## [103] XML_3.99-0.17               rapiclient_0.1.6           </span></span>
 <span><span class="co">## [105] parallel_4.4.1              pkgdown_2.1.0.9000         </span></span>
 <span><span class="co">## [107] readr_2.1.5                 blob_1.2.4                 </span></span>
 <span><span class="co">## [109] prettyunits_1.2.0           bitops_1.0-8               </span></span>
