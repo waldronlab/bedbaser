@@ -12,5 +12,5 @@ Install bedbaser using `BiocManager`.
 if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
 }
-BiocManager::install("bedbaser", dependencies = TRUE)
+BiocManager::install("bedbaser")
 ```

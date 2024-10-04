@@ -34,7 +34,7 @@ Install bedbaser using `r CRANpkg("BiocManager")` and load the package.
 if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
 }
-BiocManager::install("bedbaser", dependencies = TRUE)
+BiocManager::install("bedbaser")
 library(bedbaser)
 ```
 
@@ -169,7 +169,7 @@ packages.
 if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
 }
-BiocManager::install(c("liftOver", "rtracklayer"), dependencies = TRUE)
+BiocManager::install(c("liftOver", "rtracklayer"))
 
 library(liftOver)
 library(rtracklayer)
