@@ -88,7 +88,7 @@ test_that("bb_bed_text_search returns results scored against the query", {
 
 test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
     api <- BEDbase()
-    id <- "b7cb28278e4cba2dc62e51ddc70cfbfb"
+    id <- "95a593b8337074a334b425aba5e77d4c"
     md <- bb_metadata(api, id, TRUE)
     expect_equal("bed3+0", md$bed_type)
     gro <- bb_to_granges(api, id)
