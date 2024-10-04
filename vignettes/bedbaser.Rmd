@@ -16,7 +16,6 @@ vignette: >
 # Introduction
 
 ```{r library, include=FALSE}
-library(bedbaser)
 library(rtracklayer)
 library(R.utils)
 library(liftOver)
@@ -24,39 +23,28 @@ library(liftOver)
 
 bedbaser is an R API client for [BEDbase](https://bedbase.org) that provides
 access to the [BEDbase API](https://api.bedbase.org) and includes convenience
-functions, such to create GRanges and GRangesList objects.
+functions, such as to create GRanges and GRangesList objects.
 
-# Install bedbaser
+# Install bedbaser and create a BEDbase instance
 
-Install bedbaser using `r CRANpkg("BiocManager")` and load the package.
+Install bedbaser using `r CRANpkg("BiocManager")`.
 
 ```{r install, eval=FALSE}
 if (!"BiocManager" %in% rownames(installed.packages())) {
     install.packages("BiocManager")
 }
 BiocManager::install("bedbaser")
-library(bedbaser)
 ```
 
-# Create the BEDbase Service instance
-
-bedbaser uses the `r Biocpkg("AnVIL")` Service class to expose the BEDbase API.
+Load the package and create a BEDbase instance.
 
 ```{r bedbase}
+library(bedbaser)
+
 api <- BEDbase()
-head(operations(api))
 ```
 
-End points can be accessed with `$` and their results can be retrieved with
-`r CRANpkg("httr")`.
-
-```{r count_bed_record_bed_count_get}
-library(httr)
-rsp <- api$get_example_bed_record_v1_bed_example_get()
-content(rsp)
-```
-
-## Set the cache
+## (Optional) Set the cache
 
 Set the cache path with the environment variable `BEDBASER_CACHE`; otherwise,
 bedbaser will choose the default cache location.
@@ -68,7 +56,7 @@ Sys.setenv("BEDBASER_CACHE" = tempdir())
 # Convenience Functions
 
 bedbaser includes convenience functions prefixed with *bb_* to facilitate
-finding BED files, exploring their metadata, download files, and creating
+finding BED files, exploring their metadata, downloading files, and creating
 `GRanges` objects.
 
 ## Find a BED file or BEDset
@@ -155,6 +143,27 @@ Create a GRangesList given a BEDset id with `bb_to_grangeslist`.
 ```{r bb_to_grangeslist, message=FALSE}
 bedset_id <- "lola_hg38_ucsc_features"
 bb_to_grangeslist(api, bedset_id)
+```
+
+# Accessing BEDbase API endpoints
+
+Because bedbaser uses the `r Biocpkg("AnVIL")` Service class, it's possible to
+access any endpoint of the [BEDbase API](https://api.bedbase.org/v1/docs).
+
+```{r operations}
+show(api)
+```
+
+For example, to access a BED file's stats, access the endpoint with `$` and use
+`r CRANpkg("httr")` to get the result. `show` will display information about the
+endpoint.
+
+```{r service_class_example}
+library(httr)
+show(api$get_bed_stats_v1_bed__bed_id__metadata_stats_get)
+id <- "bbad85f21962bb8d972444f7f9a3a932"
+rsp <- api$get_bed_stats_v1_bed__bed_id__metadata_stats_get(id)
+content(rsp)
 ```
 
 # Example: Change genomic coordinate system with liftOver
