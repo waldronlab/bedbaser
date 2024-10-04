@@ -43,15 +43,17 @@
 #'
 #' @export
 BEDbase <- function() {
-    .BEDbase(
-        Service(
-            service = "bedbase",
-            host = "api.bedbase.org",
-            api_reference_version = .BEDBASE_API_REFERENCE_VERSION,
-            authenticate = FALSE,
-            package = "bedbaser",
-            api_url = character(),
-            api_reference_url = "https://api.bedbase.org/openapi.json",
+    suppressWarnings(
+        .BEDbase(
+            Service(
+                service = "bedbase",
+                host = "api.bedbase.org",
+                api_reference_version = .BEDBASE_API_REFERENCE_VERSION,
+                authenticate = FALSE,
+                package = "bedbaser",
+                api_url = character(),
+                api_reference_url = "https://api.bedbase.org/openapi.json",
+            )
         )
     )
 }
