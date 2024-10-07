@@ -50,15 +50,15 @@
 #' @noRd
 .download_and_cache <- function(url, quietly = TRUE) {
     bfc <- .get_cache()
-    rid <- bfcquery(bfc, url)$rid
+    rid <- bfcquery(bfc, url, "rname")$rid
     if (!length(rid)) {
         if (!quietly) {
             inform(paste("Downloading", url, "..."))
         }
-        rid <- names(bfcadd(bfc, url))
-    }
-    if (!isFALSE(bfcneedsupdate(bfc, rid))) {
-        bfcdownload(bfc, rid, ask = FALSE)
+        rid <- names(bfcadd(bfc,
+            rname = url, fpath = url, rtype = "web",
+            download = TRUE, verbose = !quietly
+        ))
     }
     bfcrpath(bfc, rids = rid)
 }

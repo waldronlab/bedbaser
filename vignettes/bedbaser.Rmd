@@ -133,7 +133,7 @@ bb_to_granges(api, bed_id)
 
 ```{r bb_to_granges_big_bed}
 ex_bed <- bb_example(api, "bed")
-bb_to_granges(api, ex_bed$id, "bigbed")
+bb_to_granges(api, ex_bed$id, "bigbed", quietly = FALSE)
 ```
 
 ## Import a BEDset into a GRangesList
