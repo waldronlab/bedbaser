@@ -18,7 +18,7 @@ if not found or id is not not 32 characters"><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -86,7 +86,6 @@ and metadata</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpHluQRB/filea842b5817bf'</span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">api</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_metadata</span><span class="op">(</span><span class="va">api</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
@@ -145,13 +144,13 @@ and metadata</p></dd>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">api</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_metadata</span><span class="op">(</span><span class="va">api</span>, <span class="va">ex_bedset</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "excluderanges"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gse246900"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Excluderanges"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "gse246900"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $md5sum</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "bf618e9e98842467fad39c7f86a9c73f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ab910211c1b997df45d8072a742f32c4"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $statistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
@@ -160,248 +159,26 @@ and metadata</p></dd>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $description</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Genomic coordinates of problematic genomic regions"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "Data from [GEO GSE246900](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE246900)\nTET-mediated DNA demethylation influences histone enhancers H3K4me1 and H3K27ac in breast cancer"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e868295c2727b004fdee15f733108083"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2e72871cd5eb7f33508b6ba8a401695f"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eef2eb209a52fe6d8e952fd48e521800"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "40dde5fd922804c4851822c0cceff27c"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[3]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ba535165a4226cf8edcc92599d194895"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "4243dbf1e8c81e1004584b278471a4c0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[4]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "6bc6da7263554de66fe4c6c48d5b69a6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d6f44f6024f8969a915a2358a20eb3d6"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[5]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a09cb004586986ec087afb6506d16d79"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "eb1db3a0f7f54d40aadfb58ca0e893cb"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[6]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "608827efc82fcaa4b0bfc65f590ffef8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[7]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "664c4707a640bef29d46e1b396325e29"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[8]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2723d1b4a309d263f71d6cd1604c5a92"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[9]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "56ce7952a21cb4333d71e3a741bca1de"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[10]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "80d2b2581bb25fa6b73ec56c11969fb3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[11]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "972395972e5d775eff6132a93f077c0b"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[12]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "fac94d97885839c1c1da4a6bd739741f"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[13]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "41cdd50db6c8bf143b13b439274188e6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[14]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d0d8bd464aca2ed89769658d4981cc3d"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[15]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "acc89308d731cb3c6caaee83294d51a1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[16]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "854d6512f3292ce8841affd98b692e40"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[17]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "540421163cc088c4b7496437b3958121"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[18]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "47766130a7a0f840b18eae52406b8890"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[19]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "04db9366dbfe6cb21482b5c2335a5587"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[20]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "396cbd90a380ca2df123951243f07b60"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[21]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e0d519f0338f2530d5969a6d7732a0e8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[22]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2bd9fa2c96a0053c1dcc1a6c94b43ac2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[23]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "679b93342aeb8b98c0f0340b2ea5fc66"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[24]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e10b4c0f816e4b44444cc011e104331f"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[25]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "11392eac9b7b64eb33995248a71baca4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[26]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ce9f6e8adf5779edb632245a166b92bd"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[27]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "696d430f94087e8e87d6b81a9766ad35"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[28]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "34da9b88217847183db132c11dddb030"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[29]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "790c14caaf5786da4b4c7496e4157e12"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[30]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "b56d842d5727f1cfaaccb0bdc1bba6ad"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[31]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ee9d11eb66ba83ccd6805b61bc5a7bf7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[32]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0c37797e240c2fe9bd92f96f7fccd1d2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[33]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e3dea8b314b637257e98be51338af5c5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[34]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "027d48df8ac311e3650c56db30b55063"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[35]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "18ff4826790b4a3262318e0c75628106"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[36]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "4031fd4a2cf5648cf90b91316251c0b4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[37]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "4c00872749ba54e12f2ab253a701d8d4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[38]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "f3b644b740da34549eb8309c9e7a1950"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[39]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7d73b4142096e8a558701f1e84dcac53"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[40]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3d6b5e467217b241f01e77a08cdb7bc2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[41]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "738c85a7458da55ccac02998c521e067"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[42]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "a9a283a6060d573b099f38ea4add3cdb"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[43]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "0f77337c25943b060e57ee23224e2fc4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[44]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "b62b6f18d7ab2fe0ad46824d24b76a1a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[45]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "401f2d80ff68d3cf339b3a2609871042"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[46]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3d6d5945e7ec7ea5c9866e0650de5a5b"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[47]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "8e3c9b1981501402123e669fc893868b"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[48]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "9ad4bb4e304f2596ed0a7020ed5c9ff3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[49]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "53983b27ce934a57cd950be9872a8506"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[50]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "c8fd5d391715404bb3461e857c16a5b0"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[51]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "96819fd0a250f9754f54fa7f0a6ac27d"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[52]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "93501be47465eb2ece3530e55c7cd37e"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[53]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "6d8b1d608bc245cd4f79b44cb9862477"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[54]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d3eeb09fefd213ba463b8bc72b6111b9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[55]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "001997a821e4295f70fd03effcb94a6b"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[56]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "8d84648489c1373d8a73b4a90e6f155a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[57]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e6cd0dbb252be66f8c2bdb0d23ed431c"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[58]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ec8179a55ab7e649e15762d0e8cb5378"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[59]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "416edd392d76e86dbfd04b5d342f94f7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[60]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "4c0f7f4d65e5468ee2167cf905fed816"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[61]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1dab13704169300d76bf67ddc9187344"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[62]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "8b769f337f017ac5b90d1c5c30ca3fc3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[63]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2ea082d200401d1d41883fa63f0cf3b1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[64]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "57f3487eba547393d5b5185baee5f6b5"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[65]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "5b0eae3235a05e3580ac3876df5c2bac"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[66]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "3eefea27c4a699f885e6edf67ee661c6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[67]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "59daa0c66214c301eef55a7b4d26cd69"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[68]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ab14b63f69b6b47a07902f945d030955"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[69]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7e82e2791b0337db26666af05d51b6c2"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[70]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "8e26147a2d3a215a46a9bca82494f289"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[71]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "43bd1a24dcfe0c64d5cd932cd9ac41a9"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[72]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "6dc42be3f70d539ab9ddad13348b18f1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[73]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "e9f74ff28805fc017e4e73177d4f3829"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[74]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "6da08e8ee4c14571ca3d77ee49093bef"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[75]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "7816f807ffe1022f438e1f5b094acf1a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[76]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "42ad8a4a12c47f7031d6b162df3bda5a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[77]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ae9297868d58f6ab7c55682ca15aa4ef"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[78]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "254e1e24d6e49a338808882ea3d90420"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[79]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1ae4b93b59c444e913fd5317b751bbaa"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $bed_ids[[80]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "f28a2f1b94071c7f48b37e1152d8d487"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "f2695ae45fd6825ad41c015a83b3ecd0"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
@@ -419,7 +196,7 @@ and metadata</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
       </footer></div>

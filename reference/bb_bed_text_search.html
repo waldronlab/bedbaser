@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.1</span>
       </span>
     </div>
 
@@ -87,22 +87,21 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">api</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>incomplete final line found on '/tmp/RtmpHluQRB/filea841664a512'</span>
 <span class="r-in"><span><span class="fu">bb_bed_text_search</span><span class="op">(</span><span class="va">api</span>, <span class="st">"hg38"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 31</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 28</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id                       payload.antibody payload.cell_line payload.cell_type</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0a73b0e5-12b7-20fa-9bad… <span style="color: #949494;">"</span>NRSF<span style="color: #949494;">"</span>           <span style="color: #949494;">""</span>                SK-N-SH          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> d6a66d98-334a-fd2e-e364… <span style="color: #949494;">"</span>USF1_(SC-8983)<span style="color: #949494;">"</span> <span style="color: #949494;">""</span>                SK-N-SH_RA       </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 9f5adc9e-913c-cd80-3b30… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                skeletal muscle …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> d80a4228-f374-0dd1-d790… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                skeletal muscle …</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 97637ef1-adac-0179-5061… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                RPMI7951         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 0316154c-3ad1-e495-06ae… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                RPMI7951         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 8a6d090c-d379-f6f8-b007… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                SK-N-MC          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> f6a64a9e-ee14-dcca-0b74… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                SK-N-MC          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 259b6fce-fca9-d78b-6207… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                SK-N-MC          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 8fb221f9-ed96-3f88-61d7… <span style="color: #949494;">""</span>               <span style="color: #949494;">""</span>                RPMI7951         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 27 more variables: payload.description &lt;chr&gt;, payload.exp_protocol &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 0a73b0e5-12b7-20fa-9bad… NRSF             <span style="color: #949494;">""</span>                SK-N-SH          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> d6a66d98-334a-fd2e-e364… USF1_(SC-8983)   <span style="color: #949494;">""</span>                SK-N-SH_RA       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> ddc1d630-7b49-7b23-2e51… SRF              <span style="color: #949494;">""</span>                H1-hESC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 39244497-653c-f2d3-6830… FOXP2            <span style="color: #949494;">""</span>                SK-N-MC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> c90bef55-99b2-b029-3c84… TEAD4_(SC-10118… <span style="color: #949494;">""</span>                H1-hESC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 8b72f010-e6a4-f087-d94f… SP2_(SC-643)     <span style="color: #949494;">""</span>                HepG2            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> e739e09d-6f18-acaa-dfdf… RFX5_(200-401-1… <span style="color: #949494;">""</span>                H1-hESC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> ea2fec94-be5a-4be8-af9e… JunD             <span style="color: #949494;">""</span>                H1-hESC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> df07b430-d8a4-7e55-5c0a… p300             <span style="color: #949494;">""</span>                SK-N-SH_RA       </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 8fb6135c-8b0d-7541-6680… c-Jun            <span style="color: #949494;">""</span>                H1-hESC          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: payload.description &lt;chr&gt;, payload.exp_protocol &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.genome &lt;chr&gt;, payload.genotype &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.global_experiment_id &lt;chr&gt;, payload.global_sample_id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.library_source &lt;chr&gt;, payload.organism &lt;chr&gt;,</span></span>
@@ -124,7 +123,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
 </div>
 
       </footer></div>
