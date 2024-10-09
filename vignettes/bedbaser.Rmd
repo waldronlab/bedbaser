@@ -210,7 +210,7 @@ download.file(chain_url, gz)
 gunzip(gz, remove = FALSE)
 ```
 
-Import the chain, set the sequence levels Style, and set the genome for the
+Import the chain, set the sequence levels style, and set the genome for the
 GRanges object.
 
 ```{r convertCoordinates_convert, message=FALSE}
