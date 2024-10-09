@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.2</span>
       </span>
     </div>
 
@@ -570,7 +570,7 @@ file</a> from UCSC.</p>
 <span><span class="va">gz</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"mm10ToMm39.over.chain.gz"</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/download.file.html" class="external-link">download.file</a></span><span class="op">(</span><span class="va">chain_url</span>, <span class="va">gz</span><span class="op">)</span></span>
 <span><span class="fu">gunzip</span><span class="op">(</span><span class="va">gz</span>, remove <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
-<p>Import the chain, set the sequence levels Style, and set the genome
+<p>Import the chain, set the sequence levels style, and set the genome
 for the GRanges object.</p>
 <div class="sourceCode" id="cb40"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtracklayer/man/Chain-class.html" class="external-link">import.chain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"mm10ToMm39.over.chain"</span><span class="op">)</span><span class="op">)</span></span>
@@ -639,7 +639,7 @@ for the GRanges object.</p>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
 <span><span class="co">##  [1] httr_1.4.7                             </span></span>
-<span><span class="co">##  [2] bedbaser_0.99.0                        </span></span>
+<span><span class="co">##  [2] bedbaser_0.99.2                        </span></span>
 <span><span class="co">##  [3] liftOver_1.29.0                        </span></span>
 <span><span class="co">##  [4] Homo.sapiens_1.3.1                     </span></span>
 <span><span class="co">##  [5] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
