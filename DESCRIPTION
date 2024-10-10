@@ -1,6 +1,6 @@
 Package: bedbaser
 Title: A BEDbase client
-Version: 0.99.3
+Version: 0.99.4
 Authors@R: c(
     person(
         given = "Jen",
@@ -24,7 +24,7 @@ BugReports: https://github.com/jwokaty/bedbaser/issues
 biocViews: Software, DataImport, ThirdPartyClient
 License: Artistic License 2.0
 Imports:
-    AnVIL,
+    AnVIL (>= 1.16.0),
     BiocFileCache,
     dplyr,
     GenomicRanges,
