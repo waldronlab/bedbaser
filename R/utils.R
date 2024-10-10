@@ -141,12 +141,34 @@
             }
             extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
         }
-        import(file_path,
-            format = "bed",
-            extraCols = extra_cols,
-            genome = metadata$genome_alias
-        )
+        if (quietly) {
+            suppressMessages(
+                import(file_path,
+                    format = "bed",
+                    extraCols = extra_cols,
+                    genome = metadata$genome_alias
+                )
+            )
+        } else {
+            import(file_path,
+                format = "bed",
+                extraCols = extra_cols,
+                genome = metadata$genome_alias
+            )
+        }
     } else {
-        import(file_path, format = bed_format, genome = metadata$genome_alias)
+        if (quietly) {
+            suppressMessages(
+                import(file_path,
+                    format = bed_format,
+                    genome = metadata$genome_alias
+                )
+            )
+        } else {
+            import(file_path,
+                format = bed_format,
+                genome = metadata$genome_alias
+            )
+        }
     }
 }

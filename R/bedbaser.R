@@ -340,7 +340,11 @@ bb_to_granges <- function(
         if (.Platform$OS.type == "windows") {
             warn("This feature does not work on Windows.")
         } else {
-            import.bb(file_path, format = "bigBed")
+            if (quietly) {
+                suppressMessages(import.bb(file_path, format = "bigBed"))
+            } else {
+                import.bb(file_path, format = "bigBed")
+            }
         }
     }
 }
