@@ -1,30 +1,56 @@
 #' Get the cache
 #'
-#' Uses BEDBASER_CACHE for cache path if set; otherwise, it uses the default R
+#' Uses BEDBASE_CACHE for cache path if set; otherwise, it uses the default R
 #' cache path for bedbaser.
 #'
 #' @param quietly logical() (default TRUE) display message
 #'
-#' @importFrom BiocFileCache BiocFileCache bfccache
+#' @importFrom BiocFileCache BiocFileCache
 #' @importFrom rlang inform
 #' @importFrom tools R_user_dir
 #'
 #' @returns BiocFileCache object
 #'
 #' @examples
-#' Sys.setenv("BEDBASER_CACHE" = ".cache/bedbaser")
+#' Sys.setenv("BEDBASE_CACHE" = ".cache/bedbaser")
 #' .get_cache()
 #'
 #' @noRd
 .get_cache <- function(quietly = TRUE) {
-    bfc <- ifelse(Sys.getenv("BEDBASER_CACHE") != "",
-        Sys.getenv("BEDBASER_CACHE"),
+    path <- ifelse(Sys.getenv("BEDBASE_CACHE") != "",
+        Sys.getenv("BEDBASE_CACHE"),
         R_user_dir("bedbaser", which = "cache")
     )
     if (!quietly) {
-        inform(paste("Using", bfccache()))
+        inform(paste("Using", path))
     }
-    BiocFileCache(bfc)
+    BiocFileCache(path)
+}
+
+#' Set the cache
+#'
+#' Set BEDBASE_CACHE to path
+#'
+#' @importFrom BiocFileCache BiocFileCache
+#' @importFrom rlang inform
+#'
+#' @returns BiocFileCache object
+#'
+#' @examples
+#' .set_cache(tempdir())
+#'
+#' @noRd
+.set_cache <- function(path, quietly = TRUE) {
+    if (is.null(path))
+        bfc <- .get_cache(quietly)
+    else {
+        Sys.setenv("BEDBASE_CACHE" = path)
+        if (!quietly) {
+            inform(paste("Using", path))
+        }
+        bfc <-BiocFileCache(path)
+    }
+    bfc
 }
 
 #' Retrieve path from cache or download file and cache

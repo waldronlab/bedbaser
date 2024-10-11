@@ -33,6 +33,8 @@
 #' Set the environment variable `BEDBASER_CACHE` to alter the cache path for
 #' downloaded BED files.
 #'
+#' @param path string() (default NULL) set the cache directory
+#'
 #' @importFrom AnVIL Service
 #' @importFrom rlang warn
 #'
@@ -42,7 +44,8 @@
 #' BEDbase()
 #'
 #' @export
-BEDbase <- function() {
+BEDbase <- function(path = NULL) {
+    .set_cache(path)
     suppressWarnings(
         .BEDbase(
             Service(

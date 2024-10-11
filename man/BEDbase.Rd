@@ -4,7 +4,10 @@
 \alias{BEDbase}
 \title{An R client for BEDbase}
 \usage{
-BEDbase()
+BEDbase(path = NULL)
+}
+\arguments{
+\item{path}{string() (default NULL) set the cache directory}
 }
 \value{
 Service object
