@@ -41,18 +41,13 @@ Load the package and create a BEDbase instance.
 ```{r bedbase}
 library(bedbaser)
 
-api <- BEDbase(path = tempdir())
+api <- BEDbase()
 ```
 
 ## (Optional) Set the cache
 
-Set the cache path with the environment variable `BEDBASE_CACHE` or pass to the
-constructor when creating an instance. If not set, bedbaser will choose the
-default cache location.
-
-```{r BEDBASE_CACHE, eval=FALSE}
-Sys.setenv("BEDBASE_CACHE" = tempdir())
-```
+Set the cache path with the argument `cache_path`; otherwise, bedbaser will
+choose the default cache location.
 
 # Convenience Functions
 

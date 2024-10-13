@@ -1,5 +1,13 @@
 # test that there's an internet connection
 
+test_that("setCache changes cache", {
+    api <- BEDbase()
+    path <- tempdir()
+    expect_true(BiocFileCache::bfccache(getCache(api)) != path)
+    api <- setCache(api, path)
+    expect_true(BiocFileCache::bfccache(getCache(api)) == path)
+})
+
 test_that("bb_example has bed_format of 'bed' given rec_type 'bed'", {
     ex_bed <- bb_example(BEDbase(), "bed")
     expect_equal("bed", ex_bed$bed_format)

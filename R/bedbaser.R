@@ -5,6 +5,7 @@
 #' @returns BEDbase class instance
 .BEDbase <- setClass(
     "BEDbase",
+    slots = c("cache"),
     contains = "Service"
 )
 
@@ -22,6 +23,8 @@
 #'
 #' The convenience functions are as follows
 #' * `bedbaser::BEDbase()`: API service constructor
+#' * `bedbaser::getCache()`: Retrieve cache
+#' * `bedbaser::setCache()`: Set path to cache
 #' * `bedbaser::bb_example()`: Retrieve an example BED file or BEDset
 #' * `bedbaser::bb_metadata()`: Retrieve metadata for a BED file or BEDset
 #' * `bedbaser::bb_list_beds()`: List all BED files
@@ -30,24 +33,24 @@
 #' * `bedbaser::bb_bed_text_search()`: Search BED files by text
 #' * `bedbaser::bb_to_granges()`: Create a `GRanges` object from a BED id
 #' * `bedbaser::bb_to_grangeslist()`: Create a `GrangesList` from a BEDset id
-#' Set the environment variable `BEDBASER_CACHE` to alter the cache path for
-#' downloaded BED files.
 #'
-#' @param path string() (default NULL) set the cache directory
+#' @param cache_path string() cache
 #'
 #' @importFrom AnVIL Service
 #' @importFrom rlang warn
 #'
-#' @returns Service object
+#' @returns BEDbase object
 #'
 #' @examples
 #' BEDbase()
 #'
 #' @export
-BEDbase <- function(path = NULL) {
-    .set_cache(path)
+BEDbase <- function(cache_path) {
+    if (missing(cache_path))
+        cache_path <- tools::R_user_dir("bedbaser", which = "cache")
     suppressWarnings(
         .BEDbase(
+            cache = BiocFileCache::BiocFileCache(cache_path),
             Service(
                 service = "bedbase",
                 host = "api.bedbase.org",
@@ -60,6 +63,69 @@ BEDbase <- function(path = NULL) {
         )
     )
 }
+
+#' @rdname BEDbase
+#'
+#' @param x BEDbase object
+#' @param quietly (default TRUE) display messages
+#'
+#' @export
+setGeneric("getCache", function(x, quietly = TRUE) standardGeneric("getCache"))
+
+#' Return cache path
+#'
+#' @param x BEDbase object
+#' @param quietly (default TRUE) display messages
+#'
+#' @return BiocFileCache cache of BED files
+#'
+#' @examples
+#' api <- BEDbase(tempdir())
+#' getCache(api)
+#'
+#' @export
+setMethod(
+    "getCache", "BEDbase",
+    function(x, quietly = TRUE) {
+        if (quietly)
+            BiocFileCache::bfcinfo(x@cache)
+         x@cache
+    }
+)
+
+#' @rdname BEDbase
+#'
+#' @param x BEDbase object
+#' @param cache_path character()
+#' @param quietly (default TRUE) display messages
+#'
+#' @export
+setGeneric("setCache",
+    function(x, cache_path, quietly = TRUE) standardGeneric("setCache")
+)
+
+#' Set cache path
+#'
+#' @param x BEDbase object
+#' @param cache_path character()
+#' @param quietly (default TRUE) display messages
+#'
+#' @return BiocFileCache cache of BED files
+#'
+#' @examples
+#' api <- BEDbase(tempdir())
+#' api <- setCache(api, "/tmp")
+#'
+#' @export
+setMethod(
+    "setCache", "BEDbase",
+    function(x, cache_path, quietly = TRUE) {
+        x@cache <- BiocFileCache::BiocFileCache(cache_path)
+        if (quietly)
+            BiocFileCache::bfcinfo(x@cache)
+        x
+    }
+)
 
 #' Display API
 #'
@@ -335,7 +401,7 @@ bb_to_granges <- function(
         quietly = TRUE) {
     stopifnot(file_type %in% c("bed", "bigbed"))
     metadata <- bb_metadata(api, bed_id, TRUE)
-    file_path <- .get_file(metadata, file_type, "http", quietly)
+    file_path <- .get_file(metadata, file_type, "http", getCache(api), quietly)
 
     if (file_type == "bed") {
         .bed_file_to_granges(file_path, metadata, extra_cols, quietly)
