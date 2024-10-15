@@ -1,6 +1,6 @@
 Package: bedbaser
 Title: A BEDbase client
-Version: 0.99.4
+Version: 0.99.8
 Authors@R: c(
     person(
         given = "Jen",

@@ -1,5 +1,13 @@
 # test that there's an internet connection
 
+test_that("setCache changes cache", {
+    api <- BEDbase()
+    path <- tempdir()
+    expect_true(BiocFileCache::bfccache(getCache(api)) != path)
+    api <- setCache(api, path)
+    expect_true(BiocFileCache::bfccache(getCache(api)) == path)
+})
+
 test_that("bb_example has bed_format of 'bed' given rec_type 'bed'", {
     ex_bed <- bb_example(BEDbase(), "bed")
     expect_equal("bed", ex_bed$bed_format)
@@ -162,4 +170,17 @@ test_that("bb_to_grangeslist creates a GRangesList", {
     grl <- bb_to_grangeslist(api, "lola_hg38_ucsc_features")
     expect_equal("CompressedGRangesList", class(grl)[1])
     expect_equal(10, length(grl))
+})
+
+test_that("bb_save saves bed files to a path", {
+    api <- BEDbase()
+    path <- tempdir()
+    dir.create(path)
+    bed <- bb_example(api, "bed")
+    bb_save(api, bed$id, path, quietly = TRUE)
+    expect_true(file.exists(file.path(path, paste0(bed$id, ".bed.gz"))))
+    bedset <- bb_example(api, "bedset")
+    bb_save(api, bedset$id, path, quietly = TRUE)
+    for (id in bedset$bed_ids)
+        expect_true(file.exists(file.path(path, paste0(id, ".bed.gz"))))
 })

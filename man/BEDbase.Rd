@@ -2,12 +2,25 @@
 % Please edit documentation in R/bedbaser.R
 \name{BEDbase}
 \alias{BEDbase}
+\alias{getCache}
+\alias{setCache}
 \title{An R client for BEDbase}
 \usage{
-BEDbase()
+BEDbase(cache_path)
+
+getCache(x, quietly = TRUE)
+
+setCache(x, cache_path, quietly = TRUE)
+}
+\arguments{
+\item{cache_path}{character()}
+
+\item{x}{BEDbase object}
+
+\item{quietly}{(default TRUE) display messages}
 }
 \value{
-Service object
+BEDbase object
 }
 \description{
 bedbaser exposes the BEDbase API and includes convenience
@@ -18,6 +31,8 @@ functions for common tasks, such as to import a BED file by id into a
 The convenience functions are as follows
 \itemize{
 \item \code{bedbaser::BEDbase()}: API service constructor
+\item \code{bedbaser::getCache()}: Retrieve cache
+\item \code{bedbaser::setCache()}: Set path to cache
 \item \code{bedbaser::bb_example()}: Retrieve an example BED file or BEDset
 \item \code{bedbaser::bb_metadata()}: Retrieve metadata for a BED file or BEDset
 \item \code{bedbaser::bb_list_beds()}: List all BED files
@@ -26,8 +41,7 @@ The convenience functions are as follows
 \item \code{bedbaser::bb_bed_text_search()}: Search BED files by text
 \item \code{bedbaser::bb_to_granges()}: Create a \code{GRanges} object from a BED id
 \item \code{bedbaser::bb_to_grangeslist()}: Create a \code{GrangesList} from a BEDset id
-Set the environment variable \code{BEDBASER_CACHE} to alter the cache path for
-downloaded BED files.
+\item \code{bedbaser::bb_save()}: Save a BED file to a path.
 }
 }
 \examples{

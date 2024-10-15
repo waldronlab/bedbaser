@@ -20,11 +20,14 @@
         unnest_wider(access_url)
 }
 
-#' Get a file from BEDbase
+#' Save a file from BEDbase to the cache or a path
+#'
+#' Will create directories that do not exist when saving
 #'
 #' @param metadata list() full metadata
 #' @param file_type character() bed or bigbed
 #' @param access_type character() s3 or http
+#' @param cache_or_path BiocFileCache or character() cache or save path
 #' @param quietly logical() (default TRUE) display messages
 #'
 #' @importFrom R.utils gunzip
@@ -36,24 +39,33 @@
 #' api <- BEDbase()
 #' ex_bed <- bb_example(api, "bed")
 #' md <- bb_metadata(api, ex_bed$id, TRUE)
-#' .get_file(md, "bed", "http")
+#' .get_file(md, "bed", "http", tempdir())
 #'
 #' @noRd
 .get_file <- function(
         metadata, file_type = c("bed", "bigbed"),
-        access_type = c("s3", "http"), quietly = TRUE) {
+        access_type = c("s3", "http"), cache_or_path, quietly = TRUE) {
     file_details <- .format_metadata_files(metadata$files) |>
         filter(
             name == paste(file_type, "file", sep = "_"),
             access_id == access_type
         )
-    gzipfile <- .download_and_cache(file_details$url, quietly)
-    tryCatch(
-        gunzip(gzipfile, remove = FALSE),
-        error = function(e) {
-            gsub(".gz", "", gzipfile)
-        }
-    )
+    if (class(cache_or_path) == "BiocFileCache") {
+        cached_file <- .download_to_cache(file_details$url, cache_or_path, quietly)
+        bedbase_file <- tryCatch(
+            gunzip(cached_file, remove = FALSE),
+            error = function(e) {
+                gsub(".gz", "", cached_file)
+            }
+        )
+    } else {
+        if (!dir.exists(cache_or_path))
+            dir.create(cache_or_path, recursive = TRUE)
+        url_parts <- unlist(strsplit(file_details$url, "/"))
+        bedbase_file <- file.path(cache_or_path, url_parts[length(url_parts)]) 
+        utils::download.file(file_details$url, bedbase_file, quiet = quietly)
+    }
+    bedbase_file
 }
 
 #' Get extra_cols
