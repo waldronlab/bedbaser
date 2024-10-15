@@ -20,7 +20,9 @@
         unnest_wider(access_url)
 }
 
-#' Get a file from BEDbase
+#' Save a file from BEDbase to the cache or a path
+#'
+#' Will create directories that do not exist when saving
 #'
 #' @param metadata list() full metadata
 #' @param file_type character() bed or bigbed
@@ -57,9 +59,11 @@
             }
         )
     } else {
+        if (!dir.exists(cache_or_path))
+            dir.create(cache_or_path, recursive = TRUE)
         url_parts <- unlist(strsplit(file_details$url, "/"))
         bedbase_file <- file.path(cache_or_path, url_parts[length(url_parts)]) 
-        utils::download.file(file_details$url, bedbase_file)
+        utils::download.file(file_details$url, bedbase_file, quiet = quietly)
     }
     bedbase_file
 }

@@ -41,6 +41,7 @@ The convenience functions are as follows
 \item \code{bedbaser::bb_bed_text_search()}: Search BED files by text
 \item \code{bedbaser::bb_to_granges()}: Create a \code{GRanges} object from a BED id
 \item \code{bedbaser::bb_to_grangeslist()}: Create a \code{GrangesList} from a BEDset id
+\item \code{bedbaser::bb_save()}: Save a BED file to a path.
 }
 }
 \examples{
