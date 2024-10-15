@@ -10,7 +10,7 @@
 #'     bfcquery bfcrpath
 #' @importFrom rlang inform
 #'
-#' @returns filepath character()
+#' @return filepath character()
 #'
 #' @examples
 #' url <- paste0(

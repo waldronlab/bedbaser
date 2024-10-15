@@ -5,7 +5,7 @@
 #' @importFrom dplyr bind_rows
 #' @importFrom tidyr unnest_wider
 #'
-#' @returns tibble() file metadata
+#' @return tibble() file metadata
 #'
 #' @examples
 #' api <- BEDbase()
@@ -33,7 +33,7 @@
 #' @importFrom R.utils gunzip
 #' @importFrom dplyr filter
 #'
-#' @returns character() file path
+#' @return character() file path
 #'
 #' @examples
 #' api <- BEDbase()
@@ -77,7 +77,7 @@
 #' @importFrom stats setNames
 #' @importFrom utils read.table
 #'
-#' @returns vector representing extraCols for rtracklayer
+#' @return vector representing extraCols for rtracklayer
 #'
 #' @examples
 #' id <- "608827efc82fcaa4b0bfc65f590ffef8"
@@ -124,7 +124,7 @@
 #' @importFrom rtracklayer import
 #' @importFrom stringr str_replace str_split_1
 #'
-#' @returns GRanges() object representing BED
+#' @return GRanges() object representing BED
 #'
 #' @examples
 #' api <- BEDbase()

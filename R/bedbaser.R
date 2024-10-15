@@ -2,7 +2,7 @@
 #'
 #' @importFrom methods new
 #'
-#' @returns BEDbase class instance
+#' @return BEDbase class instance
 .BEDbase <- setClass(
     "BEDbase",
     slots = c("cache"),
@@ -40,7 +40,7 @@
 #' @importFrom AnVIL Service
 #' @importFrom rlang warn
 #'
-#' @returns BEDbase object
+#' @return BEDbase object
 #'
 #' @examples
 #' BEDbase()
@@ -137,7 +137,7 @@ setMethod(
 #' @importFrom AnVIL operations
 #' @importFrom methods callNextMethod
 #'
-#' @returns list() API end points
+#' @return list() API end points
 #'
 #' @examples
 #' api <- BEDbase()
@@ -158,7 +158,7 @@ setMethod(
 #'
 #' @importFrom httr content
 #'
-#' @returns list() bed or bedset
+#' @return list() bed or bedset
 #'
 #' @examples
 #' api <- BEDbase()
@@ -191,7 +191,7 @@ bb_example <- function(api, rec_type = c("bed", "bedset")) {
 #' @importFrom httr content
 #' @importFrom rlang abort
 #'
-#' @returns list() metadata
+#' @return list() metadata
 #'
 #' @examples
 #' api <- BEDbase()
@@ -238,7 +238,7 @@ bb_metadata <- function(api, id, full = FALSE) {
 #' @importFrom httr content
 #' @importFrom purrr map_depth
 #'
-#' @returns tibble() of BED records
+#' @return tibble() of BED records
 #'
 #' @examples
 #' api <- BEDbase()
@@ -278,7 +278,7 @@ bb_list_beds <- function(
 #' @importFrom purrr map_depth
 #' @importFrom tidyr unnest
 #'
-#' @returns tibble() of BEDset records
+#' @return tibble() of BEDset records
 #'
 #' @examples
 #' api <- BEDbase()
@@ -311,7 +311,7 @@ bb_list_bedsets <- function(api, query = NULL, limit = 1000, offset = 0) {
 #' @importFrom dplyr bind_rows
 #' @importFrom tibble tibble
 #'
-#' @returns list() BED record identifiers
+#' @return list() BED record identifiers
 #'
 #' @examples
 #' api <- BEDbase()
@@ -348,7 +348,7 @@ bb_beds_in_bedset <- function(api, bedset_id) {
 #' @importFrom tibble tibble
 #' @importFrom utils URLencode
 #'
-#' @returns tibble()
+#' @return tibble()
 #'
 #' @examples
 #' api <- BEDbase()
@@ -389,7 +389,7 @@ bb_bed_text_search <- function(api, query, limit = 10, offset = 0) {
 #' @importFrom rtracklayer import.bb
 #' @importFrom rlang warn
 #'
-#' @returns GRanges() object
+#' @return GRanges() object
 #'
 #' @examples
 #' api <- BEDbase()
@@ -429,7 +429,7 @@ bb_to_granges <- function(
 #'
 #' @importFrom GenomicRanges GRangesList
 #'
-#' @returns GRangesList() object
+#' @return GRangesList() object
 #'
 #' @examples
 #' api <- BEDbase()
