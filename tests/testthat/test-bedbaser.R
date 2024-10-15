@@ -172,10 +172,15 @@ test_that("bb_to_grangeslist creates a GRangesList", {
     expect_equal(10, length(grl))
 })
 
-test_that("bb_save saves a bed file to a path", {
+test_that("bb_save saves bed files to a path", {
     api <- BEDbase()
     path <- tempdir()
-    id <- bb_example(api, "bed")$id
-    saved_file <- bb_save(api, id, path, quietly = TRUE)    
-    expect_true(file.exists(saved_file))
+    dir.create(path)
+    bed <- bb_example(api, "bed")
+    bb_save(api, bed$id, path, quietly = TRUE)
+    expect_true(file.exists(file.path(path, paste0(bed$id, ".bed.gz"))))
+    bedset <- bb_example(api, "bedset")
+    bb_save(api, bedset$id, path, quietly = TRUE)
+    for (id in bedset$bed_ids)
+        expect_true(file.exists(file.path(path, paste0(id, ".bed.gz"))))
 })

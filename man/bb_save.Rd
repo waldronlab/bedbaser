@@ -2,11 +2,11 @@
 % Please edit documentation in R/bedbaser.R
 \name{bb_save}
 \alias{bb_save}
-\title{Save a BED file to a path given an id}
+\title{Save a BED or BEDset files to a path given an id}
 \usage{
 bb_save(
   api,
-  bed_id,
+  bed_or_bedset_id,
   path,
   file_type = "bed",
   access_type = "http",
@@ -16,9 +16,9 @@ bb_save(
 \arguments{
 \item{api}{API object of BEDbase created from BEDbase()}
 
-\item{bed_id}{integer() BED record identifier}
+\item{bed_or_bedset_id}{integer() BED or BEDset record identifier}
 
-\item{path}{character() to save file}
+\item{path}{character() directory to save file}
 
 \item{file_type}{character() (default bed) bed, bigbed, etc.}
 
@@ -26,11 +26,8 @@ bb_save(
 
 \item{quietly}{logical() (default TRUE) display messages}
 }
-\value{
-character() file path
-}
 \description{
-Save a BED file to a path given an id
+Save a BED or BEDset files to a path given an id
 }
 \examples{
 api <- BEDbase()

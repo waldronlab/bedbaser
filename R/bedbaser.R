@@ -447,18 +447,16 @@ bb_to_grangeslist <- function(api, bedset_id, quietly = TRUE) {
     GRangesList(gros)
 }
 
-#' Save a BED file to a path given an id
+#' Save a BED or BEDset files to a path given an id
 #'
 #' @rdname bb_save
 #'
 #' @param api API object of BEDbase created from BEDbase()
-#' @param bed_id integer() BED record identifier
-#' @param path character() to save file
+#' @param bed_or_bedset_id integer() BED or BEDset record identifier
+#' @param path character() directory to save file
 #' @param file_type character() (default bed) bed, bigbed, etc.
 #' @param access_type character() (default http)  s3 or http
 #' @param quietly logical() (default TRUE) display messages
-#'
-#' @return character() file path
 #'
 #' @examples
 #' api <- BEDbase()
@@ -467,10 +465,19 @@ bb_to_grangeslist <- function(api, bedset_id, quietly = TRUE) {
 #'
 #' @export
 bb_save <- function(
-        api, bed_id, path, file_type = "bed", access_type = "http",
+        api, bed_or_bedset_id, path, file_type = "bed", access_type = "http",
         quietly = TRUE)
 {
-    metadata <- bb_metadata(api, bed_id, TRUE)
-    save_path <- .get_file(metadata, file_type, access_type, path, quietly)
-
+    if (!dir.exists(path))
+        rlang::abort(paste(path, "doesn't exist.", sep = " "))
+    metadata <- bb_metadata(api, bed_or_bedset_id, TRUE)
+    if ("bedsets" %in% names(metadata)) {
+        ids <- list(metadata$id)
+    } else {
+        ids <- metadata$bed_ids
+    }
+    for (id in ids) {
+        metadata <- bb_metadata(api, id, TRUE)
+        .get_file(metadata, file_type, access_type, path, quietly)
+    }
 }
