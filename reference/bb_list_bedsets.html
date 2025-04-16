@@ -19,7 +19,7 @@ of 1000 records and an initial offset of 0."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -91,22 +91,22 @@ of 1000 records and an initial offset of 0.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 21093 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 22265 BED files available.</span>
 <span class="r-in"><span><span class="fu">bb_list_bedsets</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 21,303 × 9</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 22,691 × 9</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    id          name  md5sum submission_date last_update_date description bed_ids</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… d0585a…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… aa41f6…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… f248f0…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 6efa1a…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 54d9df…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… d4dae8…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… d7882f…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… bfead5…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 7f77a2…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 4e4735…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 21,293 more rows</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 000a10…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00116c…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00205a…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 002f49…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 003c20…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00903c…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00a4ac…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00b0c9…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00c021…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> encode_bat… enco… 6dc4c… 2024-11-03T18:… 2024-11-03T18:2… <span style="color: #949494;">"</span>Encode pr… 00d062…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 22,681 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 2 more variables: author &lt;chr&gt;, source &lt;chr&gt;</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>

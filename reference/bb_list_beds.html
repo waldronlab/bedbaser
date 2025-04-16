@@ -19,7 +19,7 @@ of 1000 records and an initial offset of 0."><!-- mathjax --><script src="https:
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">0.99.23</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
       </span>
     </div>
 
@@ -95,7 +95,7 @@ of 1000 records and an initial offset of 0.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 21093 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 22265 BED files available.</span>
 <span class="r-in"><span><span class="fu">bb_list_beds</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,000 × 26</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    name         genome_alias genome_digest bed_type bed_format id    description</span>
@@ -105,11 +105,11 @@ of 1000 records and an initial offset of 0.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> encode_12948 hg38         2230c535660f… bed6+3   broadpeak  0011… <span style="color: #949494;">"</span>DNase-seq…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> DNase-seq f… mm10         <span style="color: #BB0000;">NA</span>            bed4+1   bed        0014… <span style="color: #949494;">"</span>https://w…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> tissue,infi… hg38         2230c535660f… bed3+0   bed        0014… <span style="color: #949494;">""</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> encode_10146 hg38         2230c535660f… bed6+4   narrowpeak 0019… <span style="color: #949494;">"</span>H3K9ac Hi…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> hg38.Kundaj… hg38         2230c535660f… bed3+2   bed        0019… <span style="color: #949494;">"</span>Defined a…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> encode_4782  hg38         2230c535660f… bed6+4   narrowpeak 001d… <span style="color: #949494;">"</span>FASTKD2 e…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> encode_14119 hg38         2230c535660f… bed6+3   broadpeak  001f… <span style="color: #949494;">"</span>DNase-seq…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> encode_10920 hg38         2230c535660f… bed6+4   narrowpeak 0020… <span style="color: #949494;">"</span>ZNF621 TF…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> WT mouse co… mm10         <span style="color: #BB0000;">NA</span>            bed6+4   encode_na… 0016… <span style="color: #949494;">"</span>Library n…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> encode_10146 hg38         2230c535660f… bed6+4   narrowpeak 0019… <span style="color: #949494;">"</span>H3K9ac Hi…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> hg38.Kundaj… hg38         2230c535660f… bed3+2   bed        0019… <span style="color: #949494;">"</span>Defined a…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> encode_4782  hg38         2230c535660f… bed6+4   narrowpeak 001d… <span style="color: #949494;">"</span>FASTKD2 e…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> encode_14119 hg38         2230c535660f… bed6+3   broadpeak  001f… <span style="color: #949494;">"</span>DNase-seq…</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 990 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 19 more variables: submission_date &lt;chr&gt;, last_update_date &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   is_universe &lt;chr&gt;, license_id &lt;chr&gt;, annotation.organism &lt;chr&gt;,</span></span>
