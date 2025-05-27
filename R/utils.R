@@ -133,7 +133,7 @@
 #' file_path <- .get_file(md, getCache(bedbase), "bed", "http")
 #' args <- list(
 #'     con = file_path,
-#'     format = gsub("peak", "Peak", metadata$bed_format),
+#'     format = gsub("peak", "Peak", metadata$data_format),
 #'     genome = md$genome_alias
 #' )
 #' .import_with_genome(args)
@@ -180,7 +180,7 @@
         file_path, metadata, extra_cols = NULL,
         quietly = TRUE) {
     args <- list(con = file_path)
-    args["format"] <- gsub("peak", "Peak", metadata$bed_format)
+    args["format"] <- gsub("peak", "Peak", metadata$data_format)
     nums <- stringr::str_replace(metadata$bed_type, "bed", "") |>
         stringr::str_split_1("\\+") |>
         as.double()

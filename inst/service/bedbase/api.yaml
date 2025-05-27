@@ -3,7 +3,7 @@
   "info": {
     "description": "BED file/sets statistics and image server API",
     "title": "bedhost",
-    "version": "0.10.1"
+    "version": "0.10.3"
   },
   "paths": {
     "/": {
@@ -136,7 +136,7 @@
           {
             "description": "filter by bed type. e.g. 'bed6+4'",
             "in": "query",
-            "name": "bed_type",
+            "name": "bed_compliance",
             "required": false,
             "type": "string"
           }
@@ -811,7 +811,7 @@
         "summary": "Get link to tokenized bed file"
       }
     },
-    "/v1/bedset/create/": {
+    "/v1/bedset/create": {
       "post": {
         "consumes": [
           "application/json"
@@ -845,7 +845,7 @@
           "bedset"
         ],
         "description": "Create a new bedset by providing registry path to the PEPhub project",
-        "operationId": "create_bedset_v1_bedset_create__post",
+        "operationId": "create_bedset_v1_bedset_create_post",
         "summary": "Create Bedset"
       }
     },
@@ -2436,6 +2436,13 @@
           "title": "File Genome",
           "type": "object"
         },
+        "file_organism": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "File Organism",
+          "type": "object"
+        },
         "file_type": {
           "additionalProperties": {
             "type": "integer"
@@ -2447,7 +2454,8 @@
       "required": [
         "file_type",
         "file_format",
-        "file_genome"
+        "file_genome",
+        "file_organism"
       ],
       "title": "FileStats",
       "type": "object"

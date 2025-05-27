@@ -6,9 +6,9 @@ test_that("setCache changes cache", {
     expect_true(BiocFileCache::bfccache(getCache(bedbase, "bedfiles")) == file.path(path, "bedfiles"))
 })
 
-test_that("bb_example has bed_format of 'bed' given rec_type 'bed'", {
+test_that("bb_example has data_format of 'bed' given rec_type 'bed'", {
     ex_bed <- bb_example(BEDbase(quietly = TRUE), "bed")
-    expect_equal("bed", ex_bed$bed_format)
+    expect_equal("bed", ex_bed$data_format)
 })
 
 test_that("bb_example has 'bed_ids' given rec_type 'bedset'", {

@@ -9,7 +9,7 @@
     contains = "Service"
 )
 
-.BEDBASE_API_REFERENCE_VERSION <- "0.10.1"
+.BEDBASE_API_REFERENCE_VERSION <- "0.10.3"
 
 #' @rdname BEDbase
 #'
@@ -70,10 +70,10 @@ BEDbase <- function(cache_path, quietly = FALSE) {
         )
     )
     info <- httr::content(
-        bedbase$list_beds_v1_bed_list_get(limit = 0, offset = 0)
+        bedbase$get_bedbase_db_stats_v1_stats_get()
     )
     if (!quietly) {
-        message(info$count, " BED files available.")
+        message(info$bedfiles_number, " BED files available.")
     }
     bedbase
 }
@@ -228,6 +228,28 @@ setMethod(
         methods::callNextMethod(x, .tags, .deprecated = .deprecated)
     }
 )
+
+#' Get BEDbase statistics
+#'
+#' @description Get statistics on available BED files, BEDsets, and genomoes.
+#'
+#' @param bedbase BEDbase() object
+#' @param detailed logical(1) if TRUE display detailed information
+#'
+#' @return An invisible \code{NULL}
+#'
+#' @examples
+#' bedbase <- BEDbase()
+#' bb_stats()
+#' @export
+bb_stats <- function(bedbase, detailed = FALSE) {
+    if (detailed) {
+        rsp <- bedbase$get_detailed_stats_v1_detailed_stats_get()
+    } else {
+        rsp <- bedbase$get_bedbase_db_stats_v1_stats_get()
+    }
+    httr::content(rsp)
+}
 
 #' Get the example BED file or BEDset with metadata
 #'

@@ -63,6 +63,12 @@ cache_path
 facilitate finding BED files, exploring their metadata, downloading files, and
 creating `GRanges` objects.
 
+# BEDbase statistics
+
+Use `bbs_stats()` to display the total available BED files, BEDsets, and
+genomes. Set `detailed` to `TRUE` to display the type of BED formats and genomes
+available.
+
 ## Find a BED file or BEDset
 
 Use `bb_list_beds()` and `bb_list_bedsets()` to browse available resources in
