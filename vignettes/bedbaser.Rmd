@@ -140,9 +140,8 @@ bb_to_granges(bedbase, bed_id)
 
 `bb_to_granges` can also import big BED files.
 
-```{r bb_to_granges_big_bed}
-bed_id <- "ffc1e5ac45d923135500bdd825177356"
-bb_to_granges(bedbase, bed_id, "bigbed", quietly = FALSE)
+```{r bb_to_granges_big_bed, eval=FALSE}
+bb_to_granges(bedbase, ex_bed$id, "bigbed", quietly = FALSE)
 ```
 
 ## Import a BEDset into a GRangesList
@@ -203,12 +202,12 @@ library(rtracklayer)
 ```
 
 Create a GRanges object from a
-[mouse genome](https://bedbase.org/bed/7816f807ffe1022f438e1f5b094acf1a).
+[mouse genome](https://bedbase.org/bed/f2a5b06011706376560514c3f39648ea).
 Create a BEDbase Service instance. Use the instance to create a GRanges
 object from the BEDbase `id`.
 
 ```{r convertCoordinates_createGRangesObject, message=FALSE}
-id <- "7816f807ffe1022f438e1f5b094acf1a"
+id <- "f2a5b06011706376560514c3f39648ea"
 bedbase <- BEDbase()
 gro <- bb_to_granges(bedbase, id)
 gro

@@ -23,6 +23,8 @@ URL: https://github.com/waldronlab/bedbaser
 BugReports: https://github.com/waldronlab/bedbaser/issues
 biocViews: Software, DataImport, ThirdPartyClient
 License: Artistic License 2.0
+Depends:
+    R (>= 4.1.0)
 Imports:
     AnVIL (>= 1.16.0),
     BiocFileCache,

@@ -27,6 +27,7 @@
 #' * `bedbaser::BEDbase()`: API service constructor
 #' * `bedbaser::getCache()`: Retrieve cache
 #' * `bedbaser::setCache()`: Set path to cache
+#' * `bedbaser::bb_stats()`: Retrieve BEDbase statistics
 #' * `bedbaser::bb_example()`: Retrieve an example BED file or BEDset
 #' * `bedbaser::bb_metadata()`: Retrieve metadata for a BED file or BEDset
 #' * `bedbaser::bb_list_beds()`: List all BED files
@@ -240,7 +241,7 @@ setMethod(
 #'
 #' @examples
 #' bedbase <- BEDbase()
-#' bb_stats()
+#' bb_stats(bedbase)
 #' @export
 bb_stats <- function(bedbase, detailed = FALSE) {
     if (detailed) {
@@ -334,7 +335,8 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #'
 #' @param bedbase BEDbase() object
 #' @param genome character(1) (default \code{NULL}) genome keyword
-#' @param bed_type character(1) (default \code{NULL}) bed file type
+#' @param bed_compliance character(1) (default \code{NULL}) bed compliance,
+#' e.g., 'bed6+4'
 #' @param limit integer(1) (default \code{1000}) maximum records
 #' @param offset integer(1) (default \code{0}) page token of records
 #'
@@ -346,10 +348,10 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #'
 #' @export
 bb_list_beds <- function(
-        bedbase, genome = NULL, bed_type = NULL, limit = 1000,
+        bedbase, genome = NULL, bed_compliance = NULL, limit = 1000,
         offset = 0) {
     rsp <- bedbase$list_beds_v1_bed_list_get(
-        genome = genome, bed_type = bed_type,
+        genome = genome, bed_compliance = bed_compliance,
         limit = limit, offset = offset
     )
     recs <- httr::content(rsp)

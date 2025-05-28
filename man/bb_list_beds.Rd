@@ -4,14 +4,21 @@
 \alias{bb_list_beds}
 \title{List BEDs}
 \usage{
-bb_list_beds(bedbase, genome = NULL, bed_type = NULL, limit = 1000, offset = 0)
+bb_list_beds(
+  bedbase,
+  genome = NULL,
+  bed_compliance = NULL,
+  limit = 1000,
+  offset = 0
+)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
 
 \item{genome}{character(1) (default \code{NULL}) genome keyword}
 
-\item{bed_type}{character(1) (default \code{NULL}) bed file type}
+\item{bed_compliance}{character(1) (default \code{NULL}) bed compliance,
+e.g., 'bed6+4'}
 
 \item{limit}{integer(1) (default \code{1000}) maximum records}
 

@@ -19,5 +19,5 @@ Get statistics on available BED files, BEDsets, and genomoes.
 }
 \examples{
 bedbase <- BEDbase()
-bb_stats()
+bb_stats(bedbase)
 }
