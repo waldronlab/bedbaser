@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.0</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
       </span>
     </div>
 
@@ -76,7 +76,7 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 22265 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 125948 BED files available.</span>
 <span class="r-in"><span><span class="fu">schemas</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $AccessMethod</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   AccessMethod(access_id, access_url, region, type)</span>
@@ -88,8 +88,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BaseListResponse(count, limit, offset, results)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedClassification</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedClassification(bed_format, bed_type, genome_alias, genome_digest,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     name)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedClassification(bed_compliance, compliant_columns, data_format,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     genome_alias, genome_digest, header, name, non_compliant_columns)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedEmbeddingResult</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedEmbeddingResult(embedding, identifier, payload)</span>
@@ -104,15 +104,17 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedListSearchResult(count, limit, offset, results)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedMetadataAll</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataAll(annotation, bed_format, bed_type, bedsets,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     description, files, genome_alias, genome_digest, id, is_universe,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     last_update_date, license_id, name, plots, raw_metadata, stats,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     submission_date, universe_metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataAll(annotation, bed_compliance, bedsets,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     compliant_columns, data_format, description, files, genome_alias,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     genome_digest, header, id, is_universe, last_update_date,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     license_id, name, non_compliant_columns, plots, processed,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     raw_metadata, stats, submission_date, universe_metadata)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedMetadataBasic</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataBasic(annotation, bed_format, bed_type, description,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     genome_alias, genome_digest, id, is_universe, last_update_date,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     license_id, name, submission_date)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataBasic(annotation, bed_compliance, compliant_columns,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     data_format, description, genome_alias, genome_digest, header, id,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     is_universe, last_update_date, license_id, name,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     non_compliant_columns, processed, submission_date)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedPEPHub</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedPEPHub(antibody, cell_line, cell_type, description, exp_protocol,</span>
@@ -139,7 +141,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetMetadata</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMetadata(author, bed_ids, description, id, last_update_date,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     md5sum, name, plots, source, statistics, submission_date)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     md5sum, name, plots, source, statistics, submission_date, summary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetMinimal</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMinimal(description, id, name)</span>
@@ -169,6 +171,9 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ComponentVersions(bbconf_version, bedhost_version, geniml_version,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     openapi_version, python_version)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $CreateBEDsetRequest</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   CreateBEDsetRequest(registry_path)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $DRSModel</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   DRSModel(access_methods, checksums, created_time, description, id,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     name, self_uri, size, updated_time)</span>
@@ -177,8 +182,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   EmbeddingModels(region2vec, text2vec)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $FileModel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   FileModel(access_methods, description, name, object_id, path, size,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     thumbnail_path, title)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FileModel(access_methods, description, file_digest, name, object_id,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     path, size, thumbnail_path, title)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $FileStats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FileStats(bed_compliance, data_format, file_genome, file_organism)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $HTTPValidationError</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   HTTPValidationError(detail)</span>
@@ -189,6 +197,13 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $QdrantSearchResult</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   QdrantSearchResult(id, metadata, payload, score)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $RefGenValidModel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RefGenValidModel(assigned_points, compared_genome, oobr,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     provided_genome, sequence_fit, tier_ranking, xs)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $RefGenValidReturnModel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   RefGenValidReturnModel(compared_genome, id, provided_genome)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ServiceInfoResponse</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ServiceInfoResponse(component_versions, contactUrl, description,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     documentationUrl, embedding_models, environment, id, name,</span>
@@ -197,8 +212,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $StandardMeta</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   StandardMeta(antibody, cell_line, cell_type, description,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     exp_protocol, genotype, global_experiment_id, global_sample_id,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     library_source, organism, phenotype, species_id, target, tissue,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     treatment)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     library_source, organism, original_file_name, phenotype,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     species_id, target, tissue, treatment)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $StatsReturn</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   StatsReturn(bedfiles_number, bedsets_number, genomes_number)</span>
@@ -214,6 +229,10 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $UniverseMetadata</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   UniverseMetadata(bedset_id, construct_method)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $UsageStats</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   UsageStats(bed_metadata, bed_search_terms, bedset_metadata,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     bedset_search_terms)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ValidationError</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ValidationError(loc, msg, type)</span>
@@ -233,7 +252,7 @@
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
 </div>
 
       </footer></div>
