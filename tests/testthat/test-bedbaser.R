@@ -103,18 +103,6 @@ test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
     expect_true(methods::is((gro)[1], "GRanges"))
 })
 
-# test_that("bb_to_granges returns a GRanges object given a bigbed file", {
-#    if (.Platform$OS.type != "windows") {
-#        gro <- bb_to_granges(bedbase, ex_bed$id, "bigbed")
-#        expect_true(methods::is((gro)[1], "GRanges"))
-#    } else {
-#        expect_warning(
-#            rlang::warn("This feature does not work on Windows."),
-#            bb_to_granges(bedbase, ex_bed$id, "bigbed")
-#        )
-#    }
-# })
-
 test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", {
     beds <- bb_list_beds(bedbase, bed_compliance = "bed6+4")
     id <- beds$id[1]
