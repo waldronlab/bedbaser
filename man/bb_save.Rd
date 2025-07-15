@@ -4,7 +4,7 @@
 \alias{bb_save}
 \title{Save a BED file or BEDset to a path given an id}
 \usage{
-bb_save(bedbase, bed_or_bedset_id, path, file_type = "bed", quietly = TRUE)
+bb_save(bedbase, bed_or_bedset_id, path, quietly = TRUE)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
@@ -12,8 +12,6 @@ bb_save(bedbase, bed_or_bedset_id, path, file_type = "bed", quietly = TRUE)
 \item{bed_or_bedset_id}{integer(1) BED or BEDset record identifier}
 
 \item{path}{character(1) directory to save file}
-
-\item{file_type}{character(1) (default \code{"bed"}) bed, bigbed, etc.}
 
 \item{quietly}{logical(1) (default \code{TRUE}) display messages}
 }

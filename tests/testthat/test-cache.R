@@ -21,19 +21,19 @@ test_that("path is used if set when calling constructor", {
     bedbase <- BEDbase(path, TRUE)
     cache <- getCache(bedbase, "bedfiles")
     id <- "bbad85f21962bb8d972444f7f9a3a932"
-    gro <- bb_to_granges(bedbase, id, "bed")
+    gro <- bb_to_granges(bedbase, id)
     expect_equal(BiocFileCache::bfccache(cache), file.path(path, "bedfiles"))
 })
 
 test_that("bedset txt is cached", {
     bedbase <- BEDbase(tempdir(), quietly = TRUE)
-    id <- "test_bedset"
-    beds <- bb_beds_in_bedset(bedbase, id)
+    ex_bedset <- bb_example(bedbase, "bedset")
+    beds <- bb_beds_in_bedset(bedbase, ex_bedset$id)
     cache <- getCache(bedbase, "bedsets")
-    .cache_bedset_txt(id, beds$id, cache)
-    rpath <- .create_nested_path(id, cache)
+    .cache_bedset_txt(ex_bedset$id, beds$id, cache)
+    rpath <- .create_nested_path(ex_bedset$id, cache)
     expect_equal(readLines(rpath), beds$id)
-    expect_equal(BiocFileCache::bfcquery(cache, id, "rname")$rpath, rpath)
+    expect_equal(BiocFileCache::bfcquery(cache, ex_bedset$id, "rname")$rpath, rpath)
 })
 
 test_that("bed files are cached", {
@@ -42,7 +42,7 @@ test_that("bed files are cached", {
     cache <- getCache(bedbase, "bedfiles")
     rid <- BiocFileCache::bfcquery(cache, id, "rname")$rid
     expect_length(rid, 0)
-    bedbase_url <- .get_url(bb_metadata(bedbase, id, TRUE), "bed", "http")
+    bedbase_url <- .get_url(bb_metadata(bedbase, id, TRUE), "http")
     rpath <- .cache_bedfile(id, bedbase_url, cache)
     expect_true(file.exists(rpath))
     rid <- BiocFileCache::bfcquery(cache, id, "rname")$rid

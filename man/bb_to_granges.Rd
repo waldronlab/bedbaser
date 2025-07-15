@@ -4,20 +4,12 @@
 \alias{bb_to_granges}
 \title{Create a GRanges object given a BED id}
 \usage{
-bb_to_granges(
-  bedbase,
-  bed_id,
-  file_type = "bed",
-  extra_cols = NULL,
-  quietly = TRUE
-)
+bb_to_granges(bedbase, bed_id, extra_cols = NULL, quietly = TRUE)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
 
 \item{bed_id}{integer(1) BED record identifier}
-
-\item{file_type}{character(1) bed or bigbed}
 
 \item{extra_cols}{character() (default \code{NULL}) extra column names to
 construct GRanges objects}

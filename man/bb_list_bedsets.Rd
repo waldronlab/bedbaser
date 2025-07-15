@@ -4,12 +4,12 @@
 \alias{bb_list_bedsets}
 \title{List BEDsets}
 \usage{
-bb_list_bedsets(bedbase, query = NULL, limit = 1000, offset = 0)
+bb_list_bedsets(bedbase, query = "", limit = 1000, offset = 0)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
 
-\item{query}{character() (default \code{NULL}) keyword}
+\item{query}{character() (default \code{""}) keyword}
 
 \item{limit}{integer(1) (default \code{1000}) maximum records}
 

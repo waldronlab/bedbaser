@@ -16,7 +16,6 @@
 #' Get BEDbase url for BED file
 #'
 #' @param records list() metadata
-#' @param file_type character(1) bed or bigbed
 #' @param access_type character(1) s3 or http
 #'
 #' @return character(1) url to BED file
@@ -25,19 +24,16 @@
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
 #' ex_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' .get_url(ex_bed$files, "bed", "http")
+#' .get_url(ex_bed$files, "http")
 #'
 #' @noRd
-.get_url <- function(
-        metadata, file_type = c("bed", "bigbed"),
-        access_type = c("s3", "http")) {
-    file_type <- match.arg(file_type)
+.get_url <- function(metadata, access_type = c("s3", "http")) {
     access_type <- match.arg(access_type)
     file_details <- dplyr::bind_rows(metadata$files) |>
         tidyr::unnest_wider(access_methods) |>
         tidyr::unnest_wider(access_url) |>
         dplyr::filter(
-            name == paste(file_type, "file", sep = "_"),
+            name == "bed_file",
             access_id == access_type
         )
     file_details$url
@@ -51,8 +47,7 @@
 #'
 #' @param metadata list() full metadata
 #' @param cache_or_path [BiocFileCache][BiocFileCache::BiocFileCache-class] or
-#' character(1) cache or save path
-#' @param file_type character(1) bed or bigbed
+#'        character(1) cache or save path
 #' @param access_type character(1) s3 or http
 #' @param quietly logical(1) (default \code{TRUE}) display messages
 #'
@@ -62,12 +57,11 @@
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
 #' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' .get_file(md, tempdir(), "bed", "http")
+#' .get_file(md, tempdir(), "http")
 #'
 #' @noRd
-.get_file <- function(metadata, cache_or_path, file_type, access_type,
-    quietly = TRUE) {
-    file_url <- .get_url(metadata, file_type, access_type)
+.get_file <- function(metadata, cache_or_path, access_type, quietly = TRUE) {
+    file_url <- .get_url(metadata, access_type)
     if (methods::is(cache_or_path, "BiocFileCache")) {
         bed_file <- .cache_bedfile(metadata$id, file_url, cache_or_path)
     } else {
@@ -92,10 +86,10 @@
 #' [rtracklayer][rtracklayer::BEDFile-class]
 #'
 #' @examples
-#' id <- "608827efc82fcaa4b0bfc65f590ffef8"
 #' bedbase <- BEDbase()
-#' md <- bb_metadata(bedbase, id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "bed", "http")
+#' ex_bedset <- bb_example(bedbase, "bedset")
+#' md <- bb_metadata(bedbase, ex_bedset$bed_ids[[1]], TRUE)
+#' file_path <- .get_file(md, getCache(bedbase), "http")
 #' .get_extra_cols(file_path, 3, 9)
 #'
 #' @noRd
@@ -130,7 +124,7 @@
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
 #' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "bed", "http")
+#' file_path <- .get_file(md, getCache(bedbase), "http")
 #' args <- list(
 #'     con = file_path,
 #'     format = gsub("peak", "Peak", metadata$bed_format),
@@ -149,6 +143,33 @@
             gro
         }
     )
+}
+
+#' Get format
+#'
+#' @description Get format for [rtracklayer][rtracklayer::BEDFile]
+#' For supported formats, see
+#' \url{https://docs.bedbase.org/bedbase/user/bed_classification/}.
+#' @param file_path character(1) path to BED file
+#' @param data_format character(1) bed file format
+#'
+#' @return character(1) format
+#'
+#' @examples
+#' bedbase <- BEDbase()
+#' ex_bed <- bb_example(bedbase, "bed")
+#' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
+#' file_path <- .get_file(md, getCache(bedbase), "http")
+#' format <- .get_format(file_path, md$data_format)
+#'
+#' @noRd
+.get_format <- function(file_path, data_format) {
+    if (stringr::str_detect(data_format, "bed")) {
+        format <- gsub("(ucsc_|_like)", "", data_format)
+    } else {
+        format <- gsub("peak", "Peak", data_format)
+    }
+    gsub("(encode_|_rs)", "", format)
 }
 
 #' Create GRanges object from a BED file
@@ -172,35 +193,56 @@
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
 #' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "bed", "http")
+#' file_path <- .get_file(md, getCache(bedbase), "http")
 #' .bed_file_to_granges(file_path, md)
 #'
 #' @noRd
-.bed_file_to_granges <- function(
-        file_path, metadata, extra_cols = NULL,
-        quietly = TRUE) {
+.bed_file_to_granges <- function(file_path, metadata, extra_cols = NULL,
+    quietly = TRUE) {
     args <- list(con = file_path)
-    args["format"] <- gsub("peak", "Peak", metadata$bed_format)
-    nums <- stringr::str_replace(metadata$bed_type, "bed", "") |>
-        stringr::str_split_1("\\+") |>
-        as.double()
+    format <- .get_format(file_path, metadata$data_format)
 
-    if (!is.null(extra_cols) && (nums[2] != length(extra_cols))) {
-        rlang::abort("`extra_cols` length must match Y value in `bed_type`.")
+    if (!is.null(extra_cols) &&
+        (metadata$non_compliant_columns != length(extra_cols))) {
+        rlang::abort(paste(
+            "`extra_cols` length must match Y value in",
+            "`non_compliant_columns`."
+        ))
     }
 
-    if (!grepl("Peak", args["format"]) && nums[2] != 0 && is.null(extra_cols)) {
-        if (!quietly) {
-            rlang::inform("Assigning column names and types.")
+    if (format == "unknown") {
+        rlang::abort("Unknown file type: can't construct GRanges object.")
+    } else if (format == "gappedPeak") {
+        args["format"] <- "bed"
+        extra_cols <- c(
+            signalValue = numeric, pValue = numeric, qValue = numeric
+        )
+    } else if (format == "rna") {
+        args["format"] <- "bed"
+        extra_cols <- c(level = character, signif = character, score2 = integer)
+    } else if (format %in% c("bigBed", "broadPeak", "narrowPeak")) {
+        if (!quietly && !is.null(extra_cols)) {
+            rlang::abort(paste0("Disregarding extra_cols for ", format, "."))
+        }
+        args["format"] <- format
+        extra_cols <- NULL
+    } else {
+        args["format"] <- "bed"
+        if (metadata$non_compliant_columns != 0 && is.null(extra_cols)) {
+            if (!quietly) {
+                rlang::inform("Assigning column names and types.")
+            }
+            extra_cols <- .get_extra_cols(
+                file_path,
+                metadata$compliant_columns,
+                metadata$non_compliant_columns
+            )
         }
         extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
     }
 
-    if (!is.null(extra_cols)) {
+    if (!is.null(extra_cols))
         args[["extraCols"]] <- extra_cols
-    }
-
     args["genome"] <- metadata$genome_alias
-
     .import_with_genome(args)
 }

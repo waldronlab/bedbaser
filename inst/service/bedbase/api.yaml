@@ -3,7 +3,7 @@
   "info": {
     "description": "BED file/sets statistics and image server API",
     "title": "bedhost",
-    "version": "0.8.0"
+    "version": "0.10.6"
   },
   "paths": {
     "/": {
@@ -262,6 +262,12 @@
             "required": true
           },
           {
+            "default": "hg38",
+            "in": "query",
+            "name": "genome",
+            "required": false
+          },
+          {
             "default": 10,
             "in": "query",
             "name": "limit",
@@ -294,7 +300,7 @@
           "bed",
           "search"
         ],
-        "description": "Search for a BedFile by a text query.\nExample: query=\"cancer\"",
+        "description": "Search for a BedFile by a text query.\n\nBy default, it searches in the 'hg38' genome. To search in a different genome, specify the `genome` parameter. eg. mm10\nExample: query=\"cancer\"",
         "operationId": "text_to_bed_search_v1_bed_search_text_post",
         "summary": "Search for a BedFile"
       }
@@ -1037,6 +1043,64 @@
         "summary": "Get Track Hub Bedset"
       }
     },
+    "/v1/detailed-stats": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "default": false,
+            "in": "query",
+            "name": "concise",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/FileStats"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns detailed statistics",
+        "operationId": "get_detailed_stats_v1_detailed_stats_get",
+        "summary": "Get detailed statistics for BEDbase platform, including number of files for each genome"
+      }
+    },
+    "/v1/detailed-usage": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/UsageStats"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns detailed usage statistics",
+        "operationId": "get_detailed_usage_v1_detailed_usage_get",
+        "summary": "Get detailed usage statistics for BEDbase platform"
+      }
+    },
     "/v1/docs/changelog": {
       "get": {
         "produces": [
@@ -1522,6 +1586,10 @@
           "title": "Name"
         },
         "plots": {},
+        "processed": {
+          "default": true,
+          "title": "Processed"
+        },
         "raw_metadata": {
           "title": "Raw Metadata"
         },
@@ -1581,6 +1649,18 @@
           "default": "",
           "title": "Name"
         },
+<<<<<<< HEAD
+=======
+        "non_compliant_columns": {
+          "default": 0,
+          "title": "Non Compliant Columns",
+          "type": "integer"
+        },
+        "processed": {
+          "default": true,
+          "title": "Processed"
+        },
+>>>>>>> 14fd3ec (Update to bedbase 0.10.6)
         "submission_date": {
           "format": "date-time",
           "title": "Submission Date",
@@ -2186,6 +2266,46 @@
       "title": "FileModel",
       "type": "object"
     },
+    "FileStats": {
+      "properties": {
+        "bed_compliance": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed Compliance",
+          "type": "object"
+        },
+        "data_format": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Data Format",
+          "type": "object"
+        },
+        "file_genome": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "File Genome",
+          "type": "object"
+        },
+        "file_organism": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "File Organism",
+          "type": "object"
+        }
+      },
+      "required": [
+        "bed_compliance",
+        "data_format",
+        "file_genome",
+        "file_organism"
+      ],
+      "title": "FileStats",
+      "type": "object"
+    },
     "HTTPValidationError": {
       "properties": {
         "detail": {
@@ -2507,6 +2627,46 @@
         }
       },
       "title": "UniverseMetadata",
+      "type": "object"
+    },
+    "UsageStats": {
+      "properties": {
+        "bed_metadata": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed Metadata",
+          "type": "object"
+        },
+        "bed_search_terms": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed Search Terms",
+          "type": "object"
+        },
+        "bedset_metadata": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bedset Metadata",
+          "type": "object"
+        },
+        "bedset_search_terms": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bedset Search Terms",
+          "type": "object"
+        }
+      },
+      "required": [
+        "bed_metadata",
+        "bedset_metadata",
+        "bed_search_terms",
+        "bedset_search_terms"
+      ],
+      "title": "UsageStats",
       "type": "object"
     },
     "ValidationError": {
