@@ -195,7 +195,7 @@ associated with an id.</p>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_metadata.html">bb_metadata</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $name</span></span>
-<span><span class="co">## [1] "DNase-seq from CD4-positive, alpha-beta T cell (ENCLB093XCH)"</span></span>
+<span><span class="co">## [1] "TELOEC_ATAC_SYN+JQ1_REP1"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $genome_alias</span></span>
 <span><span class="co">## [1] "hg38"</span></span>
@@ -207,7 +207,7 @@ associated with an id.</p>
 <span><span class="co">## [1] "bed6+4"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $data_format</span></span>
-<span><span class="co">## [1] "encode_narrowpeak"</span></span>
+<span><span class="co">## [1] "encode_narrowpeak_rs"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $compliant_columns</span></span>
 <span><span class="co">## [1] 6</span></span></code></pre>
@@ -282,33 +282,33 @@ returns all BED files scored against a keyword query.</p>
 <span><span class="co">## 'help("repositories", package = "BiocManager")' for details.</span></span>
 <span><span class="co">## Replacement repositories:</span></span>
 <span><span class="co">##     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span></code></pre>
-<pre><code><span><span class="co">## GRanges object with 130677 ranges and 6 metadata columns:</span></span>
-<span><span class="co">##            seqnames            ranges strand |        name     score</span></span>
-<span><span class="co">##               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">##        [1]     chr1       10034-10240      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##        [2]     chr1       10461-10640      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##        [3]     chr1       16181-16300      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##        [4]     chr1       17419-17560      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##        [5]     chr1       74901-74960      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##        ...      ...               ...    ... .         ...       ...</span></span>
-<span><span class="co">##   [130673]     chrY 21647832-21647988      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##   [130674]     chrY 26315181-26315360      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##   [130675]     chrY 26670341-26670900      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##   [130676]     chrY 26671021-26671320      * |        &lt;NA&gt;         0</span></span>
-<span><span class="co">##   [130677]     chrY 26671541-26671746      * |        &lt;NA&gt;         0</span></span>
+<pre><code><span><span class="co">## GRanges object with 300000 ranges and 6 metadata columns:</span></span>
+<span><span class="co">##            seqnames              ranges strand |        name     score</span></span>
+<span><span class="co">##               &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">##        [1]     chr1       267929-268184      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##        [2]     chr1       629724-629979      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##        [3]     chr1       633894-634149      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##        [4]     chr1       778813-779068      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##        [5]     chr1       779721-779976      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##        ...      ...                 ...    ... .         ...       ...</span></span>
+<span><span class="co">##   [299996]     chrX 155991854-155992109      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##   [299997]     chrX 155994942-155995197      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##   [299998]     chrX 155997464-155997719      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##   [299999]     chrX 155999262-155999517      * |        &lt;NA&gt;         0</span></span>
+<span><span class="co">##   [300000]     chrX 155999782-156000037      * |        &lt;NA&gt;         0</span></span>
 <span><span class="co">##            signalValue    pValue    qValue      peak</span></span>
 <span><span class="co">##              &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span></span>
-<span><span class="co">##        [1]   1.2145100        -1        -1        75</span></span>
-<span><span class="co">##        [2]   0.2403270        -1        -1        75</span></span>
-<span><span class="co">##        [3]   0.0858311        -1        -1        75</span></span>
-<span><span class="co">##        [4]   0.0729564        -1        -1        75</span></span>
-<span><span class="co">##        [5]   0.0343324        -1        -1        75</span></span>
+<span><span class="co">##        [1]     9.22628        -1  0.415500       128</span></span>
+<span><span class="co">##        [2]    33.28701        -1  2.300529       128</span></span>
+<span><span class="co">##        [3]    38.27194        -1  2.812691       128</span></span>
+<span><span class="co">##        [4]     9.59170        -1  0.431217       128</span></span>
+<span><span class="co">##        [5]    12.48855        -1  0.619862       128</span></span>
 <span><span class="co">##        ...         ...       ...       ...       ...</span></span>
-<span><span class="co">##   [130673]   0.0729564        -1        -1        75</span></span>
-<span><span class="co">##   [130674]   0.2703680        -1        -1        75</span></span>
-<span><span class="co">##   [130675]   0.1673710        -1        -1        75</span></span>
-<span><span class="co">##   [130676]   0.3132840        -1        -1        75</span></span>
-<span><span class="co">##   [130677]   0.1587880        -1        -1        75</span></span>
+<span><span class="co">##   [299996]     7.79121        -1  0.330748       128</span></span>
+<span><span class="co">##   [299997]     8.37476        -1  0.368727       128</span></span>
+<span><span class="co">##   [299998]    11.36846        -1  0.545102       128</span></span>
+<span><span class="co">##   [299999]     6.96799        -1  0.277620       128</span></span>
+<span><span class="co">##   [300000]     7.84962        -1  0.331065       128</span></span>
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 711 sequences (1 circular) from hg38 genome</span></span></code></pre>
 <p>For BEDX+Y formats, a named list with column types may be passed
