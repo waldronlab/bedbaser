@@ -1649,8 +1649,6 @@
           "default": "",
           "title": "Name"
         },
-<<<<<<< HEAD
-=======
         "non_compliant_columns": {
           "default": 0,
           "title": "Non Compliant Columns",
@@ -1660,7 +1658,6 @@
           "default": true,
           "title": "Processed"
         },
->>>>>>> 14fd3ec (Update to bedbase 0.10.6)
         "submission_date": {
           "format": "date-time",
           "title": "Submission Date",
