@@ -40,7 +40,9 @@ env:
   has_RUnit: 'false'
   cache-version: 'cache-v1'
   run_docker: 'false'
-  release: '3.21'
+  bioc_release: '3.21'
+  bioc_devel_r_version: '4.5.1'
+  bioc_release_r_version: '4.5.1'
 
 jobs:
   build-check:
@@ -53,12 +55,12 @@ jobs:
       fail-fast: false
       matrix:
         config:
-          - { os: ubuntu-latest, r: 'devel', bioc: '3.22', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
-          - { os: macOS-latest, r: 'devel', bioc: '3.22'}
-          - { os: windows-latest, r: 'devel', bioc: '3.22'}
-          - { os: ubuntu-latest, r: 'devel', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
-          - { os: macOS-latest, r: 'devel', bioc: '3.21'}
-          - { os: windows-latest, r: 'devel', bioc: '3.21'}
+          - { os: ubuntu-latest, r: bioc_devel_r_version, bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
+          - { os: macOS-latest, r: bioc_devel_r_version, bioc: 'devel'}
+          - { os: windows-latest, r: bioc_devel_r_version, bioc: 'devel'}
+          - { os: ubuntu-latest, r: bioc_release_r_version, bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
+          - { os: macOS-latest, r: bioc_release_r_version, bioc: '3.21'}
+          - { os: windows-latest, r: bioc_release_r_version, bioc: '3.21'}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
@@ -264,7 +266,7 @@ jobs:
         run: R CMD INSTALL .
 
       - name: Build pkgdown site
-        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.bioc == env.release
+        if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.bioc == env.bioc_release
         run: pkgdown::build_site_github_pages(new_process = FALSE, install = FALSE)
         shell: Rscript {0}
         ## Note that you need to run pkgdown::deploy_to_branch(new_process = FALSE)
