@@ -9,7 +9,7 @@
     contains = "Service"
 )
 
-.BEDBASE_API_REFERENCE_VERSION <- "0.10.3"
+.BEDBASE_API_REFERENCE_VERSION <- "0.10.6"
 
 #' @rdname BEDbase
 #'
@@ -87,8 +87,9 @@ BEDbase <- function(cache_path, quietly = FALSE) {
 #' @export
 setGeneric(
     "getCache",
-    function(x, cache_type = c("bedfiles", "bedsets"))
+    function(x, cache_type = c("bedfiles", "bedsets")) {
         standardGeneric("getCache")
+    }
 )
 
 #' Return cache path
@@ -347,9 +348,8 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #' bb_list_beds(bedbase)
 #'
 #' @export
-bb_list_beds <- function(
-        bedbase, genome = NULL, bed_compliance = NULL, limit = 1000,
-        offset = 0) {
+bb_list_beds <- function(bedbase, genome = NULL, bed_compliance = NULL,
+    limit = 1000, offset = 0) {
     rsp <- bedbase$list_beds_v1_bed_list_get(
         genome = genome, bed_compliance = bed_compliance,
         limit = limit, offset = offset
@@ -376,7 +376,7 @@ bb_list_beds <- function(
 #' @rdname bb_list_bedsets
 #'
 #' @param bedbase BEDbase() object
-#' @param query character() (default \code{NULL}) keyword
+#' @param query character() (default \code{""}) keyword
 #' @param limit integer(1) (default \code{1000}) maximum records
 #' @param offset integer(1) (default \code{0}) page token of records
 #'
@@ -387,7 +387,7 @@ bb_list_beds <- function(
 #' bb_list_bedsets(bedbase)
 #'
 #' @export
-bb_list_bedsets <- function(bedbase, query = NULL, limit = 1000, offset = 0) {
+bb_list_bedsets <- function(bedbase, query = "", limit = 1000, offset = 0) {
     rsp <- bedbase$list_bedsets_v1_bedset_list_get(
         query = query,
         limit = limit,
@@ -395,9 +395,19 @@ bb_list_bedsets <- function(bedbase, query = NULL, limit = 1000, offset = 0) {
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()
+    by <- c(
+        "id", "name", "md5sum", "submission_date", "last_update_date",
+        "description", "author", "source"
+    )
     if (recs$count) {
         results <- dplyr::bind_rows(recs$results) |>
-            tidyr::unnest(cols = c(bed_ids))
+            tidyr::unnest(bed_ids) |>
+            dplyr::group_by(
+                id, name, md5sum, submission_date, last_update_date,
+                description, author, source
+            ) |>
+            tidyr::nest(.key = "bed_ids") |>
+            dplyr::relocate(bed_ids, .before = "author")
     }
     results
 }
@@ -484,7 +494,6 @@ bb_bed_text_search <- function(bedbase, query, limit = 10, offset = 0) {
 #'
 #' @param bedbase BEDbase() object
 #' @param bed_id integer(1) BED record identifier
-#' @param file_type character(1) bed or bigbed
 #' @param extra_cols character() (default \code{NULL}) extra column names to
 #' construct GRanges objects
 #' @param quietly logical(1) (default \code{TRUE}) display messages
@@ -497,37 +506,21 @@ bb_bed_text_search <- function(bedbase, query, limit = 10, offset = 0) {
 #' bb_to_granges(bedbase, ex_bed$id)
 #'
 #' @export
-bb_to_granges <- function(
-        bedbase, bed_id, file_type = "bed", extra_cols = NULL,
-        quietly = TRUE) {
-    stopifnot(file_type %in% c("bed", "bigbed"))
+bb_to_granges <- function(bedbase, bed_id, extra_cols = NULL, quietly = TRUE) {
     metadata <- bb_metadata(bedbase, bed_id, TRUE)
     file_path <- .get_file(
-        metadata, getCache(bedbase, "bedfiles"), file_type,
-        "http", quietly
+        metadata, getCache(bedbase, "bedfiles"), "http",
+        quietly
     )
 
-    bed_file <- tryCatch(
+    tryCatch(
         R.utils::gunzip(file_path, remove = FALSE),
         error = function(e) {
             gsub(".gz", "", file_path)
         }
     )
 
-    if (file_type == "bed") {
-        .bed_file_to_granges(file_path, metadata, extra_cols, quietly)
-    } else if (file_type == "bigbed") {
-        if (.Platform$OS.type == "windows") {
-            rlang::warn("This feature does not work on Windows.")
-        } else {
-            args <- list(
-                con = file_path,
-                genome = metadata$genome_alias,
-                format = "bigBed"
-            )
-            .import_with_genome(args)
-        }
-    }
+    .bed_file_to_granges(file_path, metadata, extra_cols, quietly)
 }
 
 #' Create a GRangesList object given a BEDset id
@@ -542,7 +535,8 @@ bb_to_granges <- function(
 #'
 #' @examples
 #' bedbase <- BEDbase()
-#' bb_to_grangeslist(bedbase, "lola_hg38_ucsc_features")
+#' bedset_id <- "lola_hg38_ucsc_features"
+#' bb_to_grangeslist(bedbase, bedset_id)
 #'
 #' @export
 bb_to_grangeslist <- function(bedbase, bedset_id, quietly = TRUE) {
@@ -569,7 +563,6 @@ bb_to_grangeslist <- function(bedbase, bedset_id, quietly = TRUE) {
 #' @param bedbase BEDbase() object
 #' @param bed_or_bedset_id integer(1) BED or BEDset record identifier
 #' @param path character(1) directory to save file
-#' @param file_type character(1) (default \code{"bed"}) bed, bigbed, etc.
 #' @param quietly logical(1) (default \code{TRUE}) display messages
 #'
 #' @return An invisible \code{NULL}
@@ -580,9 +573,7 @@ bb_to_grangeslist <- function(bedbase, bedset_id, quietly = TRUE) {
 #' bb_save(bedbase, ex_bed$id, tempdir())
 #'
 #' @export
-bb_save <- function(
-        bedbase, bed_or_bedset_id, path, file_type = "bed",
-        quietly = TRUE) {
+bb_save <- function(bedbase, bed_or_bedset_id, path, quietly = TRUE) {
     if (!dir.exists(path)) {
         rlang::abort(paste(path, "doesn't exist.", sep = " "))
     }
@@ -598,6 +589,6 @@ bb_save <- function(
     }
     for (id in ids) {
         metadata <- bb_metadata(bedbase, id, TRUE)
-        .get_file(metadata, path, file_type, "http", quietly)
+        .get_file(metadata, path, "http", quietly)
     }
 }
