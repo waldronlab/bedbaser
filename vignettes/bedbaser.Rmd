@@ -138,12 +138,6 @@ head(md)
 bb_to_granges(bedbase, bed_id)
 ```
 
-`bb_to_granges` can also import big BED files.
-
-```{r bb_to_granges_big_bed, eval=FALSE}
-bb_to_granges(bedbase, ex_bed$id, "bigbed", quietly = FALSE)
-```
-
 ## Import a BEDset into a GRangesList
 
 Create a GRangesList given a BEDset id with `bb_to_grangeslist`.
