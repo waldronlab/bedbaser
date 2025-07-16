@@ -39,6 +39,7 @@ The convenience functions are as follows
 \item \code{bedbaser::BEDbase()}: API service constructor
 \item \code{bedbaser::getCache()}: Retrieve cache
 \item \code{bedbaser::setCache()}: Set path to cache
+\item \code{bedbaser::bb_stats()}: Retrieve BEDbase statistics
 \item \code{bedbaser::bb_example()}: Retrieve an example BED file or BEDset
 \item \code{bedbaser::bb_metadata()}: Retrieve metadata for a BED file or BEDset
 \item \code{bedbaser::bb_list_beds()}: List all BED files

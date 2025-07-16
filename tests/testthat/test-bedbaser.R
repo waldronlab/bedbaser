@@ -98,7 +98,7 @@ test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
     beds <- bb_list_beds(bedbase, bed_compliance = "bed3+0")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
-    expect_equal("bed3+0", md$bed_type)
+    expect_equal("bed3+0", md$bed_compliance)
     gro <- bb_to_granges(bedbase, id)
     expect_true(methods::is((gro)[1], "GRanges"))
 })
@@ -107,7 +107,7 @@ test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", 
     beds <- bb_list_beds(bedbase, bed_compliance = "bed6+4")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
-    expect_equal("bed6+4", md$bed_type)
+    expect_equal("bed6+4", md$bed_compliance)
     gro <- bb_to_granges(bedbase, id)
     expect_true(methods::is((gro)[1], "GRanges"))
     df <- as.data.frame(gro)

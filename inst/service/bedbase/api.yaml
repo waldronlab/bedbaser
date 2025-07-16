@@ -136,7 +136,7 @@
           {
             "description": "filter by bed type. e.g. 'bed6+4'",
             "in": "query",
-            "name": "bed_type",
+            "name": "bed_compliance",
             "required": false,
             "type": "string"
           }
@@ -259,7 +259,8 @@
           {
             "in": "query",
             "name": "query",
-            "required": true
+            "required": true,
+            "type": "string"
           },
           {
             "default": "hg38",
@@ -342,6 +343,41 @@
         "description": "Returns embeddings for a single BED record.",
         "operationId": "get_bed_embedding_v1_bed__bed_id__embedding_get",
         "summary": "Get embeddings for a single BED record"
+      }
+    },
+    "/v1/bed/{bed_id}/genome-stats": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bed_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/RefGenValidReturnModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Return reference genome validation results for a bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302",
+        "operationId": "get_ref_gen_results_v1_bed__bed_id__genome_stats_get",
+        "summary": "Get reference genome validation results"
       }
     },
     "/v1/bed/{bed_id}/metadata": {
@@ -585,6 +621,59 @@
         "summary": "Get stats for a single BED record"
       }
     },
+    "/v1/bed/{bed_id}/neighbours": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "default": 10,
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListSearchResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns most similar BED files in the database. Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_neighbours_v1_bed__bed_id__neighbours_get",
+        "summary": "Get nearest neighbours for a single BED record"
+      }
+    },
     "/v1/bed/{bed_id}/regions/{chr_num}": {
       "get": {
         "produces": [
@@ -726,6 +815,44 @@
         "description": "Return link to tokenized bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe: 58dee1672b7e581c8e1312bd4ca6b3c7",
         "operationId": "get_tokens_v1_bed__bed_id__tokens__universe_id__info_get",
         "summary": "Get link to tokenized bed file"
+      }
+    },
+    "/v1/bedset/create": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/CreateBEDsetRequest"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Create a new bedset by providing registry path to the PEPhub project",
+        "operationId": "create_bedset_v1_bedset_create_post",
+        "summary": "Create Bedset"
       }
     },
     "/v1/bedset/example": {
@@ -1122,6 +1249,38 @@
         "summary": "Release notes"
       }
     },
+    "/v1/files/{file_path}": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "file_path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "operationId": "redirect_to_download_v1_files__file_path__get",
+        "summary": "Redirect To Download"
+      }
+    },
     "/v1/genomes": {
       "get": {
         "produces": [
@@ -1348,7 +1507,7 @@
         ],
         "description": "Returns statistics",
         "operationId": "get_bedbase_db_stats_v1_stats_get",
-        "summary": "Get summary statistics for the DRS object store"
+        "summary": "Get summary statistics for BEDbase platform"
       }
     }
   },
@@ -1420,15 +1579,19 @@
     },
     "BedClassification": {
       "properties": {
-        "bed_format": {
-          "title": "Bed Format",
-          "type": "string"
-        },
-        "bed_type": {
+        "bed_compliance": {
           "default": "bed3",
           "pattern": "^bed(?:[3-9]|1[0-5])(?:\\+|$)[0-9]?+$",
-          "title": "Bed Type",
+          "title": "Bed Compliance",
           "type": "string"
+        },
+        "compliant_columns": {
+          "default": 3,
+          "title": "Compliant Columns",
+          "type": "integer"
+        },
+        "data_format": {
+          "title": "Data Format"
         },
         "genome_alias": {
           "title": "Genome Alias",
@@ -1437,8 +1600,16 @@
         "genome_digest": {
           "title": "Genome Digest"
         },
+        "header": {
+          "title": "Header"
+        },
         "name": {
           "title": "Name"
+        },
+        "non_compliant_columns": {
+          "default": 0,
+          "title": "Non Compliant Columns",
+          "type": "integer"
         }
       },
       "title": "BedClassification",
@@ -1458,6 +1629,7 @@
           "type": "string"
         },
         "payload": {
+          "additionalProperties": true,
           "title": "Payload",
           "type": "object"
         }
@@ -1542,18 +1714,22 @@
     "BedMetadataAll": {
       "properties": {
         "annotation": {},
-        "bed_format": {
-          "title": "Bed Format",
-          "type": "string"
-        },
-        "bed_type": {
+        "bed_compliance": {
           "default": "bed3",
           "pattern": "^bed(?:[3-9]|1[0-5])(?:\\+|$)[0-9]?+$",
-          "title": "Bed Type",
+          "title": "Bed Compliance",
           "type": "string"
         },
         "bedsets": {
           "title": "Bedsets"
+        },
+        "compliant_columns": {
+          "default": 3,
+          "title": "Compliant Columns",
+          "type": "integer"
+        },
+        "data_format": {
+          "title": "Data Format"
         },
         "description": {
           "title": "Description"
@@ -1565,6 +1741,9 @@
         },
         "genome_digest": {
           "title": "Genome Digest"
+        },
+        "header": {
+          "title": "Header"
         },
         "id": {
           "title": "Id",
@@ -1584,6 +1763,11 @@
         "name": {
           "default": "",
           "title": "Name"
+        },
+        "non_compliant_columns": {
+          "default": 0,
+          "title": "Non Compliant Columns",
+          "type": "integer"
         },
         "plots": {},
         "processed": {
@@ -1610,15 +1794,19 @@
     "BedMetadataBasic": {
       "properties": {
         "annotation": {},
-        "bed_format": {
-          "title": "Bed Format",
-          "type": "string"
-        },
-        "bed_type": {
+        "bed_compliance": {
           "default": "bed3",
           "pattern": "^bed(?:[3-9]|1[0-5])(?:\\+|$)[0-9]?+$",
-          "title": "Bed Type",
+          "title": "Bed Compliance",
           "type": "string"
+        },
+        "compliant_columns": {
+          "default": 3,
+          "title": "Compliant Columns",
+          "type": "integer"
+        },
+        "data_format": {
+          "title": "Data Format"
         },
         "description": {
           "title": "Description"
@@ -1629,6 +1817,9 @@
         },
         "genome_digest": {
           "title": "Genome Digest"
+        },
+        "header": {
+          "title": "Header"
         },
         "id": {
           "title": "Id",
@@ -1736,6 +1927,7 @@
           "type": "string"
         },
         "sample_name": {
+          "default": "",
           "title": "Sample Name",
           "type": "string"
         },
@@ -1763,9 +1955,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "sample_name"
-      ],
       "title": "BedPEPHub",
       "type": "object"
     },
@@ -1834,6 +2023,7 @@
           "type": "string"
         },
         "sample_name": {
+          "default": "",
           "title": "Sample Name",
           "type": "string"
         },
@@ -1861,9 +2051,6 @@
           "type": "string"
         }
       },
-      "required": [
-        "sample_name"
-      ],
       "title": "BedPEPHubRestrict",
       "type": "object"
     },
@@ -1993,6 +2180,10 @@
         "submission_date": {
           "format": "date-time",
           "title": "Submission Date",
+          "type": "string"
+        },
+        "summary": {
+          "title": "Summary",
           "type": "string"
         }
       },
@@ -2159,6 +2350,19 @@
       "title": "ComponentVersions",
       "type": "object"
     },
+    "CreateBEDsetRequest": {
+      "properties": {
+        "registry_path": {
+          "title": "Registry Path",
+          "type": "string"
+        }
+      },
+      "required": [
+        "registry_path"
+      ],
+      "title": "CreateBEDsetRequest",
+      "type": "object"
+    },
     "DRSModel": {
       "properties": {
         "access_methods": {
@@ -2234,6 +2438,9 @@
         },
         "description": {
           "title": "Description"
+        },
+        "file_digest": {
+          "title": "File Digest"
         },
         "name": {
           "title": "Name",
@@ -2342,6 +2549,7 @@
         },
         "metadata": {},
         "payload": {
+          "additionalProperties": true,
           "title": "Payload",
           "type": "object"
         },
@@ -2351,11 +2559,73 @@
         }
       },
       "required": [
-        "id",
-        "payload",
-        "score"
+        "id"
       ],
       "title": "QdrantSearchResult",
+      "type": "object"
+    },
+    "RefGenValidModel": {
+      "additionalProperties": false,
+      "properties": {
+        "assigned_points": {
+          "title": "Assigned Points",
+          "type": "integer"
+        },
+        "compared_genome": {
+          "title": "Compared Genome",
+          "type": "string"
+        },
+        "oobr": {
+          "title": "Oobr"
+        },
+        "provided_genome": {
+          "title": "Provided Genome",
+          "type": "string"
+        },
+        "sequence_fit": {
+          "title": "Sequence Fit"
+        },
+        "tier_ranking": {
+          "title": "Tier Ranking",
+          "type": "integer"
+        },
+        "xs": {
+          "default": 0,
+          "title": "Xs",
+          "type": "number"
+        }
+      },
+      "required": [
+        "provided_genome",
+        "compared_genome",
+        "assigned_points",
+        "tier_ranking"
+      ],
+      "title": "RefGenValidModel",
+      "type": "object"
+    },
+    "RefGenValidReturnModel": {
+      "properties": {
+        "compared_genome": {
+          "items": {
+            "$ref": "#/definitions/RefGenValidModel"
+          },
+          "title": "Compared Genome",
+          "type": "array"
+        },
+        "id": {
+          "title": "Id",
+          "type": "string"
+        },
+        "provided_genome": {
+          "title": "Provided Genome"
+        }
+      },
+      "required": [
+        "id",
+        "compared_genome"
+      ],
+      "title": "RefGenValidReturnModel",
       "type": "object"
     },
     "ServiceInfoResponse": {
@@ -2462,14 +2732,12 @@
         "global_experiment_id": {
           "default": "",
           "description": "Global experiment identifier. e.g. GSE000",
-          "title": "Global Experiment Id",
-          "type": "string"
+          "title": "Global Experiment Id"
         },
         "global_sample_id": {
           "default": "",
           "description": "Global sample identifier. e.g. GSM000",
-          "title": "Global Sample Id",
-          "type": "string"
+          "title": "Global Sample Id"
         },
         "library_source": {
           "default": "",
@@ -2481,6 +2749,12 @@
           "default": "",
           "description": "Name of species. e.g. Homo sapiens.",
           "title": "Organism",
+          "type": "string"
+        },
+        "original_file_name": {
+          "default": "",
+          "description": "Original file name",
+          "title": "Original File Name",
           "type": "string"
         },
         "phenotype": {

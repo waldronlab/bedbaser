@@ -127,7 +127,7 @@
 #' file_path <- .get_file(md, getCache(bedbase), "http")
 #' args <- list(
 #'     con = file_path,
-#'     format = gsub("peak", "Peak", metadata$bed_format),
+#'     format = gsub("peak", "Peak", metadata$data_format),
 #'     genome = md$genome_alias
 #' )
 #' .import_with_genome(args)
@@ -238,7 +238,6 @@
                 metadata$non_compliant_columns
             )
         }
-        extra_cols <- .get_extra_cols(file_path, nums[1], nums[2])
     }
 
     if (!is.null(extra_cols))

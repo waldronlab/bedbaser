@@ -27,6 +27,7 @@
 #' * `bedbaser::BEDbase()`: API service constructor
 #' * `bedbaser::getCache()`: Retrieve cache
 #' * `bedbaser::setCache()`: Set path to cache
+#' * `bedbaser::bb_stats()`: Retrieve BEDbase statistics
 #' * `bedbaser::bb_example()`: Retrieve an example BED file or BEDset
 #' * `bedbaser::bb_metadata()`: Retrieve metadata for a BED file or BEDset
 #' * `bedbaser::bb_list_beds()`: List all BED files
@@ -70,10 +71,10 @@ BEDbase <- function(cache_path, quietly = FALSE) {
         )
     )
     info <- httr::content(
-        bedbase$list_beds_v1_bed_list_get(limit = 0, offset = 0)
+        bedbase$get_bedbase_db_stats_v1_stats_get()
     )
     if (!quietly) {
-        message(info$count, " BED files available.")
+        message(info$bedfiles_number, " BED files available.")
     }
     bedbase
 }
@@ -230,6 +231,28 @@ setMethod(
     }
 )
 
+#' Get BEDbase statistics
+#'
+#' @description Get statistics on available BED files, BEDsets, and genomoes.
+#'
+#' @param bedbase BEDbase() object
+#' @param detailed logical(1) if TRUE display detailed information
+#'
+#' @return An invisible \code{NULL}
+#'
+#' @examples
+#' bedbase <- BEDbase()
+#' bb_stats(bedbase)
+#' @export
+bb_stats <- function(bedbase, detailed = FALSE) {
+    if (detailed) {
+        rsp <- bedbase$get_detailed_stats_v1_detailed_stats_get()
+    } else {
+        rsp <- bedbase$get_bedbase_db_stats_v1_stats_get()
+    }
+    httr::content(rsp)
+}
+
 #' Get the example BED file or BEDset with metadata
 #'
 #' @description Get the example BED file or BEDset available through
@@ -313,7 +336,8 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #'
 #' @param bedbase BEDbase() object
 #' @param genome character(1) (default \code{NULL}) genome keyword
-#' @param bed_type character(1) (default \code{NULL}) bed file type
+#' @param bed_compliance character(1) (default \code{NULL}) bed compliance,
+#' e.g., 'bed6+4'
 #' @param limit integer(1) (default \code{1000}) maximum records
 #' @param offset integer(1) (default \code{0}) page token of records
 #'
@@ -327,7 +351,7 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 bb_list_beds <- function(bedbase, genome = NULL, bed_compliance = NULL,
     limit = 1000, offset = 0) {
     rsp <- bedbase$list_beds_v1_bed_list_get(
-        genome = genome, bed_type = bed_type,
+        genome = genome, bed_compliance = bed_compliance,
         limit = limit, offset = offset
     )
     recs <- httr::content(rsp)
