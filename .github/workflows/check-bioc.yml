@@ -41,6 +41,7 @@ env:
   cache-version: 'cache-v1'
   run_docker: 'false'
   bioc_release: '3.21'
+  bioc_branch: 'RELEASE_3_21'
 
 jobs:
   build-check:
@@ -53,12 +54,9 @@ jobs:
       fail-fast: false
       matrix:
         config:
-#          - { os: ubuntu-latest, r: bioc_devel_r_version, bioc: 'devel', cont: "bioconductor/bioconductor_docker:devel", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
-#          - { os: macOS-latest, r: bioc_devel_r_version, bioc: 'devel'}
-#          - { os: windows-latest, r: bioc_devel_r_version, bioc: 'devel'}
-          - { os: ubuntu-latest, r: '4.5.1', bioc: '3.21', cont: "bioconductor/bioconductor_docker:RELEASE_3_21", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
-          - { os: macOS-latest, r: '4.5.1', bioc: '3.21'}
-          - { os: windows-latest, r: '4.5.1', bioc: '3.21'}
+          - { os: ubuntu-latest, r: '4.5.1', bioc: bioc_release, cont: "bioconductor/bioconductor_docker:RELEASE_3_21", rspm: "https://packagemanager.rstudio.com/cran/__linux__/jammy/latest" }
+          - { os: macOS-latest, r: '4.5.1', bioc: bioc_release}
+          - { os: windows-latest, r: '4.5.1', bioc: bioc_release}
           ## Check https://github.com/r-lib/actions/tree/master/examples
           ## for examples using the http-user-agent
     env:
@@ -84,6 +82,8 @@ jobs:
       ## If they update their steps, we will also need to update ours.
       - name: Checkout Repository
         uses: actions/checkout@v3
+        with:
+          ref: ${{ env.bioc_branch }}
 
       ## R is already included in the Bioconductor docker images
       - name: Setup R from r-lib
@@ -161,7 +161,7 @@ jobs:
 
       - name: Set BiocVersion
         run: |
-          BiocManager::install(version = "${{ matrix.config.bioc }}", ask = FALSE, force = TRUE)
+          BiocManager::install(version = "${{ env.bioc_release }}", ask = FALSE, force = TRUE)
         shell: Rscript {0}
 
       - name: Install dependencies pass 1
@@ -261,7 +261,8 @@ jobs:
 
       - name: Install package
         if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux'
-        run: R CMD INSTALL .
+        run: |
+          R CMD INSTALL .
 
       - name: Build pkgdown site
         if: github.ref == 'refs/heads/devel' && env.run_pkgdown == 'true' && runner.os == 'Linux' && matrix.config.bioc == env.bioc_release
