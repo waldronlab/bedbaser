@@ -19,7 +19,7 @@ of bedbaser with an example BED file and BEDset in BEDbase."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.1.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
       </span>
     </div>
 
@@ -83,44 +83,46 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 125948 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 125977 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bed</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name                 : chr "TELOEC_ATAC_SYN+JQ1_REP1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name                 : chr "encode_10240"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ genome_alias         : chr "hg38"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ genome_digest        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_compliance       : chr "bed6+4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ data_format          : chr "encode_narrowpeak_rs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ genome_digest        : chr "2230c535660fb4774114bfa966a62f823fdb6d21acf138d4"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_compliance       : chr "bed6+3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ data_format          : chr "encode_broadpeak"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ compliant_columns    : int 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ non_compliant_columns: int 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ non_compliant_columns: int 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ header               : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id                   : chr "a4b2accb7716cc96bbda940f777c4f66"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description          : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date      : chr "2025-05-28T20:42:07.648218Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date     : chr "2025-07-01T17:24:06.354049Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id                   : chr "afbdec2bd8ff7f22467a39d6146d1714"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description          : chr "GM DNase-seq experiment on K562 (Blast phase chronic myelogenous leukemia, BCR-ABL1 positive cell line from pleural effusion)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date      : chr "2025-04-28T23:15:53.132875Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date     : chr "2025-07-18T20:52:00.968951Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ is_universe          : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ license_id           : chr "DUO:0000042"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ annotation           :List of 16</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ species_name        : chr "Homo sapiens"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ species_id          : chr "9606"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ genotype            : chr "Normal"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ genotype            : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ phenotype           : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ description         : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_type           : chr "Human Aortic Endothelial Cells"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_line           : chr "teloHAEC"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_type           : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_line           : chr "K562"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ tissue              : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ library_source      : chr "genomic"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ assay               : chr "ATAC-seq"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ antibody            : chr "N/A"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ assay               : chr "DNase-Hypersensitivity"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ antibody            : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ target              : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ treatment           : chr "50ng/mL IFNg, 25ng/mL TNFa, and 500nM JQ1"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_sample_id    :List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gsm8128692"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_experiment_id:List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gse232168"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ original_file_name  : chr "GSM8128692_TELOEC_ATAC_500nM_JQ1_RB10569_REP1_filt_to_147.tn5_peaks.narrowPeak.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ processed            : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ treatment           : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_sample_id    :List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "encode:ENCFF708QSW"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gsm2400267"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_experiment_id:List of 2</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "encode"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gse90287"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ original_file_name  : chr "GSM2400267_ENCFF708QSW_hotspots_GRCh38.bed.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ processed            : logi TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ stats                : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots                : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ files                : NULL</span>
@@ -130,61 +132,61 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bedset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse127562"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse127562"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "040f0636e1843adfc3fa02c954004b3a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-06-03T19:27:59.804630Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-06-03T19:27:59.804633Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse127704"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse127704"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "b509b959846303ecba35adc66e7838ff"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-06-03T16:17:24.565586Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-06-03T16:17:24.565590Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ statistics      :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ mean:List of 18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 3e+05</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.425</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 40615</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 316</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 11558</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 0.0386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 133766</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 0.446</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.386</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 115895</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 7156</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 0.0239</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 9806</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.0327</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 10412</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 0.0348</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 11407</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 0.038</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.435</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 37110</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 362</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 10536</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 0.0352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 132950</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 0.443</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.424</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 127308</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 3364</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 0.0113</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 6050</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.0202</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 8175</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 0.0273</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 11616</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 0.0387</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ sd  :List of 18</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 0</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.0212</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 4660</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 30.1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 285</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 9e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 750</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 0.0025</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.0041</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 1235</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 280</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 9e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 515</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.0017</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 274</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 9e-04</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 1178</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 0.004</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.0071</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 651</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 2.27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 614</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 0.0021</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 96.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 4e-04</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.0011</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 315</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 483</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 0.0016</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 552</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.0018</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 885</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 0.0029</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 53</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 1e-04</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots           :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ region_commonality: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE127562](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE127562)\nChIP-seq from HEK293 (ENCSR283DOU)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE127704](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE127704)\nChIP-seq from K562 (ENCSR497VFH)"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ summary         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 4</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "23f32335a31bcd80c5d2f0f6a0c75020"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "7fc7f757eff600d5eb492d8b760ccefa"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "d451ecce9b462458cecb753d06564971"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "f204ae8184e3fb8924b8125c643145c7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "3b56d2689a821ef80da854e789e7c4bc"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "4704124ec926afd6c557536f3ddd266a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "58114a3e44dea03decaa305f35c0f60b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9a2adba03018d2e8780fb743a7d7dc3c"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "ENCODE, DCC"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse127562"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse127704"</span>
 </code></pre></div>
     </div>
   </div>
@@ -199,7 +201,7 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.9000.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
 </div>
 
       </footer></div>
