@@ -42,6 +42,28 @@
         "summary": "API intro page"
       }
     },
+    "/v1/assays": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BaseListResponse"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns statistics",
+        "operationId": "get_bedbase_db_stats_v1_assays_get",
+        "summary": "Get available assays"
+      }
+    },
     "/v1/bed/embed": {
       "post": {
         "consumes": [
@@ -250,8 +272,8 @@
         "summary": "Search for similar bed files"
       }
     },
-    "/v1/bed/search/text": {
-      "post": {
+    "/v1/bed/search/exact": {
+      "get": {
         "produces": [
           "application/json"
         ],
@@ -263,9 +285,72 @@
             "type": "string"
           },
           {
-            "default": "hg38",
             "in": "query",
             "name": "genome",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "assay",
+            "required": false
+          },
+          {
+            "default": 10,
+            "in": "query",
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "in": "query",
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListSearchResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed",
+          "search"
+        ],
+        "operationId": "exact_search_v1_bed_search_exact_get",
+        "summary": "Search for exact match of metadata in bed files"
+      }
+    },
+    "/v1/bed/search/text": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "genome",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "assay",
             "required": false
           },
           {
@@ -302,7 +387,7 @@
           "search"
         ],
         "description": "Search for a BedFile by a text query.\n\nBy default, it searches in the 'hg38' genome. To search in a different genome, specify the `genome` parameter. eg. mm10\nExample: query=\"cancer\"",
-        "operationId": "text_to_bed_search_v1_bed_search_text_post",
+        "operationId": "text_to_bed_search_v1_bed_search_text_get",
         "summary": "Search for a BedFile"
       }
     },
@@ -1870,6 +1955,12 @@
           "title": "Antibody",
           "type": "string"
         },
+        "assay": {
+          "default": "",
+          "description": "Experimental protocol (e.g. ChIP-seq)",
+          "title": "Assay",
+          "type": "string"
+        },
         "cell_line": {
           "default": "",
           "title": "Cell Line",
@@ -1884,12 +1975,6 @@
           "default": "",
           "description": "Description of the sample",
           "title": "Description",
-          "type": "string"
-        },
-        "exp_protocol": {
-          "default": "",
-          "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Exp Protocol",
           "type": "string"
         },
         "genome": {
@@ -1966,6 +2051,12 @@
           "title": "Antibody",
           "type": "string"
         },
+        "assay": {
+          "default": "",
+          "description": "Experimental protocol (e.g. ChIP-seq)",
+          "title": "Assay",
+          "type": "string"
+        },
         "cell_line": {
           "default": "",
           "title": "Cell Line",
@@ -1980,12 +2071,6 @@
           "default": "",
           "description": "Description of the sample",
           "title": "Description",
-          "type": "string"
-        },
-        "exp_protocol": {
-          "default": "",
-          "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Exp Protocol",
           "type": "string"
         },
         "genome": {
@@ -2295,6 +2380,38 @@
       "title": "BedStatsModel",
       "type": "object"
     },
+    "BinValues": {
+      "properties": {
+        "bins": {
+          "items": {},
+          "title": "Bins",
+          "type": "array"
+        },
+        "counts": {
+          "items": {
+            "type": "integer"
+          },
+          "title": "Counts",
+          "type": "array"
+        },
+        "mean": {
+          "title": "Mean",
+          "type": "number"
+        },
+        "median": {
+          "title": "Median",
+          "type": "number"
+        }
+      },
+      "required": [
+        "bins",
+        "counts",
+        "mean",
+        "median"
+      ],
+      "title": "BinValues",
+      "type": "object"
+    },
     "Body_bed_to_bed_search_v1_bed_search_bed_post": {
       "properties": {
         "file": {
@@ -2472,6 +2589,13 @@
     },
     "FileStats": {
       "properties": {
+        "bed_comments": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed Comments",
+          "type": "object"
+        },
         "bed_compliance": {
           "additionalProperties": {
             "type": "integer"
@@ -2484,6 +2608,13 @@
             "type": "integer"
           },
           "title": "Data Format",
+          "type": "object"
+        },
+        "file_assay": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "File Assay",
           "type": "object"
         },
         "file_genome": {
@@ -2499,15 +2630,70 @@
           },
           "title": "File Organism",
           "type": "object"
+        },
+        "file_size": {
+          "$ref": "#/definitions/BinValues"
+        },
+        "geo": {
+          "$ref": "#/definitions/GEOStatistics"
+        },
+        "geo_status": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Geo Status",
+          "type": "object"
+        },
+        "mean_region_width": {
+          "$ref": "#/definitions/BinValues"
+        },
+        "number_of_regions": {
+          "$ref": "#/definitions/BinValues"
         }
       },
       "required": [
         "bed_compliance",
         "data_format",
         "file_genome",
-        "file_organism"
+        "file_organism",
+        "file_assay",
+        "geo_status",
+        "bed_comments",
+        "mean_region_width",
+        "file_size",
+        "number_of_regions",
+        "geo"
       ],
       "title": "FileStats",
+      "type": "object"
+    },
+    "GEOStatistics": {
+      "description": "GEO statistics for files.",
+      "properties": {
+        "cumulative_number_of_files": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Cumulative Number Of Files",
+          "type": "object"
+        },
+        "file_sizes": {
+          "$ref": "#/definitions/BinValues"
+        },
+        "number_of_files": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Number Of Files",
+          "type": "object"
+        }
+      },
+      "required": [
+        "number_of_files",
+        "cumulative_number_of_files",
+        "file_sizes"
+      ],
+      "title": "GEOStatistics",
       "type": "object"
     },
     "HTTPValidationError": {
@@ -2572,8 +2758,10 @@
           "type": "integer"
         },
         "compared_genome": {
-          "title": "Compared Genome",
-          "type": "string"
+          "title": "Compared Genome"
+        },
+        "genome_digest": {
+          "title": "Genome Digest"
         },
         "oobr": {
           "title": "Oobr"
@@ -2598,6 +2786,7 @@
       "required": [
         "provided_genome",
         "compared_genome",
+        "genome_digest",
         "assigned_points",
         "tier_ranking"
       ],
@@ -2701,6 +2890,12 @@
           "title": "Antibody",
           "type": "string"
         },
+        "assay": {
+          "default": "",
+          "description": "Experimental protocol (e.g. ChIP-seq)",
+          "title": "Assay",
+          "type": "string"
+        },
         "cell_line": {
           "default": "",
           "description": "population of cells derived from a single cell and cultured in the lab for extended use, e.g. HeLa, HepG2, k562",
@@ -2716,12 +2911,6 @@
         "description": {
           "default": "",
           "title": "Description"
-        },
-        "exp_protocol": {
-          "default": "",
-          "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Exp Protocol",
-          "type": "string"
         },
         "genotype": {
           "default": "",
@@ -2902,6 +3091,13 @@
     },
     "UsageStats": {
       "properties": {
+        "bed_downloads": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed Downloads",
+          "type": "object"
+        },
         "bed_metadata": {
           "additionalProperties": {
             "type": "integer"
@@ -2935,7 +3131,8 @@
         "bed_metadata",
         "bedset_metadata",
         "bed_search_terms",
-        "bedset_search_terms"
+        "bedset_search_terms",
+        "bed_downloads"
       ],
       "title": "UsageStats",
       "type": "object"

@@ -4,12 +4,23 @@
 \alias{bb_bed_text_search}
 \title{Search BED files by text}
 \usage{
-bb_bed_text_search(bedbase, query, limit = 10, offset = 0)
+bb_bed_text_search(
+  bedbase,
+  query,
+  genome = NULL,
+  assay = NULL,
+  limit = 10,
+  offset = 0
+)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
 
 \item{query}{character() keywords to search}
+
+\item{genome}{character() (default NULL) genome to search}
+
+\item{assay}{character() (default NULL) assay to search}
 
 \item{limit}{integer(1) (default \code{10}) maximum number of results}
 

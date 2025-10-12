@@ -456,6 +456,8 @@ bb_beds_in_bedset <- function(bedbase, bedset_id) {
 #'
 #' @param bedbase BEDbase() object
 #' @param query character() keywords to search
+#' @param genome character() (default NULL) genome to search
+#' @param assay character() (default NULL) assay to search
 #' @param limit integer(1) (default \code{10}) maximum number of results
 #' @param offset integer(1) (default \code{0}) page offset of results
 #'
@@ -466,10 +468,17 @@ bb_beds_in_bedset <- function(bedbase, bedset_id) {
 #' bb_bed_text_search(bedbase, "hg38")
 #'
 #' @export
-bb_bed_text_search <- function(bedbase, query, limit = 10, offset = 0) {
-    encoded_query <- utils::URLencode(query, reserved = TRUE)
-    rsp <- bedbase$text_to_bed_search_v1_bed_search_text_post(
-        query = encoded_query,
+bb_bed_text_search <- function(bedbase, query, genome = NULL, assay = NULL,
+                               limit = 10, offset = 0) {
+    query <- utils::URLencode(query, reserved = TRUE)
+    if (!is.null(genome))
+        genome <- utils::URLencode(genome, reserved = TRUE)
+    if (!is.null(assay))
+        assay <- utils::URLencode(assay, reserved = TRUE)
+    rsp <- bedbase$text_to_bed_search_v1_bed_search_text_get(
+        query = query,
+        genome = genome,
+        assay = assay,
         limit = limit,
         offset = offset
     )

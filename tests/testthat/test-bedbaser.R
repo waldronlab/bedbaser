@@ -83,8 +83,10 @@ test_that("bb_beds_in_bedset returns expected bed_ids", {
 
 test_that("bb_bed_text_search returns results scored against the query", {
     beds <- bb_bed_text_search(bedbase, "hg38")
-    ex_beds <- httr::content(bedbase$text_to_bed_search_v1_bed_search_text_post(
+    ex_beds <- httr::content(bedbase$text_to_bed_search_v1_bed_search_text_get(
         query = "hg38",
+        genome = NULL,
+        assay = NULL,
         limit = 10,
         offset = 0
     ))
