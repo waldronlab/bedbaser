@@ -18,7 +18,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 125977 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 128999 BED files available.</span>
 <span class="r-in"><span><span class="fu">operations</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $lending_page__get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lending_page__get </span>
@@ -99,6 +99,14 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> API intro page </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Display the index UI page</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedbase_db_stats_v1_assays_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedbase_db_stats_v1_assays_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Get available assays </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns statistics</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -153,8 +161,19 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   file (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $text_to_bed_search_v1_bed_search_text_post</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> text_to_bed_search_v1_bed_search_text_post </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $exact_search_v1_bed_search_exact_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> exact_search_v1_bed_search_exact_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Search for exact match of metadata in bed files </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   query (string)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   genome ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assay ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $text_to_bed_search_v1_bed_search_text_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> text_to_bed_search_v1_bed_search_text_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Search for a BedFile </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Search for a BedFile by a text query.</span>
@@ -166,6 +185,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   query (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   genome ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   assay ()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>

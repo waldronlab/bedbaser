@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -79,17 +79,15 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 125977 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 128999 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_beds_in_bedset</span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bedset</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 34</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   name   genome_alias genome_digest bed_compliance data_format compliant_columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> encod… hg38         2230c535660f… bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> ChIP-… hg19         <span style="color: #BB0000;">NA</span>            bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> ChIP-… hg19         <span style="color: #BB0000;">NA</span>            bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> encod… hg38         2230c535660f… bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 28 more variables: non_compliant_columns &lt;chr&gt;, id &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 2 × 29</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   name         genome_alias bed_compliance data_format compliant_columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> U2OS sh-VNGD hg38         bed4+1         bed_like    4                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> U2OS sh-ctrl hg38         bed4+1         bed_like    4                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 24 more variables: non_compliant_columns &lt;chr&gt;, id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   description &lt;chr&gt;, submission_date &lt;chr&gt;, last_update_date &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   is_universe &lt;chr&gt;, license_id &lt;chr&gt;, annotation.species_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   annotation.species_id &lt;chr&gt;, annotation.genotype &lt;chr&gt;,</span></span>

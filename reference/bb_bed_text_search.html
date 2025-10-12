@@ -19,7 +19,7 @@ records and an initial offset of 0."><!-- mathjax --><script src="https://cdnjs.
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.3</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
       </span>
     </div>
 
@@ -60,7 +60,14 @@ records and an initial offset of 0.</p>
     </div>
 
     <div id="ref-usage">
-    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bb_bed_text_search</span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">query</span>, limit <span class="op">=</span> <span class="fl">10</span>, offset <span class="op">=</span> <span class="fl">0</span><span class="op">)</span></span></code></pre></div>
+    <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">bb_bed_text_search</span><span class="op">(</span></span>
+<span>  <span class="va">bedbase</span>,</span>
+<span>  <span class="va">query</span>,</span>
+<span>  genome <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  assay <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  limit <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>  offset <span class="op">=</span> <span class="fl">0</span></span>
+<span><span class="op">)</span></span></code></pre></div>
     </div>
 
     <div id="arguments">
@@ -73,6 +80,14 @@ records and an initial offset of 0.</p>
 
 <dt id="arg-query">query<a class="anchor" aria-label="anchor" href="#arg-query"></a></dt>
 <dd><p>character() keywords to search</p></dd>
+
+
+<dt id="arg-genome">genome<a class="anchor" aria-label="anchor" href="#arg-genome"></a></dt>
+<dd><p>character() (default NULL) genome to search</p></dd>
+
+
+<dt id="arg-assay">assay<a class="anchor" aria-label="anchor" href="#arg-assay"></a></dt>
+<dd><p>character() (default NULL) assay to search</p></dd>
 
 
 <dt id="arg-limit">limit<a class="anchor" aria-label="anchor" href="#arg-limit"></a></dt>
@@ -91,28 +106,28 @@ records and an initial offset of 0.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 125977 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 128999 BED files available.</span>
 <span class="r-in"><span><span class="fu">bb_bed_text_search</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"hg38"</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 48</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    id                   payload.species_name payload.species_id payload.genotype</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 7d3acf8e-1da7-e70c-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> ce44f456-2428-e08e-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 86439e4f-5ed4-ad3c-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> fd8732dd-5310-f056-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 7ca19e8d-a89b-fc23-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> 53174b51-10e5-3421-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> b31fed80-4814-50dd-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> c220b90d-362c-0d2a-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> 8350ab5e-48c6-ab00-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 4d18dd3a-9eca-26d8-… Homo sapiens         9606               <span style="color: #949494;">""</span>              </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44 more variables: payload.phenotype &lt;chr&gt;, payload.description &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.cell_type &lt;chr&gt;, payload.cell_line &lt;chr&gt;, payload.tissue &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.library_source &lt;chr&gt;, payload.assay &lt;chr&gt;, payload.antibody &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.target &lt;chr&gt;, payload.treatment &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.global_sample_id &lt;chr&gt;, payload.global_experiment_id &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.original_file_name &lt;chr&gt;, score &lt;chr&gt;, metadata.name &lt;chr&gt;,</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metadata.genome_alias &lt;chr&gt;, metadata.genome_digest &lt;chr&gt;, …</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 10 × 43</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    id              payload.id payload.name payload.description payload.cell_line</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> 6be4f1fb7464a8… 6be4f1fb7… ChIP_HL60_H… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> 3986a74ae4f050… 3986a74ae… ChIP_HL60_H… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> 5691d9009f9614… 5691d9009… ChIP_HL60_H… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> 2334a9fc37fadf… 2334a9fc3… HCC38_H3K27… <span style="color: #949494;">""</span>                  HCC38            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> 1b7fc14e60f8af… 1b7fc14e6… ChIP_HL60_H… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> df98019401d35a… df9801940… HL-60_H3K27… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> 9f17013256fca6… 9f1701325… HT1376_DMSO… <span style="color: #949494;">""</span>                  HT1376           </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> 4353d91e0c7c6c… 4353d91e0… H3K27ac_ChI… <span style="color: #949494;">""</span>                  786-O            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> fbee3b0091eaa2… fbee3b009… ChIP_HL60_S… <span style="color: #949494;">""</span>                  HL-60            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> 95bc6dd2083d3a… 95bc6dd20… H3K27ac_ChI… <span style="color: #949494;">""</span>                  786-O            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 38 more variables: payload.cell_type &lt;chr&gt;, payload.tissue &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.target &lt;chr&gt;, payload.treatment &lt;chr&gt;, payload.assay &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   payload.genome_alias &lt;chr&gt;, payload.species_name &lt;chr&gt;, score &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metadata.name &lt;chr&gt;, metadata.genome_alias &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metadata.bed_compliance &lt;chr&gt;, metadata.data_format &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metadata.compliant_columns &lt;chr&gt;, metadata.non_compliant_columns &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   metadata.id &lt;chr&gt;, metadata.description &lt;chr&gt;, …</span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>
