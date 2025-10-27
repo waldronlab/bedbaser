@@ -25,6 +25,11 @@ test_that(".get_file returns a valid file path", {
 test_that(".get_extra_cols returns a named vector", {
     ex_bed_md2 <- bb_metadata(bedbase, ex_bedset$bed_ids[[1]], TRUE)
     file_path <- .get_file(ex_bed_md2, getCache(bedbase, "bedfiles"), "http")
-    extra_cols <- .get_extra_cols(file_path, 4, 1)
-    expect_equal(1, length(extra_cols))
+    x_y <- strsplit(gsub("bed", "", ex_bed_md2$bed_compliance),
+                    "+",
+                    fixed= TRUE)[[1]]
+    extra_cols <- .get_extra_cols(file_path,
+                                  as.numeric(x_y[1]),
+                                  as.numeric(x_y[2]))
+    expect_equal(as.numeric(x_y[2]), length(extra_cols))
 })
