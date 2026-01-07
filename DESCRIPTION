@@ -28,6 +28,7 @@ Depends:
 Imports:
     AnVIL (>= 1.16.0),
     BiocFileCache,
+    curl,
     dplyr,
     GenomeInfoDb,
     GenomicRanges,
@@ -50,6 +51,6 @@ Suggests:
     testthat (>= 3.0.0)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.2
+RoxygenNote: 7.3.3
 VignetteBuilder: knitr
 Config/testthat/edition: 3
