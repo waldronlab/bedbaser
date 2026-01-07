@@ -1,3 +1,9 @@
+# version 1.2.1
+
+- Update bedbase to 0.12.1
+- Replace download.file with curl::curl_download
+- Fix test for bb_bed_text_search
+
 # version 1.1.1
 
 - Update bedbase to 0.10.6
