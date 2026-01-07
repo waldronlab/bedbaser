@@ -66,7 +66,7 @@
         bed_file <- .cache_bedfile(metadata$id, file_url, cache_or_path)
     } else {
         bed_file <- file.path(cache_or_path, .get_file_name(file_url))
-        utils::download.file(file_url, bed_file, quiet = quietly)
+        curl::curl_download(file_url, bed_file, quiet = quietly)
     }
     bed_file
 }

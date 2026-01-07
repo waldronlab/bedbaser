@@ -9,7 +9,7 @@
     contains = "Service"
 )
 
-.BEDBASE_API_REFERENCE_VERSION <- "0.10.6"
+.BEDBASE_API_REFERENCE_VERSION <- "0.12.1"
 
 #' @rdname BEDbase
 #'

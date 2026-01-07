@@ -71,7 +71,7 @@ test_that("bb_list_bedsets returns limited number of bed ids", {
     bedsets <- bb_list_bedsets(bedbase, query = "", limit = 1)
     expect_equal(bedset_ids, bedsets$id)
 })
-
+ 
 test_that("bb_beds_in_bedset returns expected bed_ids", {
     ex_bedset <- httr::content(bedbase$get_example_bedset_record_v1_bedset_example_get())
     ex_bedset_raw <- httr::content(bedbase$get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get(ex_bedset$id))
@@ -82,7 +82,8 @@ test_that("bb_beds_in_bedset returns expected bed_ids", {
 })
 
 test_that("bb_bed_text_search returns results scored against the query", {
-    beds <- bb_bed_text_search(bedbase, "hg38")
+    beds <- bb_bed_text_search(bedbase, "hg38") |>
+        dplyr::arrange(id)
     ex_beds <- httr::content(bedbase$text_to_bed_search_v1_bed_search_text_get(
         query = "hg38",
         genome = NULL,
@@ -91,7 +92,8 @@ test_that("bb_bed_text_search returns results scored against the query", {
         offset = 0
     ))
     ex_beds <- purrr::map_depth(.x = ex_beds$results, 1, \(y) unlist(y)) |>
-        dplyr::bind_rows()
+        dplyr::bind_rows() |>
+        dplyr::arrange(id)
     expect_equal(ex_beds, beds)
     expect_true("score" %in% names(beds))
 })

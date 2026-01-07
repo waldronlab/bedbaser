@@ -3,7 +3,7 @@
   "info": {
     "description": "BED file/sets statistics and image server API",
     "title": "bedhost",
-    "version": "0.10.6"
+    "version": "0.12.1"
   },
   "paths": {
     "/": {
@@ -136,7 +136,10 @@
         "parameters": [
           {
             "default": 1000,
+            "description": "Limit (1-10000), default 1000",
             "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
@@ -389,6 +392,48 @@
         "description": "Search for a BedFile by a text query.\n\nBy default, it searches in the 'hg38' genome. To search in a different genome, specify the `genome` parameter. eg. mm10\nExample: query=\"cancer\"",
         "operationId": "text_to_bed_search_v1_bed_search_text_get",
         "summary": "Search for a BedFile"
+      }
+    },
+    "/v1/bed/umap": {
+      "post": {
+        "consumes": [
+          "multipart/form-data"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "format": "binary",
+            "in": "formData",
+            "name": "file",
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "items": {
+                "type": "number"
+              },
+              "title": "Response Embed Bed File V1 Bed Umap Post",
+              "type": "array"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Create embedding for bed file",
+        "operationId": "embed_bed_file_v1_bed_umap_post",
+        "summary": "Get embeddings for a bed file."
       }
     },
     "/v1/bed/{bed_id}/embedding": {
@@ -2432,6 +2477,17 @@
         }
       },
       "title": "Body_embed_bed_file_v1_bed_embed_post",
+      "type": "object"
+    },
+    "Body_embed_bed_file_v1_bed_umap_post": {
+      "properties": {
+        "file": {
+          "format": "binary",
+          "title": "File",
+          "type": "string"
+        }
+      },
+      "title": "Body_embed_bed_file_v1_bed_umap_post",
       "type": "object"
     },
     "ComponentVersions": {
