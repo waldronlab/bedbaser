@@ -20,7 +20,7 @@ GRangesList."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/lib
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.3</span>
       </span>
     </div>
 
@@ -119,13 +119,13 @@ GRangesList.</p>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="bb_metadata.html">bb_metadata</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "encode_15133"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ATAC-seq from GM23338 (ENCLB501SUW)"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $genome_alias</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "hg38"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $genome_digest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2230c535660fb4774114bfa966a62f823fdb6d21acf138d4"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $bed_compliance</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "bed6+4"</span>
@@ -143,16 +143,16 @@ GRangesList.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $id</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "d30633f26d7d403427e884eb9edf2033"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "1d7d4d24e6a3339d185f4e0f58571b5e"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $description</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NCOR1 TF ChIP-seq experiment on K562 (Blast phase chronic myelogenous leukemia, BCR-ABL1 positive cell line from pleural effusion)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ATAC-seq on human cell line PGP1"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $submission_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-04-30T07:27:01.912631Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-06-05T10:01:37.346917Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $last_update_date</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-12-23T02:18:10.298621Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "2025-12-22T22:39:29.016762Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $is_universe</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
@@ -180,7 +180,7 @@ GRangesList.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$cell_line</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "K562"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$tissue</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
@@ -189,39 +189,33 @@ GRangesList.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] "genomic"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$assay</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "TF ChIP-seq"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "ATAC-seq"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$antibody</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NCOR1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$target</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "NCOR1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$treatment</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> [1] ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_sample_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_sample_id[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "encode:ENCFF098MNE"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_sample_id[[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "geo:gsm2424143"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "geo:gsm5214527"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_experiment_id</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_experiment_id[[1]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "encode"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$global_experiment_id[[2]]</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "geo:gse92157"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "geo:gse170231"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $annotation$original_file_name</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "GSM2424143_ENCFF098MNE_peaks_GRCh38.bed.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "GSM5214527_ENCFF699ZTV_IDR_thresholded_peaks_GRCh38.bed.gz"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $processed</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> [1] TRUE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $stats</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> NULL</span>
