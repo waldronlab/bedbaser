@@ -32,7 +32,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.0.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.2</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ Health<br><a class="author_email" href="mailto:#"></a><a href="mailto:jennifer.w
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p><em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
+<p><em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
 is an R API client for <a href="https://bedbase.org" class="external-link">BEDbase</a> that
 provides access to the <a href="https://api.bedbase.org" class="external-link">bedhost API</a>
 and includes convenience functions, such as to create GRanges and
@@ -95,7 +95,7 @@ GRangesList objects.</p>
 <div class="section level2">
 <h2 id="install-bedbaser-and-create-a-bedbase-instance">Install bedbaser and create a BEDbase instance<a class="anchor" aria-label="anchor" href="#install-bedbaser-and-create-a-bedbase-instance"></a>
 </h2>
-<p>Install <em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
+<p>Install <em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
 using <em><a href="https://CRAN.R-project.org/package=BiocManager" class="external-link">BiocManager</a></em>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"BiocManager"</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -104,14 +104,14 @@ using <em><a href="https://CRAN.R-project.org/package=BiocManager" class="extern
 <span><span class="fu">BiocManager</span><span class="fu">::</span><span class="fu"><a href="https://bioconductor.github.io/BiocManager/reference/install.html" class="external-link">install</a></span><span class="op">(</span><span class="st">"bedbaser"</span><span class="op">)</span></span></code></pre></div>
 <p>Load the package and create a BEDbase instance, optionally setting
 the cache to <code>cache_path</code>. If <code>cache_path</code> is not
-set, <em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
+set, <em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
 will choose the default location.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/bedbaser" class="external-link">bedbaser</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 128999 BED files available.</span></span></code></pre>
-<p><em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
+<pre><code><span><span class="co">## 130451 BED files available.</span></span></code></pre>
+<p><em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
 can use the same cache as <a href="https://docs.bedbase.org/geniml/" class="external-link">geniml</a>’s BBClient by setting
 the <code>cache_path</code> to the same location. It will create the
 following structure:</p>
@@ -124,7 +124,7 @@ following structure:</p>
 <div class="section level2">
 <h2 id="convenience-functions">Convenience Functions<a class="anchor" aria-label="anchor" href="#convenience-functions"></a>
 </h2>
-<p><em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
+<p><em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
 includes convenience functions prefixed with <em>bb_</em> to facilitate
 finding BED files, exploring their metadata, downloading files, and
 creating <code>GRanges</code> objects.</p>
@@ -195,19 +195,19 @@ associated with an id.</p>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_metadata.html">bb_metadata</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $name</span></span>
-<span><span class="co">## [1] "Histone ChIP-seq from SJSA1 (ENCLB902REK)"</span></span>
+<span><span class="co">## [1] "encode_1433"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $genome_alias</span></span>
 <span><span class="co">## [1] "hg38"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $genome_digest</span></span>
-<span><span class="co">## NULL</span></span>
+<span><span class="co">## [1] "2230c535660fb4774114bfa966a62f823fdb6d21acf138d4"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $bed_compliance</span></span>
-<span><span class="co">## [1] "bed6+4"</span></span>
+<span><span class="co">## [1] "bed6+3"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $data_format</span></span>
-<span><span class="co">## [1] "encode_narrowpeak"</span></span>
+<span><span class="co">## [1] "encode_broadpeak"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $compliant_columns</span></span>
 <span><span class="co">## [1] 6</span></span></code></pre>
@@ -247,20 +247,20 @@ BEDset.</p>
 returns all BED files scored against a keyword query.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/bb_bed_text_search.html">bb_bed_text_search</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"cancer"</span>, limit <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 44</span></span></span>
+<pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 42</span></span></span>
 <span><span class="co">##    id              payload.id payload.name payload.description payload.cell_line</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  T47D-MTVL        </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> f0f66be64b879d… f0f66be64… WT_T47D_HiC  <span style="color: #949494;">""</span>                  T47D-MTVL        </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 031fcd26012245… 031fcd260… TYUC1_p63_1  <span style="color: #949494;">""</span>                  TYUC-1           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 6f0558df8d4bc9… 6f0558df8… TYUC1_p63_2  <span style="color: #949494;">""</span>                  TYUC-1           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 4ae0fd71a38e46… 4ae0fd71a… CEBPB_KD1_H… <span style="color: #949494;">""</span>                  A549             </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 058cc2a31df12f… 058cc2a31… CEBPB_KD2_H… <span style="color: #949494;">""</span>                  A549             </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 925b77c6c018b8… 925b77c6c… NuMA-C_term… <span style="color: #949494;">""</span>                  HCT116           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 4e9845328d8fa5… 4e9845328… NuMA-N_term… <span style="color: #949494;">""</span>                  HCT116           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 8ac8cb600dac64… 8ac8cb600… Kai-1 tech … <span style="color: #949494;">""</span>                  HeLa             </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> 994d2d7da44652… 994d2d7da… D7-H23       <span style="color: #949494;">"</span>Single-nucleus/mi… HeLa             </span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 39 more variables: payload.cell_type &lt;chr&gt;, payload.tissue &lt;chr&gt;,</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> f0f66be64b879d… f0f66be64… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> c1ec0ee9b824b3… c1ec0ee9b… VCaP_H3K4me… <span style="color: #949494;">"</span>Chromatin IP agai… <span style="color: #949494;">"</span>Vertebral Cance…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 6247ec77ee9a4f… 6247ec77e… PAX 139      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 0815d601135466… 0815d6011… PAX 217      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> d1d29207cdb6a6… d1d29207c… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 6a508f798160d9… 6a508f798… PAX 265      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 4e870164bcc0a4… 4e870164b… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 57291034c3664d… 57291034c… 786-O H3K27… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>786-O<span style="color: #949494;">"</span>          </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> 7d929f0062483c… 7d929f006… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 37 more variables: payload.cell_type &lt;chr&gt;, payload.tissue &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   payload.target &lt;chr&gt;, payload.treatment &lt;chr&gt;, payload.assay &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   payload.genome_alias &lt;chr&gt;, payload.species_name &lt;chr&gt;, score &lt;chr&gt;,</span></span></span>
 <span><span class="co">## <span style="color: #949494;">#   metadata.name &lt;chr&gt;, metadata.genome_alias &lt;chr&gt;,</span></span></span>
@@ -273,7 +273,7 @@ returns all BED files scored against a keyword query.</p>
 </h3>
 <p>Create a GRanges object with a BED id with
 <code>bb_to_granges</code>, which downloads and imports a BED file using
-<em><a href="https://bioconductor.org/packages/3.21/rtracklayer" class="external-link">rtracklayer</a></em>.</p>
+<em><a href="https://bioconductor.org/packages/3.22/rtracklayer" class="external-link">rtracklayer</a></em>.</p>
 <div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span>
 <span><span class="co"># Allow bedbaser to assign column names and types</span></span>
@@ -282,33 +282,20 @@ returns all BED files scored against a keyword query.</p>
 <span><span class="co">## 'help("repositories", package = "BiocManager")' for details.</span></span>
 <span><span class="co">## Replacement repositories:</span></span>
 <span><span class="co">##     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span></code></pre>
-<pre><code><span><span class="co">## GRanges object with 41694 ranges and 6 metadata columns:</span></span>
-<span><span class="co">##           seqnames              ranges strand |        name     score</span></span>
-<span><span class="co">##              &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">##       [1]     chr1         86935-87280      * |   Peak_3616       148</span></span>
-<span><span class="co">##       [2]     chr1       880351-881297      * |   Peak_3441       149</span></span>
-<span><span class="co">##       [3]     chr1       883981-884420      * |  Peak_51321        60</span></span>
-<span><span class="co">##       [4]     chr1       897321-897632      * |  Peak_39606        66</span></span>
-<span><span class="co">##       [5]     chr1       914015-914745      * | Peak_130636        41</span></span>
-<span><span class="co">##       ...      ...                 ...    ... .         ...       ...</span></span>
-<span><span class="co">##   [41690]     chrX 153829326-153829847      * |  Peak_33691        71</span></span>
-<span><span class="co">##   [41691]     chrX 153831173-153831489      * |  Peak_72205        55</span></span>
-<span><span class="co">##   [41692]     chrX 153885158-153885865      * |  Peak_43424        66</span></span>
-<span><span class="co">##   [41693]     chrX 154751539-154751827      * |  Peak_13276        95</span></span>
-<span><span class="co">##   [41694]     chrX 155863388-155863951      * | Peak_123283        43</span></span>
-<span><span class="co">##           signalValue    pValue    qValue      peak</span></span>
-<span><span class="co">##             &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span></span>
-<span><span class="co">##       [1]     4.12363  14.87206  11.48560       176</span></span>
-<span><span class="co">##       [2]     4.57585  14.98495  11.57899       188</span></span>
-<span><span class="co">##       [3]     2.89001   6.09145   3.57573       264</span></span>
-<span><span class="co">##       [4]     3.01043   6.63229   4.03133       176</span></span>
-<span><span class="co">##       [5]     2.40834   4.10604   1.98388       455</span></span>
-<span><span class="co">##       ...         ...       ...       ...       ...</span></span>
-<span><span class="co">##   [41690]     3.13085   7.18963   4.50966       307</span></span>
-<span><span class="co">##   [41691]     2.76960   5.56772   3.14046        51</span></span>
-<span><span class="co">##   [41692]     3.01043   6.63229   4.03133       385</span></span>
-<span><span class="co">##   [41693]     3.61252   9.57284   6.61083        99</span></span>
-<span><span class="co">##   [41694]     2.35793   4.35143   2.19496       203</span></span>
+<pre><code><span><span class="co">## GRanges object with 45480 ranges and 0 metadata columns:</span></span>
+<span><span class="co">##           seqnames              ranges strand</span></span>
+<span><span class="co">##              &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt;</span></span>
+<span><span class="co">##       [1]     chr1       778062-779256      *</span></span>
+<span><span class="co">##       [2]     chr1       826920-827515      *</span></span>
+<span><span class="co">##       [3]     chr1       940600-941475      *</span></span>
+<span><span class="co">##       [4]     chr1       958910-959150      *</span></span>
+<span><span class="co">##       [5]     chr1      999588-1001919      *</span></span>
+<span><span class="co">##       ...      ...                 ...    ...</span></span>
+<span><span class="co">##   [45476]     chrX 155026206-155028173      *</span></span>
+<span><span class="co">##   [45477]     chrX 155070554-155071887      *</span></span>
+<span><span class="co">##   [45478]     chrX 155215847-155217177      *</span></span>
+<span><span class="co">##   [45479]     chrX 155264216-155264446      *</span></span>
+<span><span class="co">##   [45480]     chrX 155612112-155613172      *</span></span>
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 711 sequences (1 circular) from hg38 genome</span></span></code></pre>
 <p>For BEDX+Y formats, a named list with column types may be passed
@@ -414,15 +401,15 @@ types for broad peak and narrow peak files.</p>
 <div class="section level2">
 <h2 id="accessing-bedbase-api-endpoints">Accessing BEDbase API endpoints<a class="anchor" aria-label="anchor" href="#accessing-bedbase-api-endpoints"></a>
 </h2>
-<p>Because <em><a href="https://bioconductor.org/packages/3.21/bedbaser" class="external-link">bedbaser</a></em>
-uses the <em><a href="https://bioconductor.org/packages/3.21/AnVIL" class="external-link">AnVIL</a></em>
+<p>Because <em><a href="https://bioconductor.org/packages/3.22/bedbaser" class="external-link">bedbaser</a></em>
+uses the <em><a href="https://bioconductor.org/packages/3.22/AnVIL" class="external-link">AnVIL</a></em>
 Service class, it’s possible to access any endpoint of the <a href="https://api.bedbase.org/v1/docs" class="external-link">BEDbase API</a>.</p>
 <div class="sourceCode" id="cb26"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">show</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## service: bedbase</span></span>
 <span><span class="co">## host: api.bedbase.org</span></span>
 <span><span class="co">## tags(); use bedbase$&lt;tab completion&gt;:</span></span>
-<span><span class="co">## <span style="color: #949494;"># A tibble: 47 × 3</span></span></span>
+<span><span class="co">## <span style="color: #949494;"># A tibble: 48 × 3</span></span></span>
 <span><span class="co">##    tag   operation                                     summary                  </span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                    </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> base  get_bedbase_db_stats_v1_assays_get            Get available assays     </span></span>
@@ -434,14 +421,14 @@ Service class, it’s possible to access any endpoint of the <a href="https://ap
 <span><span class="co">## <span style="color: #BCBCBC;"> 7</span> base  service_info_v1_service_info_get              GA4GH service info       </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> bed   bed_to_bed_search_v1_bed_search_bed_post      Search for similar bed f…</span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> bed   embed_bed_file_v1_bed_embed_post              Get embeddings for a bed…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> bed   exact_search_v1_bed_search_exact_get          Search for exact match o…</span></span>
-<span><span class="co">## <span style="color: #949494;"># ℹ 37 more rows</span></span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> bed   embed_bed_file_v1_bed_umap_post               Get embeddings for a bed…</span></span>
+<span><span class="co">## <span style="color: #949494;"># ℹ 38 more rows</span></span></span>
 <span><span class="co">## tag values:</span></span>
 <span><span class="co">##   base, bed, bedset, home, objects, search, NA</span></span>
 <span><span class="co">## schemas():</span></span>
 <span><span class="co">##   AccessMethod, AccessURL, BaseListResponse, BedClassification,</span></span>
 <span><span class="co">##   BedEmbeddingResult</span></span>
-<span><span class="co">##   # ... with 44 more elements</span></span></code></pre>
+<span><span class="co">##   # ... with 45 more elements</span></span></code></pre>
 <p>For example, to access a BED file’s stats, access the endpoint with
 <code>$</code> and use <em><a href="https://CRAN.R-project.org/package=httr" class="external-link">httr</a></em> to get the
 result. <code>show</code> will display information about the
@@ -524,10 +511,10 @@ endpoint.</p>
 <div class="section level2">
 <h2 id="example-change-genomic-coordinate-system-with-liftover">Example: Change genomic coordinate system with liftOver<a class="anchor" aria-label="anchor" href="#example-change-genomic-coordinate-system-with-liftover"></a>
 </h2>
-<p>Given a BED id, we can use <em><a href="https://bioconductor.org/packages/3.21/liftOver" class="external-link">liftOver</a></em>
+<p>Given a BED id, we can use <em><a href="https://bioconductor.org/packages/3.22/liftOver" class="external-link">liftOver</a></em>
 to convert one genomic coordinate system to another.</p>
-<p>Install <em><a href="https://bioconductor.org/packages/3.21/liftOver" class="external-link">liftOver</a></em>
-and <em><a href="https://bioconductor.org/packages/3.21/rtracklayer" class="external-link">rtracklayer</a></em>
+<p>Install <em><a href="https://bioconductor.org/packages/3.22/liftOver" class="external-link">liftOver</a></em>
+and <em><a href="https://bioconductor.org/packages/3.22/rtracklayer" class="external-link">rtracklayer</a></em>
 then load the packages.</p>
 <div class="sourceCode" id="cb35"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw">if</span> <span class="op">(</span><span class="op">!</span><span class="st">"BiocManager"</span> <span class="op"><a href="https://rdrr.io/pkg/BiocGenerics/man/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/row_colnames.html" class="external-link">rownames</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/utils/installed.packages.html" class="external-link">installed.packages</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span><span class="op">)</span> <span class="op">{</span></span>
@@ -576,7 +563,7 @@ file</a> from UCSC.</p>
 for the GRanges object.</p>
 <div class="sourceCode" id="cb39"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">ch</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtracklayer/man/Chain-class.html" class="external-link">import.chain</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/file.path.html" class="external-link">file.path</a></span><span class="op">(</span><span class="va">tmpdir</span>, <span class="st">"mm10ToMm39.over.chain"</span><span class="op">)</span><span class="op">)</span></span>
-<span><span class="fu">seqlevelsStyle</span><span class="op">(</span><span class="va">gro</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UCSC"</span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/GenomeInfoDb/man/seqlevelsStyle.html" class="external-link">seqlevelsStyle</a></span><span class="op">(</span><span class="va">gro</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"UCSC"</span></span>
 <span><span class="va">gro39</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/rtracklayer/man/liftOver.html" class="external-link">liftOver</a></span><span class="op">(</span><span class="va">gro</span>, <span class="va">ch</span><span class="op">)</span></span>
 <span><span class="va">gro39</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/BiocGenerics/man/unlist.html" class="external-link">unlist</a></span><span class="op">(</span><span class="va">gro39</span><span class="op">)</span></span>
 <span><span class="fu">genome</span><span class="op">(</span><span class="va">gro39</span><span class="op">)</span> <span class="op">&lt;-</span> <span class="st">"mm39"</span></span>
@@ -603,7 +590,7 @@ for the GRanges object.</p>
 </h2>
 <div class="sourceCode" id="cb41"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/sessionInfo.html" class="external-link">sessionInfo</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## R version 4.5.1 (2025-06-13)</span></span>
+<pre><code><span><span class="co">## R version 4.5.2 (2025-10-31)</span></span>
 <span><span class="co">## Platform: x86_64-pc-linux-gnu</span></span>
 <span><span class="co">## Running under: Ubuntu 24.04.3 LTS</span></span>
 <span><span class="co">## </span></span>
@@ -627,88 +614,87 @@ for the GRanges object.</p>
 <span><span class="co">## [8] base     </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## other attached packages:</span></span>
-<span><span class="co">##  [1] httr_1.4.7                             </span></span>
-<span><span class="co">##  [2] bedbaser_1.0.4                         </span></span>
-<span><span class="co">##  [3] liftOver_1.32.0                        </span></span>
-<span><span class="co">##  [4] Homo.sapiens_1.3.1                     </span></span>
-<span><span class="co">##  [5] TxDb.Hsapiens.UCSC.hg19.knownGene_3.2.2</span></span>
-<span><span class="co">##  [6] org.Hs.eg.db_3.21.0                    </span></span>
-<span><span class="co">##  [7] GO.db_3.21.0                           </span></span>
-<span><span class="co">##  [8] OrganismDbi_1.50.0                     </span></span>
-<span><span class="co">##  [9] GenomicFeatures_1.60.0                 </span></span>
-<span><span class="co">## [10] AnnotationDbi_1.70.0                   </span></span>
-<span><span class="co">## [11] Biobase_2.68.0                         </span></span>
-<span><span class="co">## [12] gwascat_2.40.0                         </span></span>
-<span><span class="co">## [13] R.utils_2.13.0                         </span></span>
-<span><span class="co">## [14] R.oo_1.27.1                            </span></span>
-<span><span class="co">## [15] R.methodsS3_1.8.2                      </span></span>
-<span><span class="co">## [16] rtracklayer_1.68.0                     </span></span>
-<span><span class="co">## [17] GenomicRanges_1.60.0                   </span></span>
-<span><span class="co">## [18] GenomeInfoDb_1.44.3                    </span></span>
-<span><span class="co">## [19] IRanges_2.42.0                         </span></span>
-<span><span class="co">## [20] S4Vectors_0.46.0                       </span></span>
-<span><span class="co">## [21] BiocGenerics_0.54.0                    </span></span>
-<span><span class="co">## [22] generics_0.1.4                         </span></span>
-<span><span class="co">## [23] BiocStyle_2.36.0                       </span></span>
+<span><span class="co">##  [1] httr_1.4.7                              </span></span>
+<span><span class="co">##  [2] bedbaser_1.2.2                          </span></span>
+<span><span class="co">##  [3] liftOver_1.34.0                         </span></span>
+<span><span class="co">##  [4] Homo.sapiens_1.3.1                      </span></span>
+<span><span class="co">##  [5] TxDb.Hsapiens.UCSC.hg19.knownGene_3.22.1</span></span>
+<span><span class="co">##  [6] org.Hs.eg.db_3.22.0                     </span></span>
+<span><span class="co">##  [7] GO.db_3.22.0                            </span></span>
+<span><span class="co">##  [8] OrganismDbi_1.52.0                      </span></span>
+<span><span class="co">##  [9] GenomicFeatures_1.62.0                  </span></span>
+<span><span class="co">## [10] AnnotationDbi_1.72.0                    </span></span>
+<span><span class="co">## [11] Biobase_2.70.0                          </span></span>
+<span><span class="co">## [12] GenomeInfoDb_1.46.2                     </span></span>
+<span><span class="co">## [13] gwascat_2.42.0                          </span></span>
+<span><span class="co">## [14] R.utils_2.13.0                          </span></span>
+<span><span class="co">## [15] R.oo_1.27.1                             </span></span>
+<span><span class="co">## [16] R.methodsS3_1.8.2                       </span></span>
+<span><span class="co">## [17] rtracklayer_1.70.1                      </span></span>
+<span><span class="co">## [18] GenomicRanges_1.62.1                    </span></span>
+<span><span class="co">## [19] Seqinfo_1.0.0                           </span></span>
+<span><span class="co">## [20] IRanges_2.44.0                          </span></span>
+<span><span class="co">## [21] S4Vectors_0.48.0                        </span></span>
+<span><span class="co">## [22] BiocGenerics_0.56.0                     </span></span>
+<span><span class="co">## [23] generics_0.1.4                          </span></span>
+<span><span class="co">## [24] BiocStyle_2.38.0                        </span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## loaded via a namespace (and not attached):</span></span>
 <span><span class="co">##   [1] jsonlite_2.0.0              magrittr_2.0.4             </span></span>
 <span><span class="co">##   [3] rmarkdown_2.30              fs_1.6.6                   </span></span>
-<span><span class="co">##   [5] BiocIO_1.18.0               zlibbioc_1.54.0            </span></span>
-<span><span class="co">##   [7] ragg_1.5.0                  vctrs_0.6.5                </span></span>
-<span><span class="co">##   [9] memoise_2.0.1               Rsamtools_2.24.1           </span></span>
-<span><span class="co">##  [11] RCurl_1.98-1.17             htmltools_0.5.8.1          </span></span>
-<span><span class="co">##  [13] S4Arrays_1.8.1              BiocBaseUtils_1.10.0       </span></span>
-<span><span class="co">##  [15] progress_1.2.3              lambda.r_1.2.4             </span></span>
-<span><span class="co">##  [17] curl_7.0.0                  SparseArray_1.8.1          </span></span>
-<span><span class="co">##  [19] sass_0.4.10                 bslib_0.9.0                </span></span>
-<span><span class="co">##  [21] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
-<span><span class="co">##  [23] httr2_1.2.1                 futile.options_1.0.1       </span></span>
-<span><span class="co">##  [25] cachem_1.1.0                GenomicAlignments_1.44.0   </span></span>
-<span><span class="co">##  [27] mime_0.13                   lifecycle_1.0.4            </span></span>
-<span><span class="co">##  [29] pkgconfig_2.0.3             Matrix_1.7-4               </span></span>
-<span><span class="co">##  [31] R6_2.6.1                    fastmap_1.2.0              </span></span>
-<span><span class="co">##  [33] GenomeInfoDbData_1.2.14     MatrixGenerics_1.20.0      </span></span>
-<span><span class="co">##  [35] shiny_1.11.1                digest_0.6.37              </span></span>
-<span><span class="co">##  [37] textshaping_1.0.4           RSQLite_2.4.3              </span></span>
-<span><span class="co">##  [39] filelock_1.0.3              abind_1.4-8                </span></span>
-<span><span class="co">##  [41] compiler_4.5.1              withr_3.0.2                </span></span>
-<span><span class="co">##  [43] bit64_4.6.0-1               BiocParallel_1.42.2        </span></span>
-<span><span class="co">##  [45] DBI_1.2.3                   biomaRt_2.64.0             </span></span>
-<span><span class="co">##  [47] rappdirs_0.3.3              DelayedArray_0.34.1        </span></span>
-<span><span class="co">##  [49] rjson_0.2.23                tools_4.5.1                </span></span>
-<span><span class="co">##  [51] httpuv_1.6.16               glue_1.8.0                 </span></span>
-<span><span class="co">##  [53] restfulr_0.0.16             promises_1.3.3             </span></span>
-<span><span class="co">##  [55] grid_4.5.1                  BSgenome_1.76.0            </span></span>
-<span><span class="co">##  [57] tidyr_1.3.1                 data.table_1.17.8          </span></span>
-<span><span class="co">##  [59] hms_1.1.3                   utf8_1.2.6                 </span></span>
-<span><span class="co">##  [61] xml2_1.4.0                  XVector_0.48.0             </span></span>
-<span><span class="co">##  [63] pillar_1.11.1               stringr_1.5.2              </span></span>
-<span><span class="co">##  [65] later_1.4.4                 splines_4.5.1              </span></span>
-<span><span class="co">##  [67] dplyr_1.1.4                 BiocFileCache_2.16.2       </span></span>
-<span><span class="co">##  [69] lattice_0.22-7              survival_3.8-3             </span></span>
-<span><span class="co">##  [71] bit_4.6.0                   tidyselect_1.2.1           </span></span>
-<span><span class="co">##  [73] RBGL_1.84.0                 Biostrings_2.76.0          </span></span>
-<span><span class="co">##  [75] miniUI_0.1.2                knitr_1.50                 </span></span>
-<span><span class="co">##  [77] bookdown_0.45               SummarizedExperiment_1.38.1</span></span>
-<span><span class="co">##  [79] snpStats_1.58.0             futile.logger_1.4.3        </span></span>
-<span><span class="co">##  [81] xfun_0.53                   matrixStats_1.5.0          </span></span>
-<span><span class="co">##  [83] DT_0.34.0                   stringi_1.8.7              </span></span>
-<span><span class="co">##  [85] UCSC.utils_1.4.0            yaml_2.3.10                </span></span>
-<span><span class="co">##  [87] evaluate_1.0.5              codetools_0.2-20           </span></span>
-<span><span class="co">##  [89] tibble_3.3.0                AnVILBase_1.2.0            </span></span>
-<span><span class="co">##  [91] BiocManager_1.30.26         graph_1.86.0               </span></span>
-<span><span class="co">##  [93] cli_3.6.5                   AnVIL_1.20.4               </span></span>
-<span><span class="co">##  [95] xtable_1.8-4                systemfonts_1.3.1          </span></span>
-<span><span class="co">##  [97] jquerylib_0.1.4             Rcpp_1.1.0                 </span></span>
-<span><span class="co">##  [99] dbplyr_2.5.1                png_0.1-8                  </span></span>
-<span><span class="co">## [101] rapiclient_0.1.8            XML_3.99-0.19              </span></span>
-<span><span class="co">## [103] parallel_4.5.1              pkgdown_2.1.3              </span></span>
-<span><span class="co">## [105] blob_1.2.4                  prettyunits_1.2.0          </span></span>
-<span><span class="co">## [107] bitops_1.0-9                txdbmaker_1.4.2            </span></span>
-<span><span class="co">## [109] VariantAnnotation_1.54.1    purrr_1.1.0                </span></span>
-<span><span class="co">## [111] crayon_1.5.3                rlang_1.1.6                </span></span>
-<span><span class="co">## [113] KEGGREST_1.48.1             formatR_1.14</span></span></code></pre>
+<span><span class="co">##   [5] BiocIO_1.20.0               ragg_1.5.0                 </span></span>
+<span><span class="co">##   [7] vctrs_0.6.5                 memoise_2.0.1              </span></span>
+<span><span class="co">##   [9] Rsamtools_2.26.0            RCurl_1.98-1.17            </span></span>
+<span><span class="co">##  [11] htmltools_0.5.9             S4Arrays_1.10.1            </span></span>
+<span><span class="co">##  [13] BiocBaseUtils_1.12.0        lambda.r_1.2.4             </span></span>
+<span><span class="co">##  [15] curl_7.0.0                  SparseArray_1.10.8         </span></span>
+<span><span class="co">##  [17] sass_0.4.10                 bslib_0.9.0                </span></span>
+<span><span class="co">##  [19] htmlwidgets_1.6.4           desc_1.4.3                 </span></span>
+<span><span class="co">##  [21] httr2_1.2.2                 futile.options_1.0.1       </span></span>
+<span><span class="co">##  [23] cachem_1.1.0                GenomicAlignments_1.46.0   </span></span>
+<span><span class="co">##  [25] mime_0.13                   lifecycle_1.0.5            </span></span>
+<span><span class="co">##  [27] pkgconfig_2.0.3             Matrix_1.7-4               </span></span>
+<span><span class="co">##  [29] R6_2.6.1                    fastmap_1.2.0              </span></span>
+<span><span class="co">##  [31] MatrixGenerics_1.22.0       shiny_1.12.1               </span></span>
+<span><span class="co">##  [33] digest_0.6.39               GCPtools_1.0.0             </span></span>
+<span><span class="co">##  [35] textshaping_1.0.4           RSQLite_2.4.5              </span></span>
+<span><span class="co">##  [37] filelock_1.0.3              abind_1.4-8                </span></span>
+<span><span class="co">##  [39] compiler_4.5.2              bit64_4.6.0-1              </span></span>
+<span><span class="co">##  [41] withr_3.0.2                 BiocParallel_1.44.0        </span></span>
+<span><span class="co">##  [43] DBI_1.2.3                   rappdirs_0.3.3             </span></span>
+<span><span class="co">##  [45] DelayedArray_0.36.0         rjson_0.2.23               </span></span>
+<span><span class="co">##  [47] tools_4.5.2                 otel_0.2.0                 </span></span>
+<span><span class="co">##  [49] httpuv_1.6.16               glue_1.8.0                 </span></span>
+<span><span class="co">##  [51] restfulr_0.0.16             promises_1.5.0             </span></span>
+<span><span class="co">##  [53] grid_4.5.2                  BSgenome_1.78.0            </span></span>
+<span><span class="co">##  [55] tidyr_1.3.2                 data.table_1.18.0          </span></span>
+<span><span class="co">##  [57] utf8_1.2.6                  XVector_0.50.0             </span></span>
+<span><span class="co">##  [59] stringr_1.6.0               pillar_1.11.1              </span></span>
+<span><span class="co">##  [61] later_1.4.5                 splines_4.5.2              </span></span>
+<span><span class="co">##  [63] dplyr_1.1.4                 BiocFileCache_3.0.0        </span></span>
+<span><span class="co">##  [65] lattice_0.22-7              survival_3.8-3             </span></span>
+<span><span class="co">##  [67] bit_4.6.0                   tidyselect_1.2.1           </span></span>
+<span><span class="co">##  [69] RBGL_1.86.0                 Biostrings_2.78.0          </span></span>
+<span><span class="co">##  [71] miniUI_0.1.2                knitr_1.51                 </span></span>
+<span><span class="co">##  [73] bookdown_0.46               SummarizedExperiment_1.40.0</span></span>
+<span><span class="co">##  [75] snpStats_1.60.0             futile.logger_1.4.9        </span></span>
+<span><span class="co">##  [77] xfun_0.55                   matrixStats_1.5.0          </span></span>
+<span><span class="co">##  [79] DT_0.34.0                   stringi_1.8.7              </span></span>
+<span><span class="co">##  [81] UCSC.utils_1.6.1            yaml_2.3.12                </span></span>
+<span><span class="co">##  [83] evaluate_1.0.5              codetools_0.2-20           </span></span>
+<span><span class="co">##  [85] cigarillo_1.0.0             tibble_3.3.1               </span></span>
+<span><span class="co">##  [87] AnVILBase_1.4.0             BiocManager_1.30.27        </span></span>
+<span><span class="co">##  [89] graph_1.88.1                cli_3.6.5                  </span></span>
+<span><span class="co">##  [91] AnVIL_1.22.3                xtable_1.8-4               </span></span>
+<span><span class="co">##  [93] systemfonts_1.3.1           jquerylib_0.1.4            </span></span>
+<span><span class="co">##  [95] Rcpp_1.1.1                  dbplyr_2.5.1               </span></span>
+<span><span class="co">##  [97] png_0.1-8                   XML_3.99-0.20              </span></span>
+<span><span class="co">##  [99] rapiclient_0.1.8            parallel_4.5.2             </span></span>
+<span><span class="co">## [101] pkgdown_2.2.0               blob_1.2.4                 </span></span>
+<span><span class="co">## [103] bitops_1.0-9                VariantAnnotation_1.56.0   </span></span>
+<span><span class="co">## [105] purrr_1.2.1                 crayon_1.5.3               </span></span>
+<span><span class="co">## [107] rlang_1.1.7                 KEGGREST_1.50.0            </span></span>
+<span><span class="co">## [109] formatR_1.14</span></span></code></pre>
 </div>
   </div>
 
@@ -727,7 +713,7 @@ for the GRanges object.</p>
 
 <div class="pkgdown">
   <p></p>
-<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+<p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
       </footer>
