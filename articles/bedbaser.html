@@ -195,7 +195,7 @@ associated with an id.</p>
 <span><span class="va">md</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/bb_metadata.html">bb_metadata</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://rdrr.io/r/utils/head.html" class="external-link">head</a></span><span class="op">(</span><span class="va">md</span><span class="op">)</span></span></code></pre></div>
 <pre><code><span><span class="co">## $name</span></span>
-<span><span class="co">## [1] "ATAC-seq from GM23338 (ENCLB501SUW)"</span></span>
+<span><span class="co">## [1] "D7-H25"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $genome_alias</span></span>
 <span><span class="co">## [1] "hg38"</span></span>
@@ -204,13 +204,13 @@ associated with an id.</p>
 <span><span class="co">## NULL</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $bed_compliance</span></span>
-<span><span class="co">## [1] "bed6+4"</span></span>
+<span><span class="co">## [1] "bed5+0"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $data_format</span></span>
-<span><span class="co">## [1] "encode_narrowpeak"</span></span>
+<span><span class="co">## [1] "ucsc_bed_rs"</span></span>
 <span><span class="co">## </span></span>
 <span><span class="co">## $compliant_columns</span></span>
-<span><span class="co">## [1] 6</span></span></code></pre>
+<span><span class="co">## [1] 5</span></span></code></pre>
 </div>
 <div class="section level3">
 <h3 id="show-bed-files-in-bedset">Show BED files in BEDset<a class="anchor" aria-label="anchor" href="#show-bed-files-in-bedset"></a>
@@ -252,12 +252,12 @@ returns all BED files scored against a keyword query.</p>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 1</span> f0f66be64b879d… f0f66be64… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 2</span> c1ec0ee9b824b3… c1ec0ee9b… VCaP_H3K4me… <span style="color: #949494;">"</span>Chromatin IP agai… <span style="color: #949494;">"</span>Vertebral Cance…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 6247ec77ee9a4f… 6247ec77e… PAX 139      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 6247ec77ee9a4f… 6247ec77e… PAX 139      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 5</span> d1d29207cdb6a6… d1d29207c… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 0815d601135466… 0815d6011… PAX 217      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 4e870164bcc0a4… 4e870164b… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 6a508f798160d9… 6a508f798… PAX 265      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 6a508f798160d9… 6a508f798… PAX 265      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 4e870164bcc0a4… 4e870164b… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 57291034c3664d… 57291034c… 786-O H3K27… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>786-O<span style="color: #949494;">"</span>          </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;">10</span> 7d929f0062483c… 7d929f006… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 37 more variables: payload.cell_type &lt;chr&gt;, payload.tissue &lt;chr&gt;,</span></span></span>
@@ -282,33 +282,20 @@ returns all BED files scored against a keyword query.</p>
 <span><span class="co">## 'help("repositories", package = "BiocManager")' for details.</span></span>
 <span><span class="co">## Replacement repositories:</span></span>
 <span><span class="co">##     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span></span></code></pre>
-<pre><code><span><span class="co">## GRanges object with 182800 ranges and 6 metadata columns:</span></span>
-<span><span class="co">##            seqnames            ranges strand |        name     score</span></span>
-<span><span class="co">##               &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;</span></span>
-<span><span class="co">##        [1]     chr1     778340-779304      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##        [2]     chr1     778340-779304      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##        [3]     chr1     778340-779304      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##        [4]     chr1     804492-805014      * |        &lt;NA&gt;       606</span></span>
-<span><span class="co">##        [5]     chr1     804492-805014      * |        &lt;NA&gt;       606</span></span>
-<span><span class="co">##        ...      ...               ...    ... .         ...       ...</span></span>
-<span><span class="co">##   [182796]     chrY 19744277-19745309      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##   [182797]     chrY 19744277-19745309      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##   [182798]     chrY 20575027-20576230      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##   [182799]     chrY 20575027-20576230      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##   [182800]     chrY 20575027-20576230      * |        &lt;NA&gt;      1000</span></span>
-<span><span class="co">##            signalValue    pValue    qValue      peak</span></span>
-<span><span class="co">##              &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span></span>
-<span><span class="co">##        [1]    19.94898  357.1044  353.9787       483</span></span>
-<span><span class="co">##        [2]    17.85714  303.8167  300.8375       314</span></span>
-<span><span class="co">##        [3]     8.72449  100.0353   97.7143       780</span></span>
-<span><span class="co">##        [4]     6.51092   39.0381   37.0470       402</span></span>
-<span><span class="co">##        [5]     4.20325   17.5437   15.7713       107</span></span>
-<span><span class="co">##        ...         ...       ...       ...       ...</span></span>
-<span><span class="co">##   [182796]     7.25267   46.9421   44.8948       206</span></span>
-<span><span class="co">##   [182797]     6.51092   39.0381   37.0470       679</span></span>
-<span><span class="co">##   [182798]    18.44758  322.4428  319.4118       586</span></span>
-<span><span class="co">##   [182799]     7.35887   76.0308   73.8191       992</span></span>
-<span><span class="co">##   [182800]     3.32913   16.6367   14.8800       100</span></span>
+<pre><code><span><span class="co">## GRanges object with 6455 ranges and 2 metadata columns:</span></span>
+<span><span class="co">##          seqnames              ranges strand |        name     score</span></span>
+<span><span class="co">##             &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;</span></span>
+<span><span class="co">##      [1]     chr1         79089-96861      * |           0      1151</span></span>
+<span><span class="co">##      [2]     chr1       104195-111987      * |           0       173</span></span>
+<span><span class="co">##      [3]     chr1     4184534-4206411      * |           0       630</span></span>
+<span><span class="co">##      [4]     chr1     4742433-4763182      * |           0       313</span></span>
+<span><span class="co">##      [5]     chr1     6895898-6908119      * |           0       188</span></span>
+<span><span class="co">##      ...      ...                 ...    ... .         ...       ...</span></span>
+<span><span class="co">##   [6451]     chrX 155386207-155425042      * |           0      2072</span></span>
+<span><span class="co">##   [6452]     chrY     3844269-3853448      * |           0       222</span></span>
+<span><span class="co">##   [6453]     chrY     5170821-5172231      * |           0        33</span></span>
+<span><span class="co">##   [6454]     chrY     6132897-6134195      * |           1        53</span></span>
+<span><span class="co">##   [6455]     chrY     6137689-6139249      * |           0        28</span></span>
 <span><span class="co">##   -------</span></span>
 <span><span class="co">##   seqinfo: 711 sequences (1 circular) from hg38 genome</span></span></code></pre>
 <p>For BEDX+Y formats, a named list with column types may be passed
