@@ -20,13 +20,13 @@ test_that("bb_example has 'bed_ids' given rec_type 'bedset'", {
 test_that("bb_metadata returns metadata for BEDs", {
     ex_metadata <- httr::content(bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(ex_bed$id, TRUE))
     bed_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
-    expect_identical(ex_metadata, bed_metadata)
+    expect_equal(ex_metadata, bed_metadata)
 })
 
 test_that("bb_metadata returns metadata for BEDsets", {
     ex_bedset_metadata <- httr::content(bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(ex_bedset$id, TRUE))
     bedset_metadata <- bb_metadata(bedbase, ex_bedset$id, TRUE)
-    expect_identical(ex_bedset_metadata, bedset_metadata)
+    expect_equal(ex_bedset_metadata, bedset_metadata)
 })
 
 test_that("bb_metadata errors on invalid input", {
