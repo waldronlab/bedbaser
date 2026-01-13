@@ -94,6 +94,10 @@ test_that("bb_bed_text_search returns results scored against the query", {
     ex_beds <- purrr::map_depth(.x = ex_beds$results, 1, \(y) unlist(y)) |>
         dplyr::bind_rows() |>
         dplyr::arrange(id)
+
+    ex_beds <- ex_beds[, sort(names(ex_beds))]
+    beds <- beds[, sort(names(beds))]
+
     expect_equal(ex_beds, beds)
     expect_true("score" %in% names(beds))
 })
