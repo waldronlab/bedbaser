@@ -5,3 +5,5 @@ BEDbaseR.Rproj
 .httr-oauth
 /doc/
 /Meta/
+
+.DS_Store

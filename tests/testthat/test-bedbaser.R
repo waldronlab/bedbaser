@@ -18,14 +18,14 @@ test_that("bb_example has 'bed_ids' given rec_type 'bedset'", {
 })
 
 test_that("bb_metadata returns metadata for BEDs", {
-    ex_metadata <- httr::content(bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(ex_bed$id, TRUE))
-    bed_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
+    ex_metadata <- httr::content(bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(ex_bed$id, TRUE, test_request = TRUE))
+    bed_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE, test_request = TRUE)
     expect_identical(ex_metadata, bed_metadata)
 })
 
 test_that("bb_metadata returns metadata for BEDsets", {
-    ex_bedset_metadata <- httr::content(bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(ex_bedset$id, TRUE))
-    bedset_metadata <- bb_metadata(bedbase, ex_bedset$id, TRUE)
+    ex_bedset_metadata <- httr::content(bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(ex_bedset$id, TRUE, test_request = TRUE))
+    bedset_metadata <- bb_metadata(bedbase, ex_bedset$id, TRUE, test_request = TRUE)
     expect_identical(ex_bedset_metadata, bedset_metadata)
 })
 
@@ -49,13 +49,14 @@ test_that("bb_list_beds returns same number of results for the mm39 genome", {
 test_that("bb_list_bedsets returns same number for query 'alzheimer'", {
     bedsets_raw <- httr::content(bedbase$list_bedsets_v1_bedset_list_get(
         query = "alzheimer",
-        limit = 5000
+        limit = 5000,
+        test_request = TRUE
     ))
     bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
     bedsets_from_raw <- dplyr::bind_rows(bedsets_names_bed_ids_list) |>
         tidyr::unnest(cols = c(bed_ids))
     bedset_ids <- bedsets_from_raw$id |> unique()
-    bedsets <- bb_list_bedsets(bedbase, query = "alzheimer", limit = 5000)
+    bedsets <- bb_list_bedsets(bedbase, query = "alzheimer", limit = 5000, test_request = TRUE)
     expect_equal(bedset_ids, bedsets$id)
 })
 
@@ -82,14 +83,15 @@ test_that("bb_beds_in_bedset returns expected bed_ids", {
 })
 
 test_that("bb_bed_text_search returns results scored against the query", {
-    beds <- bb_bed_text_search(bedbase, "hg38") |>
+    beds <- bb_bed_text_search(bedbase, "hg38", test_request = TRUE) |>
         dplyr::arrange(id)
     ex_beds <- httr::content(bedbase$text_to_bed_search_v1_bed_search_text_get(
         query = "hg38",
         genome = NULL,
         assay = NULL,
         limit = 10,
-        offset = 0
+        offset = 0,
+        test_request = TRUE
     ))
     ex_beds <- purrr::map_depth(.x = ex_beds$results, 1, \(y) unlist(y)) |>
         dplyr::bind_rows() |>

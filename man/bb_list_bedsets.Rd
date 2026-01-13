@@ -4,7 +4,13 @@
 \alias{bb_list_bedsets}
 \title{List BEDsets}
 \usage{
-bb_list_bedsets(bedbase, query = "", limit = 1000, offset = 0)
+bb_list_bedsets(
+  bedbase,
+  query = "",
+  limit = 1000,
+  offset = 0,
+  test_request = FALSE
+)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
@@ -14,6 +20,8 @@ bb_list_bedsets(bedbase, query = "", limit = 1000, offset = 0)
 \item{limit}{integer(1) (default \code{1000}) maximum records}
 
 \item{offset}{integer(1) (default \code{0}) page token of records}
+
+\item{test_request}{boolean() (default \code{FALSE}) internal parameter for testing purposes}
 }
 \value{
 \link[tibble:tibble]{tibble} of BEDset records

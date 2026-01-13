@@ -4,7 +4,7 @@
 \alias{bb_metadata}
 \title{Get metadata for a BED file or BEDset}
 \usage{
-bb_metadata(bedbase, id, full = FALSE)
+bb_metadata(bedbase, id, full = FALSE, test_request = FALSE)
 }
 \arguments{
 \item{bedbase}{BEDbase() object}
@@ -13,6 +13,8 @@ bb_metadata(bedbase, id, full = FALSE)
 
 \item{full}{logical(1) (default \code{FALSE}) include full record with
 stats, files, and metadata}
+
+\item{test_request}{boolean() (default \code{FALSE}) internal parameter for testing purposes}
 }
 \value{
 list() metadata

@@ -26,3 +26,15 @@ Convert openapi.json from OpenAPI 3.1 to 3.0:
 Convert from OpenAPI 3.0 to Swagger 2.0:
 
     api-spec-converter -f openapi_3 -t swagger_2 openapi_3_0.json > api.yaml
+
+### Development Note:
+
+The following endpoints take a hidden parameter `test_request` for internal testing purposes:
+
+- bed_metadata
+- bed_text_to_bed_search
+- bedset_metadata
+- bed_set_search
+- downloading files
+
+The `test_request` is TRUE, the request will not be counted in statistics. 

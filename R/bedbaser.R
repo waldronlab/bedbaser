@@ -292,6 +292,7 @@ bb_example <- function(bedbase, rec_type = c("bed", "bedset")) {
 #' @param id integer(1) record or object identifier
 #' @param full logical(1) (default \code{FALSE}) include full record with
 #' stats, files, and metadata
+#' @param test_request boolean() (default \code{FALSE}) internal parameter for testing purposes
 #'
 #' @return list() metadata
 #'
@@ -305,7 +306,7 @@ bb_example <- function(bedbase, rec_type = c("bed", "bedset")) {
 #' bb_metadata(bedbase, ex_bedset$id)
 #'
 #' @export
-bb_metadata <- function(bedbase, id, full = FALSE) {
+bb_metadata <- function(bedbase, id, full = FALSE, test_request = FALSE) {
     rsp <- bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(
         bed_id = id,
         full = full
@@ -313,7 +314,8 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
     if (rsp$status_code != 200) {
         rsp <- bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(
             bedset_id = id,
-            full = full
+            full = full,
+            test_request = test_request,
         )
     }
     result <- httr::content(rsp)
@@ -379,6 +381,7 @@ bb_list_beds <- function(bedbase, genome = NULL, bed_compliance = NULL,
 #' @param query character() (default \code{""}) keyword
 #' @param limit integer(1) (default \code{1000}) maximum records
 #' @param offset integer(1) (default \code{0}) page token of records
+#' @param test_request boolean() (default \code{FALSE}) internal parameter for testing purposes
 #'
 #' @return [tibble][tibble::tibble] of BEDset records
 #'
@@ -387,11 +390,12 @@ bb_list_beds <- function(bedbase, genome = NULL, bed_compliance = NULL,
 #' bb_list_bedsets(bedbase)
 #'
 #' @export
-bb_list_bedsets <- function(bedbase, query = "", limit = 1000, offset = 0) {
+bb_list_bedsets <- function(bedbase, query = "", limit = 1000, offset = 0, test_request = FALSE) {
     rsp <- bedbase$list_bedsets_v1_bedset_list_get(
         query = query,
         limit = limit,
-        offset = offset
+        offset = offset,
+        test_request = test_request
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()
@@ -460,6 +464,7 @@ bb_beds_in_bedset <- function(bedbase, bedset_id) {
 #' @param assay character() (default NULL) assay to search
 #' @param limit integer(1) (default \code{10}) maximum number of results
 #' @param offset integer(1) (default \code{0}) page offset of results
+#' @param test_request boolean() (default \code{FALSE}) internal parameter for testing purposes
 #'
 #' @return [tibble][tibble::tibble] of results
 #'
@@ -469,7 +474,7 @@ bb_beds_in_bedset <- function(bedbase, bedset_id) {
 #'
 #' @export
 bb_bed_text_search <- function(bedbase, query, genome = NULL, assay = NULL,
-                               limit = 10, offset = 0) {
+                               limit = 10, offset = 0, test_request = FALSE) {
     query <- utils::URLencode(query, reserved = TRUE)
     if (!is.null(genome))
         genome <- utils::URLencode(genome, reserved = TRUE)
@@ -480,7 +485,8 @@ bb_bed_text_search <- function(bedbase, query, genome = NULL, assay = NULL,
         genome = genome,
         assay = assay,
         limit = limit,
-        offset = offset
+        offset = offset,
+        test_request = test_request
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()

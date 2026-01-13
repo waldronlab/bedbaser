@@ -10,7 +10,8 @@ bb_bed_text_search(
   genome = NULL,
   assay = NULL,
   limit = 10,
-  offset = 0
+  offset = 0,
+  test_request = FALSE
 )
 }
 \arguments{
@@ -25,6 +26,8 @@ bb_bed_text_search(
 \item{limit}{integer(1) (default \code{10}) maximum number of results}
 
 \item{offset}{integer(1) (default \code{0}) page offset of results}
+
+\item{test_request}{boolean() (default \code{FALSE}) internal parameter for testing purposes}
 }
 \value{
 \link[tibble:tibble]{tibble} of results
