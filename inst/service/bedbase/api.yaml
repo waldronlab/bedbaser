@@ -369,6 +369,13 @@
             "name": "offset",
             "required": false,
             "type": "integer"
+          },
+          {
+            "default": false,
+            "in": "query",
+            "name": "test_request",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -532,6 +539,13 @@
             "in": "query",
             "name": "full",
             "required": false
+          },
+          {
+            "default": false,
+            "in": "query",
+            "name": "test_request",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -1031,6 +1045,13 @@
             "name": "offset",
             "required": false,
             "type": "integer"
+          },
+          {
+            "default": false,
+            "in": "query",
+            "name": "test_request",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
@@ -1107,6 +1128,13 @@
             "default": true,
             "in": "query",
             "name": "full",
+            "required": false,
+            "type": "boolean"
+          },
+          {
+            "default": false,
+            "in": "query",
+            "name": "test_request",
             "required": false,
             "type": "boolean"
           }
@@ -1390,6 +1418,13 @@
             "name": "file_path",
             "required": true,
             "type": "string"
+          },
+          {
+            "default": false,
+            "in": "query",
+            "name": "test_request",
+            "required": false,
+            "type": "boolean"
           }
         ],
         "responses": {
