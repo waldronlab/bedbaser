@@ -308,12 +308,14 @@ bb_example <- function(bedbase, rec_type = c("bed", "bedset")) {
 bb_metadata <- function(bedbase, id, full = FALSE) {
     rsp <- bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(
         bed_id = id,
-        full = full
+        full = full,
+        test_request = .is_test_request()
     )
     if (rsp$status_code != 200) {
         rsp <- bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(
             bedset_id = id,
-            full = full
+            full = full,
+            test_request = .is_test_request()
         )
     }
     result <- httr::content(rsp)
@@ -391,7 +393,8 @@ bb_list_bedsets <- function(bedbase, query = "", limit = 1000, offset = 0) {
     rsp <- bedbase$list_bedsets_v1_bedset_list_get(
         query = query,
         limit = limit,
-        offset = offset
+        offset = offset,
+        test_request = .is_test_request()
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()
@@ -480,7 +483,8 @@ bb_bed_text_search <- function(bedbase, query, genome = NULL, assay = NULL,
         genome = genome,
         assay = assay,
         limit = limit,
-        offset = offset
+        offset = offset,
+        test_request = .is_test_request()
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()
@@ -516,11 +520,7 @@ bb_bed_text_search <- function(bedbase, query, genome = NULL, assay = NULL,
 #'
 #' @export
 bb_to_granges <- function(bedbase, bed_id, extra_cols = NULL, quietly = TRUE) {
-    metadata <- bb_metadata(bedbase, bed_id, TRUE)
-    file_path <- .get_file(
-        metadata, getCache(bedbase, "bedfiles"), "http",
-        quietly
-    )
+    file_path <- .get_file(bedbase, bed_id, getCache(bedbase, "bedfiles"), quietly)
 
     tryCatch(
         R.utils::gunzip(file_path, remove = FALSE),
@@ -529,6 +529,7 @@ bb_to_granges <- function(bedbase, bed_id, extra_cols = NULL, quietly = TRUE) {
         }
     )
 
+    metadata <- bb_metadata(bedbase, bed_id, TRUE)
     .bed_file_to_granges(file_path, metadata, extra_cols, quietly)
 }
 
@@ -597,7 +598,6 @@ bb_save <- function(bedbase, bed_or_bedset_id, path, quietly = TRUE) {
         )
     }
     for (id in ids) {
-        metadata <- bb_metadata(bedbase, id, TRUE)
-        .get_file(metadata, path, "http", quietly)
+        .get_file(bedbase, id, path, quietly)
     }
 }

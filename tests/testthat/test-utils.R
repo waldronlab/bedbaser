@@ -10,21 +10,17 @@ test_that(".get_file_name returns file name", {
     )
 })
 
-test_that(".get_url returns a url", {
-    file_url <- .get_url(ex_bed_md, "http")
-    expect_true(stringr::str_detect(file_url, "(https?|ftp|s3)://"))
-})
-
 test_that(".get_file returns a valid file path", {
-    file_path <- .get_file(ex_bed_md, tempdir(), "http")
+    file_path <- .get_file(bedbase, ex_bed$id, tempdir())
     expect_true(file.exists(file_path))
-    file_path <- .get_file(ex_bed_md, getCache(bedbase, "bedfiles"), "http")
+    file_path <- .get_file(bedbase, ex_bed$id, getCache(bedbase, "bedfiles"))
     expect_true(file.exists(file_path))
 })
 
 test_that(".get_extra_cols returns a named vector", {
-    ex_bed_md2 <- bb_metadata(bedbase, ex_bedset$bed_ids[[1]], TRUE)
-    file_path <- .get_file(ex_bed_md2, getCache(bedbase, "bedfiles"), "http")
+    ids <- ex_bedset$bed_ids[[1]]
+    file_path <- .get_file(bedbase, ids, getCache(bedbase, "bedfiles"))
+    ex_bed_md2 <- bb_metadata(bedbase, ids, TRUE)
     x_y <- strsplit(gsub("bed", "", ex_bed_md2$bed_compliance),
                     "+",
                     fixed= TRUE)[[1]]
