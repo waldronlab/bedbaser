@@ -1,0 +1,18 @@
+# requires jq
+# run with
+# bash add_test_requests
+
+jq --indent 2 '
+  {
+    "default": false,
+    "in": "query",
+    "name": "test_request",
+    "required": false,
+    "type": "boolean"
+  } as $test_request |
+  .paths["/v1/bed/{bed_id}/metadata"].get.parameters += [$test_request] |
+  .paths["/v1/bed/search/text"].get.parameters += [$test_request] |
+  .paths["/v1/bedset/{bedset_id}/metadata"].get.parameters += [$test_request] |
+  .paths["/v1/bedset/list"].get.parameters += [$test_request] |
+  .paths["/v1/files/{file_path}"].get.parameters += [$test_request]
+' api.yaml > tmp.yaml && mv tmp.yaml api.yaml
