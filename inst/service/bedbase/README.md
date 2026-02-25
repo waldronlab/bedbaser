@@ -26,3 +26,17 @@ Convert openapi.json from OpenAPI 3.1 to 3.0:
 Convert from OpenAPI 3.0 to Swagger 2.0:
 
     api-spec-converter -f openapi_3 -t swagger_2 openapi_3_0.json > api.yaml
+
+Run `add_test_requests` to add a hidden parameter `test_request` for the
+following endpoints:
+
+* /v1/bed/search/text
+* /v1/bed/{bed_id}/metadata
+* /v1/bedset/{bedset_id}/metadata
+* /v1/bedset/list
+* /v1/files/{file_path}
+
+If `test_request` is TRUE, the request will not be counted in BEDbase
+statistics.
+
+    bash add_test_request

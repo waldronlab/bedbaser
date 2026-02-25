@@ -42,7 +42,13 @@ test_that("bed files are cached", {
     cache <- getCache(bedbase, "bedfiles")
     rid <- BiocFileCache::bfcquery(cache, id, "rname")$rid
     expect_length(rid, 0)
-    bedbase_url <- .get_url(bb_metadata(bedbase, id, TRUE), "http")
+    resp <- httr::content(
+        bedbase$get_bed_files_v1_bed__bed_id__metadata_files_get(id)
+    )
+    bedbase_url <- bedbase$redirect_to_download_v1_files__file_path__get(
+        file_path = resp$bed_file$path,
+        test_request = .is_test_request()
+    )$url
     rpath <- .cache_bedfile(id, bedbase_url, cache)
     expect_true(file.exists(rpath))
     rid <- BiocFileCache::bfcquery(cache, id, "rname")$rid

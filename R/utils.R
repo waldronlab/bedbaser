@@ -1,3 +1,15 @@
+#' Return TRUE if a test_request to prevent impact to BEDbase statistics
+#'
+#' @param default logical(1) (default \code{FALSE}) internal parameter for
+#' testing purposes
+#'
+#' @return logical(1)
+#'
+#' @noRd
+.is_test_request <- function(default = FALSE) {
+    getOption("bedbaser.test_request", default = default)
+}
+
 #' Get file name from URL for a file
 #'
 #' @param a_url character(1) URL
@@ -13,42 +25,16 @@
     url_parts[length(url_parts)]
 }
 
-#' Get BEDbase url for BED file
-#'
-#' @param records list() metadata
-#' @param access_type character(1) s3 or http
-#'
-#' @return character(1) url to BED file
-#'
-#' @examples
-#' bedbase <- BEDbase()
-#' ex_bed <- bb_example(bedbase, "bed")
-#' ex_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' .get_url(ex_bed$files, "http")
-#'
-#' @noRd
-.get_url <- function(metadata, access_type = c("s3", "http")) {
-    access_type <- match.arg(access_type)
-    file_details <- dplyr::bind_rows(metadata$files) |>
-        tidyr::unnest_wider(access_methods) |>
-        tidyr::unnest_wider(access_url) |>
-        dplyr::filter(
-            name == "bed_file",
-            access_id == access_type
-        )
-    file_details$url
-}
-
 #' Get a BED file
 #'
 #' @description Download or retrieve the file the cache. If not available, get
 #' the file from bedbase.org and save to the cache or a path. If a directory
 #' does not exist along specified path, it will raise an error message.
 #'
-#' @param metadata list() full metadata
+#' @param bedbase BEDbase() object
+#' @param bed_id integer(1) BED record identifier
 #' @param cache_or_path [BiocFileCache][BiocFileCache::BiocFileCache-class] or
 #'        character(1) cache or save path
-#' @param access_type character(1) s3 or http
 #' @param quietly logical(1) (default \code{TRUE}) display messages
 #'
 #' @return character(1) file path
@@ -56,14 +42,19 @@
 #' @examples
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
-#' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' .get_file(md, tempdir(), "http")
+#' .get_file(bedbase, ex_bed$id, tempdir())
 #'
 #' @noRd
-.get_file <- function(metadata, cache_or_path, access_type, quietly = TRUE) {
-    file_url <- .get_url(metadata, access_type)
+.get_file <- function(bedbase, id, cache_or_path, quietly = TRUE) {
+    resp = httr::content(
+        bedbase$get_bed_files_v1_bed__bed_id__metadata_files_get(id)
+    )
+    file_url <- bedbase$redirect_to_download_v1_files__file_path__get(
+        file_path = resp$bed_file$path,
+        test_request = .is_test_request()
+    )$url
     if (methods::is(cache_or_path, "BiocFileCache")) {
-        bed_file <- .cache_bedfile(metadata$id, file_url, cache_or_path)
+        bed_file <- .cache_bedfile(id, file_url, cache_or_path)
     } else {
         bed_file <- file.path(cache_or_path, .get_file_name(file_url))
         curl::curl_download(file_url, bed_file, quiet = quietly)
@@ -88,8 +79,7 @@
 #' @examples
 #' bedbase <- BEDbase()
 #' ex_bedset <- bb_example(bedbase, "bedset")
-#' md <- bb_metadata(bedbase, ex_bedset$bed_ids[[1]], TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "http")
+#' file_path <- .get_file(bedbase, ex_bedset$bed_ids[[1]], getCache(bedbase))
 #' .get_extra_cols(file_path, 3, 9)
 #'
 #' @noRd
@@ -123,8 +113,8 @@
 #' @examples
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
-#' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "http")
+#' metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
+#' file_path <- .get_file(bedbase, ex_bed$id, getCache(bedbase))
 #' args <- list(
 #'     con = file_path,
 #'     format = gsub("peak", "Peak", metadata$data_format),
@@ -158,8 +148,8 @@
 #' @examples
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
+#' file_path <- .get_file(bedbase, ex_bed$id, getCache(bedbase))
 #' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "http")
 #' format <- .get_format(file_path, md$data_format)
 #'
 #' @noRd
@@ -192,8 +182,7 @@
 #' @examples
 #' bedbase <- BEDbase()
 #' ex_bed <- bb_example(bedbase, "bed")
-#' md <- bb_metadata(bedbase, ex_bed$id, TRUE)
-#' file_path <- .get_file(md, getCache(bedbase), "http")
+#' file_path <- .get_file(bedbase, ex_bed$id, getCache(bedbase))
 #' .bed_file_to_granges(file_path, md)
 #'
 #' @noRd

@@ -36,6 +36,13 @@ if (!"BiocManager" %in% rownames(installed.packages())) {
 BiocManager::install("bedbaser")
 ```
 
+```{r set-bedbaser-test_request, echo=FALSE, include=FALSE}
+# We set .is_test_request to TRUE if !interactive() so we don't inflate
+# statistics for BEDbase
+
+options(bedbaser.test_request = !interactive())
+```
+
 Load the package and create a BEDbase instance, optionally setting the cache
 to `cache_path`. If `cache_path` is not set, `r Biocpkg("bedbaser")` will
 choose the default location.
@@ -231,6 +238,12 @@ gro39 <- liftOver(gro, ch)
 gro39 <- unlist(gro39)
 genome(gro39) <- "mm39"
 gro39
+```
+
+```{r unset-bedbaser-test_request, echo=FALSE, include=FALSE}
+# We unset bedbaser.test_request to FALSE
+
+options(bedbaser.test_request = FALSE)
 ```
 
 # SessionInfo()
