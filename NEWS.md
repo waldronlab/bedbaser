@@ -1,3 +1,8 @@
+# version 1.3.5
+
+- Incorporated test_request parameter
+- Improved how bedbaser constructs BED file url
+
 # version 1.3.1
 
 - Update bedbase to 0.12.1
