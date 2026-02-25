@@ -102,23 +102,23 @@ e.g., 'bed6+4'</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 130451 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 168106 BED files available.</span>
 <span class="r-in"><span><span class="fu">bb_list_beds</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1,000 × 52</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    name                genome_alias bed_compliance data_format compliant_columns</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Plasma B cells - T… <span style="color: #949494;">"</span>hg38<span style="color: #949494;">"</span>       bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Young_Daughter 3y3A <span style="color: #949494;">"</span>mm10<span style="color: #949494;">"</span>       bed5+5         bed_like_rs 5                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> DU01: Damage H2AK1… <span style="color: #949494;">""</span>           bed6+0         ucsc_bed    6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> total RNA at diagn… <span style="color: #949494;">"</span>hg19<span style="color: #949494;">"</span>       bed4+2         bed_like    4                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> encode_16468        <span style="color: #949494;">"</span>hg38<span style="color: #949494;">"</span>       bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> Human colon cancer… <span style="color: #949494;">"</span>hg19<span style="color: #949494;">"</span>       bed6+3         encode_bro… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> FGFR1(RA)_ChIP_Seq  <span style="color: #949494;">"</span>mm10<span style="color: #949494;">"</span>       bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> encode_4362         <span style="color: #949494;">"</span>hg38<span style="color: #949494;">"</span>       bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> TF ChIP-seq from H… <span style="color: #949494;">"</span>hg38<span style="color: #949494;">"</span>       bed6+4         encode_nar… 6                </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> H3K4me3 Wnt3KO Chi… <span style="color: #949494;">"</span>mm9<span style="color: #949494;">"</span>        bed6+4         encode_nar… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    name  genome_alias genome_digest bed_compliance data_format compliant_columns</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> Plas… hg19         GOIHeGSorDrb… bed6+4         encode_nar… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> Youn… mm10         wsDErYxgCXiP… bed5+5         bed_like_rs 5                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> DU01… mm38         TQORtixTJqM3… bed6+0         ucsc_bed    6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> tota… hg19         GOIHeGSorDrb… bed4+2         bed_like    4                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> af9_… mm38         TQORtixTJqM3… bed6+4         encode_nar… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> enco… hg38         jFm0Uca8a7vK… bed6+4         encode_nar… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> atac… hg19         GOIHeGSorDrb… bed4+1         bed_like    4                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> Huma… hg38         Dx_M8skbJqRO… bed6+3         encode_bro… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> FGFR… mm10         dMjpOU7EvpeZ… bed6+4         encode_nar… 6                </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> enco… hg38         EiFob05aCWgV… bed6+4         encode_nar… 6                </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 990 more rows</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 47 more variables: non_compliant_columns &lt;chr&gt;, id &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 46 more variables: non_compliant_columns &lt;chr&gt;, id &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   description &lt;chr&gt;, submission_date &lt;chr&gt;, last_update_date &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   is_universe &lt;chr&gt;, license_id &lt;chr&gt;, annotation.organism &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   annotation.species_id &lt;chr&gt;, annotation.genotype &lt;chr&gt;,</span></span>

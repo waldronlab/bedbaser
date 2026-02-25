@@ -96,40 +96,40 @@ construct GRanges objects</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 130451 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 168106 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_to_granges</span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 758 ranges and 6 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         seqnames              ranges strand |        name     score signalValue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;   &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [1]     chr1     1309757-1310040      * |        &lt;NA&gt;       628     27.1098</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [2]     chr1     1361050-1361333      * |        &lt;NA&gt;       969     46.9058</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [3]     chr1     1595600-1595883      * |        &lt;NA&gt;       544     37.8757</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [4]     chr1     1596172-1596455      * |        &lt;NA&gt;      1000     60.3260</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [5]     chr1     2896839-2897122      * |        &lt;NA&gt;       670     27.9391</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ...      ...                 ...    ... .         ...       ...         ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [754]     chrX 137592599-137592882      * |        &lt;NA&gt;       621     35.1752</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [755]     chrX 140723887-140724170      * |        &lt;NA&gt;       570     20.7953</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [756]     chrX 140725202-140725485      * |        &lt;NA&gt;       770     39.3965</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [757]     chrX 153382538-153382821      * |        &lt;NA&gt;       586     37.2207</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [758]     chrY   11327531-11327814      * |        &lt;NA&gt;       768     38.3850</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>            pValue    qValue      peak</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>         &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [1]        -1  -0.32846       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [2]        -1  -0.12926       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [3]        -1  -0.37348       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [4]        -1   0.33303       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     [5]        -1  -0.34152       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     ...       ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [754]        -1  -0.39023       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [755]        -1  -0.18003       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [756]        -1  -0.33490       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [757]        -1  -0.37418       142</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [758]        -1  -0.36814       142</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 25882 ranges and 6 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           seqnames              ranges strand |              name     score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |       &lt;character&gt; &lt;numeric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]     chr1       191313-191731      * |     100753_peak_1       139</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]     chr1       629776-630122      * |     100753_peak_2      1227</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]     chr1       633844-634214      * |     100753_peak_3      4049</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]     chr1       778466-779004      * |     100753_peak_4       654</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]     chr1       827372-827743      * |     100753_peak_5       257</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ...      ...                 ...    ... .               ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25878]     chrX 155264054-155264646      * | 100753_peak_25878        93</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25879]     chrX 155334643-155334842      * | 100753_peak_25879        22</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25880]     chrX 155612461-155612797      * | 100753_peak_25880        43</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25881]     chrX 155881065-155881496      * | 100753_peak_25881       251</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25882]     chrX 155997485-155997684      * | 100753_peak_25882        27</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           signalValue    pValue    qValue      peak</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>             &lt;numeric&gt; &lt;numeric&gt; &lt;numeric&gt; &lt;integer&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]     7.32698   17.1060   13.9875       174</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]    13.33866  127.8868  122.7292       173</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]    30.00000  414.4757  404.9943       187</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]    17.47573   69.5439   65.4596       343</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]    10.42686   29.1827   25.7834       191</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ...         ...       ...       ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25878]     5.75916  12.31354   9.34482       455</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25879]     3.38168   4.81863   2.28532        51</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25880]     4.21348   7.02986   4.30581       172</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25881]     8.78661  28.49479  25.10905       239</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [25882]     3.05085   5.38376   2.79375       102</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 711 sequences (1 circular) from hg38 genome</span>
 <span class="r-in"><span></span></span>
