@@ -19,7 +19,7 @@ of bedbaser with an example BED file and BEDset in BEDbase."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
       </span>
     </div>
 
@@ -83,22 +83,22 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 168106 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 168207 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bed</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 22</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name                 : chr "PB bulk, 100753"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name                 : chr "encode_2074"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ genome_alias         : chr "hg38"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ genome_digest        : chr "Ba88PY52_qeifhJrgUXyin6UITdXNsg3"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_compliance       : chr "bed6+4"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ data_format          : chr "encode_narrowpeak_rs"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_compliance       : chr "bed6+3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ data_format          : chr "encode_broadpeak"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ compliant_columns    : int 6</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ non_compliant_columns: int 4</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ non_compliant_columns: int 3</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ header               : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id                   : chr "923202a2777c0c1a13432fae8842aba0"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description          : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date      : chr "2026-01-17T18:32:05.098881Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date     : chr "2026-02-08T17:21:01.635330Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id                   : chr "ee0c316f02b443c27b0136cb85c113c5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description          : chr "DNase-seq experiment on SJSA1 (Osteosarcoma cell line from femur)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date      : chr "2025-04-24T23:25:31.252448Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date     : chr "2026-02-08T09:56:25.908938Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ is_universe          : logi FALSE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ license_id           : chr "DUO:0000042"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ annotation           :List of 16</span>
@@ -107,20 +107,20 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ genotype            : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ phenotype           : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ description         : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_type           : chr "bulk"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_line           : chr ""</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ tissue              : chr "peripheral blood"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ library_source      : chr "genomic"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ assay               : chr "ATAC-seq"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_type           : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ cell_line           : chr "SJSA1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ tissue              : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ library_source      : chr ""</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ assay               : chr "DNase-seq"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ antibody            : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ target              : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ treatment           : chr ""</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_sample_id    :List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gsm7457826"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "encode:ENCFF209ZHV"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ global_experiment_id:List of 1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "geo:gse234237"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ original_file_name  : chr "GSM7457826_100753_peaks.narrowPeak.gz"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ processed            : logi FALSE</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ : chr "encode"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ original_file_name  : chr "ENCFF209ZHV.bed.gz"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ processed            : logi TRUE</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ stats                : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots                : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ files                : NULL</span>
@@ -130,17 +130,17 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bedset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 12</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse231188"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse231188"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "c10feb3ab6f0627bd4eccea2a3582016"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2026-02-07T17:31:29.489188Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2026-02-07T17:31:29.489197Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse120532"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse120532"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "cd04e239d745b9f97697781c20c4cd28"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-05-22T21:34:03.063062Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-05-22T21:34:03.063068Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ statistics      :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ mean:List of 18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 30512</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 32996</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 470</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 795</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
@@ -156,10 +156,10 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ sd  :List of 18</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 31499</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 10188</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 112</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 170</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
@@ -176,19 +176,48 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots           :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ region_commonality: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE231188](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE231188)\nTF ChIP-seq from HepG2 (ENCSR727IJD)"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE120532](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE120532)\nGenome-wide maps of ch"| __truncated__</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ summary         : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "00f194a9c6e84100de61fbfc390af99a"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "3da1056df1b82f50d0c1d6eb1cc4722d"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "6055857ec5f75b7c2532807fef38ff34"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "7853dc97f0f42c0c77144e5e00cdd2aa"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "84f905df97d54e3cacc179f2db7631fd"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "900fcac00ecd106b1c96ab30a550ec5f"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9f0faeffab39936624b606e48ad9c5e7"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "ebb83827aef57f580e94a5cdde0f4ea6"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "ENCODE, DCC"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse231188"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 37</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "041fc0c13036b5b8d4c42d075ce943fa"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "08c4e25d4a5320aa63b1ffbabb717d15"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1c34c33f029c5967b96b5bcd0bd25743"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1e43444e0f8071bf026b24cc55f1e86e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "2a9342b8b2648def09bc7156d1eeb1e6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "31a07e444fd57ec52d7da688038fbfd3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "3a881e4b1b0e3dc281a417703d387aed"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "3af5bbcbd00e095809a511c5a60b6d45"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "4eea36bcdfed04c1965cf513146a40e8"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "4fcd2e45738ad83b0254e878520a497d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "54dbedb46409a93efbc774bc32cba1fe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "5535ea70b8d29830dd296613fe0128a1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "5fb9daa17b08f4d272751e814d3b94a6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "62d56a00d217962895f0823ce70b0548"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "6d16b773ab23e63cc3bf23269faf5203"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "6fe836d9a4e9257673e508bff3f9d91a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "843d4a57e79426df98697c964e7fbfc9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "8571b354e47013dd20e16063ab9eba17"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "8daf787fb10ffa0c95b14597aa2a3a6e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "92f2c3a349c530c0f58957d3a76d78ee"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "97087e835d3b08f04303d1c7aeba578b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9c02b50af322fb2d46a1aa7f415c7eb3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9cdc9a4d581062cbd34e7967032272bb"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9e8473aca735b5fd8efcab1a79cb0f59"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "a7b45c97a5f48a717b714913968ab79d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "b7a11cf9634b67540703f76c454db941"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "bac923f376af783db91ff869b4895a2a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "bc42426f303397cfcce9f1944681af8e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "bd9da8b4d0bdeefd1c90a3efbee5defb"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "c851ceceb15a108ce1f3a0711a748450"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "cc3b3e6b00f0d6f8dfce658d90543f2d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "d114c3b01e300a5d1c8f4fe0aaedd6b3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "d40e3212fac699679b1e6e60781b51c5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "deb5e6d83a15e97a84ed5c997b508c89"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "e68be2f9de1d36d1df583a383bb56d51"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "e9c69ef0359d1bf923c33802af6b4640"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "ee9f86b809b086facd4bbb11f35d73f9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "Jun, Huang"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse120532"</span>
 </code></pre></div>
     </div>
   </div>

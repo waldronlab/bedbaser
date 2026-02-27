@@ -18,7 +18,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.4</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
       </span>
     </div>
 
@@ -86,7 +86,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 168106 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 168208 BED files available.</span>
 <span class="r-in"><span><span class="fu">operations</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $lending_page__get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> lending_page__get </span>
@@ -189,6 +189,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   assay ()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $embed_bed_file_v1_bed_umap_post</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> embed_bed_file_v1_bed_umap_post </span>
@@ -230,6 +231,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>     BED digest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   full ()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     Return full record with stats, plots, files and metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_bed_classification_v1_bed__bed_id__metadata_classification_get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_bed_classification_v1_bed__bed_id__metadata_classification_get </span>
@@ -363,6 +365,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   query (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get </span>
@@ -382,6 +385,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bedset_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   full (boolean)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get </span>
@@ -457,6 +461,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   file_path (string)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedbase_db_stats_v1_genomes_get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_bedbase_db_stats_v1_genomes_get </span>
