@@ -1,9 +1,9 @@
-bedbase <- BEDbase(quietly = TRUE)
+bedbase <- BEDbase(tempdir(), quietly = TRUE)
 ex_bed <- bb_example(bedbase, "bed")
 ex_bedset <- bb_example(bedbase, "bedset")
 
 test_that("setCache changes cache", {
-    path <- tempdir()
+    path <- file.path(tempdir(), "subdirectory")
     expect_true(BiocFileCache::bfccache(getCache(bedbase, "bedfiles")) != file.path(path, "bedfiles"))
     bedbase <- setCache(bedbase, path)
     expect_true(BiocFileCache::bfccache(getCache(bedbase, "bedfiles")) == file.path(path, "bedfiles"))
@@ -31,7 +31,6 @@ test_that("bb_metadata returns metadata for BEDsets", {
         ex_bedset$id,
         TRUE,
         test_request = .is_test_request()))
-    ))
     bedset_metadata <- bb_metadata(bedbase, ex_bedset$id, TRUE)
     expect_equal(ex_bedset_metadata, bedset_metadata)
 })
