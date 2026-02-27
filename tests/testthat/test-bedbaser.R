@@ -18,13 +18,20 @@ test_that("bb_example has 'bed_ids' given rec_type 'bedset'", {
 })
 
 test_that("bb_metadata returns metadata for BEDs", {
-    ex_metadata <- httr::content(bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(ex_bed$id, TRUE))
+    ex_metadata <- httr::content(bedbase$get_bed_metadata_v1_bed__bed_id__metadata_get(
+        ex_bed$id,
+        TRUE,
+        test_request = .is_test_request()))
     bed_metadata <- bb_metadata(bedbase, ex_bed$id, TRUE)
     expect_equal(ex_metadata, bed_metadata)
 })
 
 test_that("bb_metadata returns metadata for BEDsets", {
-    ex_bedset_metadata <- httr::content(bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(ex_bedset$id, TRUE))
+    ex_bedset_metadata <- httr::content(bedbase$get_bedset_metadata_v1_bedset__bedset_id__metadata_get(
+        ex_bedset$id,
+        TRUE,
+        test_request = .is_test_request()))
+    ))
     bedset_metadata <- bb_metadata(bedbase, ex_bedset$id, TRUE)
     expect_equal(ex_bedset_metadata, bedset_metadata)
 })
@@ -49,7 +56,8 @@ test_that("bb_list_beds returns same number of results for the mm39 genome", {
 test_that("bb_list_bedsets returns same number for query 'alzheimer'", {
     bedsets_raw <- httr::content(bedbase$list_bedsets_v1_bedset_list_get(
         query = "alzheimer",
-        limit = 5000
+        limit = 5000,
+        test_request = .is_test_request()
     ))
     bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
     bedsets_from_raw <- dplyr::bind_rows(bedsets_names_bed_ids_list) |>
@@ -62,7 +70,8 @@ test_that("bb_list_bedsets returns same number for query 'alzheimer'", {
 test_that("bb_list_bedsets returns limited number of bed ids", {
     bedsets_raw <- httr::content(bedbase$list_bedsets_v1_bedset_list_get(
         query = "",
-        limit = 1
+        limit = 1,
+        test_request = .is_test_request()
     ))
     bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
     bedsets_from_raw <- dplyr::bind_rows(bedsets_names_bed_ids_list) |>
@@ -89,7 +98,8 @@ test_that("bb_bed_text_search returns results scored against the query", {
         genome = NULL,
         assay = NULL,
         limit = 10,
-        offset = 0
+        offset = 0,
+        test_request = .is_test_request()
     ))
     ex_beds <- purrr::map_depth(.x = ex_beds$results, 1, \(y) unlist(y)) |>
         dplyr::bind_rows() |>
