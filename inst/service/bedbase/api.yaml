@@ -3,7 +3,7 @@
   "info": {
     "description": "BED file/sets statistics and image server API",
     "title": "bedhost",
-    "version": "0.12.1"
+    "version": "0.12.7"
   },
   "paths": {
     "/": {
@@ -59,9 +59,49 @@
         "tags": [
           "base"
         ],
-        "description": "Returns statistics",
-        "operationId": "get_bedbase_db_stats_v1_assays_get",
+        "description": "Returns available assays",
+        "operationId": "get_assays_list_v1_assays_get",
         "summary": "Get available assays"
+      }
+    },
+    "/v1/bed/analyze-genome": {
+      "post": {
+        "consumes": [
+          "application/json"
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "body",
+            "name": "body",
+            "required": true,
+            "schema": {
+              "$ref": "#/definitions/ChromLengthUploadModel"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/RefGenValidReturnModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Provide length of the chromosomes for a reference genome, and\nreturn reference genome validation results for a bed file",
+        "operationId": "analyze_reference_genome_v1_bed_analyze_genome_post",
+        "summary": "Analyze reference genome for bed file"
       }
     },
     "/v1/bed/embed": {
@@ -77,6 +117,7 @@
             "format": "binary",
             "in": "formData",
             "name": "file",
+            "required": true,
             "type": "string"
           }
         ],
@@ -424,7 +465,7 @@
               "items": {
                 "type": "number"
               },
-              "title": "Response Embed Bed File V1 Bed Umap Post",
+              "title": "Response Umap Bed File V1 Bed Umap Post",
               "type": "array"
             }
           },
@@ -439,7 +480,7 @@
           "bed"
         ],
         "description": "Create embedding for bed file",
-        "operationId": "embed_bed_file_v1_bed_umap_post",
+        "operationId": "umap_bed_file_v1_bed_umap_post",
         "summary": "Get embeddings for a bed file."
       }
     },
@@ -818,6 +859,43 @@
         "summary": "Get nearest neighbours for a single BED record"
       }
     },
+    "/v1/bed/{bed_id}/og-image": {
+      "get": {
+        "produces": [
+          "image/png",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns a 1200x630 PNG card with stats for link previews. Example bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_og_image_v1_bed__bed_id__og_image_get",
+        "summary": "Get Open Graph preview image for a BED record"
+      }
+    },
     "/v1/bed/{bed_id}/regions/{chr_num}": {
       "get": {
         "produces": [
@@ -841,8 +919,7 @@
             "name": "chr_num",
             "pattern": "^\\S+$",
             "required": true,
-            "type": "string",
-            "x-example": "chr1"
+            "type": "string"
           },
           {
             "description": "query range: start coordinate",
@@ -957,7 +1034,7 @@
           "bed"
         ],
         "description": "Return link to tokenized bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe: 58dee1672b7e581c8e1312bd4ca6b3c7",
-        "operationId": "get_tokens_v1_bed__bed_id__tokens__universe_id__info_get",
+        "operationId": "get_tokens_info_v1_bed__bed_id__tokens__universe_id__info_get",
         "summary": "Get link to tokenized bed file"
       }
     },
@@ -1192,7 +1269,7 @@
           "bedset"
         ],
         "description": "Example\n bed_id: gse218680",
-        "operationId": "get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get",
+        "operationId": "get_bedset_plots_handler_v1_bedset__bedset_id__metadata_plots_get",
         "summary": "Get plots for single bedset record"
       }
     },
@@ -1227,7 +1304,7 @@
           "bedset"
         ],
         "description": "Example\n bed_id: gse218680",
-        "operationId": "get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get",
+        "operationId": "get_bedset_stats_handler_v1_bedset__bedset_id__metadata_stats_get",
         "summary": "Get stats for a single BEDSET record"
       }
     },
@@ -1463,8 +1540,8 @@
         "tags": [
           "base"
         ],
-        "description": "Returns statistics",
-        "operationId": "get_bedbase_db_stats_v1_genomes_get",
+        "description": "Returns available genomes",
+        "operationId": "get_genomes_list_v1_genomes_get",
         "summary": "Get available genomes"
       }
     },
@@ -1759,8 +1836,7 @@
           "title": "Data Format"
         },
         "genome_alias": {
-          "title": "Genome Alias",
-          "type": "string"
+          "title": "Genome Alias"
         },
         "genome_digest": {
           "title": "Genome Digest"
@@ -1861,11 +1937,7 @@
           "type": "integer"
         },
         "results": {
-          "items": {
-            "$ref": "#/definitions/QdrantSearchResult"
-          },
-          "title": "Results",
-          "type": "array"
+          "title": "Results"
         }
       },
       "required": [
@@ -1901,8 +1973,7 @@
         },
         "files": {},
         "genome_alias": {
-          "title": "Genome Alias",
-          "type": "string"
+          "title": "Genome Alias"
         },
         "genome_digest": {
           "title": "Genome Digest"
@@ -1944,9 +2015,7 @@
         },
         "stats": {},
         "submission_date": {
-          "format": "date-time",
-          "title": "Submission Date",
-          "type": "string"
+          "title": "Submission Date"
         },
         "universe_metadata": {}
       },
@@ -1977,8 +2046,7 @@
           "title": "Description"
         },
         "genome_alias": {
-          "title": "Genome Alias",
-          "type": "string"
+          "title": "Genome Alias"
         },
         "genome_digest": {
           "title": "Genome Digest"
@@ -2015,9 +2083,7 @@
           "title": "Processed"
         },
         "submission_date": {
-          "format": "date-time",
-          "title": "Submission Date",
-          "type": "string"
+          "title": "Submission Date"
         }
       },
       "required": [
@@ -2032,92 +2098,76 @@
         "antibody": {
           "default": "",
           "description": "Antibody used in the assay",
-          "title": "Antibody",
-          "type": "string"
+          "title": "Antibody"
         },
         "assay": {
           "default": "",
           "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Assay",
-          "type": "string"
+          "title": "Assay"
         },
         "cell_line": {
           "default": "",
-          "title": "Cell Line",
-          "type": "string"
+          "title": "Cell Line"
         },
         "cell_type": {
           "default": "",
-          "title": "Cell Type",
-          "type": "string"
+          "title": "Cell Type"
         },
         "description": {
           "default": "",
           "description": "Description of the sample",
-          "title": "Description",
-          "type": "string"
+          "title": "Description"
         },
         "genome": {
           "default": "",
-          "title": "Genome",
-          "type": "string"
+          "title": "Genome"
         },
         "genotype": {
           "default": "",
           "description": "Genotype of the sample",
-          "title": "Genotype",
-          "type": "string"
+          "title": "Genotype"
         },
         "global_experiment_id": {
           "default": "",
           "description": "Global experiment identifier",
-          "title": "Global Experiment Id",
-          "type": "string"
+          "title": "Global Experiment Id"
         },
         "global_sample_id": {
           "default": "",
           "description": "Global sample identifier",
-          "title": "Global Sample Id",
-          "type": "string"
+          "title": "Global Sample Id"
         },
         "library_source": {
           "default": "",
           "description": "Library source (e.g. genomic, transcriptomic)",
-          "title": "Library Source",
-          "type": "string"
+          "title": "Library Source"
         },
         "organism": {
           "default": "",
-          "title": "Organism",
-          "type": "string"
+          "title": "Organism"
         },
         "sample_name": {
           "default": "",
-          "title": "Sample Name",
-          "type": "string"
+          "title": "Sample Name"
         },
         "species_id": {
           "default": "",
-          "title": "Species Id",
-          "type": "string"
+          "title": "Species Id"
         },
         "target": {
           "default": "",
           "description": "Target of the assay (e.g. H3K4me3)",
-          "title": "Target",
-          "type": "string"
+          "title": "Target"
         },
         "tissue": {
           "default": "",
           "description": "Tissue type",
-          "title": "Tissue",
-          "type": "string"
+          "title": "Tissue"
         },
         "treatment": {
           "default": "",
           "description": "Treatment of the sample (e.g. drug treatment)",
-          "title": "Treatment",
-          "type": "string"
+          "title": "Treatment"
         }
       },
       "title": "BedPEPHub",
@@ -2128,92 +2178,76 @@
         "antibody": {
           "default": "",
           "description": "Antibody used in the assay",
-          "title": "Antibody",
-          "type": "string"
+          "title": "Antibody"
         },
         "assay": {
           "default": "",
           "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Assay",
-          "type": "string"
+          "title": "Assay"
         },
         "cell_line": {
           "default": "",
-          "title": "Cell Line",
-          "type": "string"
+          "title": "Cell Line"
         },
         "cell_type": {
           "default": "",
-          "title": "Cell Type",
-          "type": "string"
+          "title": "Cell Type"
         },
         "description": {
           "default": "",
           "description": "Description of the sample",
-          "title": "Description",
-          "type": "string"
+          "title": "Description"
         },
         "genome": {
           "default": "",
-          "title": "Genome",
-          "type": "string"
+          "title": "Genome"
         },
         "genotype": {
           "default": "",
           "description": "Genotype of the sample",
-          "title": "Genotype",
-          "type": "string"
+          "title": "Genotype"
         },
         "global_experiment_id": {
           "default": "",
           "description": "Global experiment identifier",
-          "title": "Global Experiment Id",
-          "type": "string"
+          "title": "Global Experiment Id"
         },
         "global_sample_id": {
           "default": "",
           "description": "Global sample identifier",
-          "title": "Global Sample Id",
-          "type": "string"
+          "title": "Global Sample Id"
         },
         "library_source": {
           "default": "",
           "description": "Library source (e.g. genomic, transcriptomic)",
-          "title": "Library Source",
-          "type": "string"
+          "title": "Library Source"
         },
         "organism": {
           "default": "",
-          "title": "Organism",
-          "type": "string"
+          "title": "Organism"
         },
         "sample_name": {
           "default": "",
-          "title": "Sample Name",
-          "type": "string"
+          "title": "Sample Name"
         },
         "species_id": {
           "default": "",
-          "title": "Species Id",
-          "type": "string"
+          "title": "Species Id"
         },
         "target": {
           "default": "",
           "description": "Target of the assay (e.g. H3K4me3)",
-          "title": "Target",
-          "type": "string"
+          "title": "Target"
         },
         "tissue": {
           "default": "",
           "description": "Tissue type",
-          "title": "Tissue",
-          "type": "string"
+          "title": "Tissue"
         },
         "treatment": {
           "default": "",
           "description": "Treatment of the sample (e.g. drug treatment)",
-          "title": "Treatment",
-          "type": "string"
+          "title": "Treatment"
         }
       },
       "title": "BedPEPHubRestrict",
@@ -2511,10 +2545,13 @@
           "type": "string"
         }
       },
+      "required": [
+        "file"
+      ],
       "title": "Body_embed_bed_file_v1_bed_embed_post",
       "type": "object"
     },
-    "Body_embed_bed_file_v1_bed_umap_post": {
+    "Body_umap_bed_file_v1_bed_umap_post": {
       "properties": {
         "file": {
           "format": "binary",
@@ -2522,7 +2559,23 @@
           "type": "string"
         }
       },
-      "title": "Body_embed_bed_file_v1_bed_umap_post",
+      "title": "Body_umap_bed_file_v1_bed_umap_post",
+      "type": "object"
+    },
+    "ChromLengthUploadModel": {
+      "properties": {
+        "bed_file": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Bed File",
+          "type": "object"
+        }
+      },
+      "required": [
+        "bed_file"
+      ],
+      "title": "ChromLengthUploadModel",
       "type": "object"
     },
     "ComponentVersions": {
@@ -2638,11 +2691,7 @@
     "FileModel": {
       "properties": {
         "access_methods": {
-          "items": {
-            "$ref": "#/definitions/AccessMethod"
-          },
-          "title": "Access Methods",
-          "type": "array"
+          "title": "Access Methods"
         },
         "description": {
           "title": "Description"
@@ -2692,6 +2741,13 @@
             "type": "integer"
           },
           "title": "Bed Compliance",
+          "type": "object"
+        },
+        "cell_line": {
+          "additionalProperties": {
+            "type": "integer"
+          },
+          "title": "Cell Line",
           "type": "object"
         },
         "data_format": {
@@ -2748,6 +2804,7 @@
         "file_genome",
         "file_organism",
         "file_assay",
+        "cell_line",
         "geo_status",
         "bed_comments",
         "mean_region_width",
@@ -2976,28 +3033,20 @@
       "description": "Standardized Bed file metadata",
       "properties": {
         "antibody": {
-          "default": "",
           "description": "Antibody used in the assay",
-          "title": "Antibody",
-          "type": "string"
+          "title": "Antibody"
         },
         "assay": {
-          "default": "",
           "description": "Experimental protocol (e.g. ChIP-seq)",
-          "title": "Assay",
-          "type": "string"
+          "title": "Assay"
         },
         "cell_line": {
-          "default": "",
           "description": "population of cells derived from a single cell and cultured in the lab for extended use, e.g. HeLa, HepG2, k562",
-          "title": "Cell Line",
-          "type": "string"
+          "title": "Cell Line"
         },
         "cell_type": {
-          "default": "",
           "description": "specific kind of cell with distinct characteristics found in an organism. e.g. Neurons, Hepatocytes, Adipocytes",
-          "title": "Cell Type",
-          "type": "string"
+          "title": "Cell Type"
         },
         "description": {
           "default": "",
@@ -3006,65 +3055,49 @@
         "genotype": {
           "default": "",
           "description": "Genotype of the sample",
-          "title": "Genotype",
-          "type": "string"
+          "title": "Genotype"
         },
         "global_experiment_id": {
-          "default": "",
           "description": "Global experiment identifier. e.g. GSE000",
           "title": "Global Experiment Id"
         },
         "global_sample_id": {
-          "default": "",
           "description": "Global sample identifier. e.g. GSM000",
           "title": "Global Sample Id"
         },
         "library_source": {
-          "default": "",
           "description": "Library source (e.g. genomic, transcriptomic)",
-          "title": "Library Source",
-          "type": "string"
+          "title": "Library Source"
         },
         "organism": {
           "default": "",
           "description": "Name of species. e.g. Homo sapiens.",
-          "title": "Organism",
-          "type": "string"
+          "title": "Organism"
         },
         "original_file_name": {
-          "default": "",
           "description": "Original file name",
-          "title": "Original File Name",
-          "type": "string"
+          "title": "Original File Name"
         },
         "phenotype": {
           "default": "",
           "description": "Phenotype of the sample",
-          "title": "Phenotype",
-          "type": "string"
+          "title": "Phenotype"
         },
         "species_id": {
           "default": "",
-          "title": "Species Id",
-          "type": "string"
+          "title": "Species Id"
         },
         "target": {
-          "default": "",
           "description": "Target of the assay (e.g. H3K4me3)",
-          "title": "Target",
-          "type": "string"
+          "title": "Target"
         },
         "tissue": {
-          "default": "",
           "description": "Tissue type",
-          "title": "Tissue",
-          "type": "string"
+          "title": "Tissue"
         },
         "treatment": {
-          "default": "",
           "description": "Treatment of the sample (e.g. drug treatment)",
-          "title": "Treatment",
-          "type": "string"
+          "title": "Treatment"
         }
       },
       "title": "StandardMeta",
@@ -3230,6 +3263,13 @@
     },
     "ValidationError": {
       "properties": {
+        "ctx": {
+          "title": "Context",
+          "type": "object"
+        },
+        "input": {
+          "title": "Input"
+        },
         "loc": {
           "items": {},
           "title": "Location",

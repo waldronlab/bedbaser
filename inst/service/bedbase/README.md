@@ -39,4 +39,4 @@ following endpoints:
 If `test_request` is TRUE, the request will not be counted in BEDbase
 statistics.
 
-    bash add_test_request
+    bash add_test_requests
