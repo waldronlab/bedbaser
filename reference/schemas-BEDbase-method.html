@@ -17,7 +17,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -76,13 +76,20 @@
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 168208 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 663721 BED files available.</span>
 <span class="r-in"><span><span class="fu">schemas</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $AccessMethod</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   AccessMethod(access_id, access_url, region, type)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $AccessURL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   AccessURL(headers, url)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $AnalysisFileListResult</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AnalysisFileListResult(count, results)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $AnalysisFileResult</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   AnalysisFileResult(tags, checksum, creation_date, description,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     file_path, file_size, file_type, genome, id, name)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BaseListResponse</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BaseListResponse(count, limit, offset, results)</span>
@@ -107,25 +114,14 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataAll(annotation, bed_compliance, bedsets,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     compliant_columns, data_format, description, files, genome_alias,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     genome_digest, header, id, is_universe, last_update_date,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     license_id, name, non_compliant_columns, plots, processed,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     raw_metadata, stats, submission_date, universe_metadata)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     license_id, name, non_compliant_columns, plots, processed, stats,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     submission_date, universe_metadata)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedMetadataBasic</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedMetadataBasic(annotation, bed_compliance, compliant_columns,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     data_format, description, genome_alias, genome_digest, header, id,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     is_universe, last_update_date, license_id, name,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     non_compliant_columns, processed, submission_date)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $BedPEPHub</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedPEPHub(antibody, assay, cell_line, cell_type, description, genome,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     genotype, global_experiment_id, global_sample_id, library_source,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     organism, sample_name, species_id, target, tissue, treatment)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $BedPEPHubRestrict</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedPEPHubRestrict(antibody, assay, cell_line, cell_type, description,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     genome, genotype, global_experiment_id, global_sample_id,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     library_source, organism, sample_name, species_id, target, tissue,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     treatment)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedPlots</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedPlots(chrombins, cumulative_partitions, expected_partitions,</span>
@@ -135,15 +131,21 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetBedFiles</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetBedFiles(count, results)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetDistributions</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetDistributions(chromosome_summaries, composition, gc_content,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     n_files, neighbor_distances, partitions, region_distribution,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     scalar_summaries, tss_histogram, widths_histogram)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetListResult</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetListResult(count, limit, offset, results)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetMetadata</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMetadata(author, bed_ids, description, id, last_update_date,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     md5sum, name, plots, source, statistics, submission_date, summary)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMetadata(author, bed_ids, bedfile_count, description,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     distributions, id, last_update_date, md5sum, name, plots, source,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     statistics, submission_date, summary)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetMinimal</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMinimal(description, id, name)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetMinimal(bedfile_count, description, id, name)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetPlots</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetPlots(region_commonality)</span>
@@ -151,12 +153,19 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedSetStats</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   BedSetStats(mean, sd)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $BedSnapshotListResult</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSnapshotListResult(count, results)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $BedSnapshotResult</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedSnapshotResult(checksum, creation_date, file_path, file_size,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     file_type, record_count, schema_version)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $BedStatsModel</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   BedStatsModel(exon_frequency, exon_percentage, fiveutr_frequency,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     fiveutr_percentage, gc_content, intergenic_frequency,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     intergenic_percentage, intron_frequency, intron_percentage,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     mean_region_width, median_tss_dist, number_of_regions,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     promotercore_frequency, promotercore_percentage,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   BedStatsModel(distributions, exon_frequency, exon_percentage,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     fiveutr_frequency, fiveutr_percentage, gc_content,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     intergenic_frequency, intergenic_percentage, intron_frequency,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     intron_percentage, mean_region_width, median_tss_dist,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     number_of_regions, promotercore_frequency, promotercore_percentage,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     promoterprox_frequency, promoterprox_percentage,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     threeutr_frequency, threeutr_percentage)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -169,8 +178,11 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span> $Body_embed_bed_file_v1_bed_embed_post</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Body_embed_bed_file_v1_bed_embed_post(file)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $Body_embed_bed_file_v1_bed_umap_post</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Body_embed_bed_file_v1_bed_umap_post(file)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $Body_umap_bed_file_v1_bed_umap_post</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Body_umap_bed_file_v1_bed_umap_post(file)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $ChromLengthUploadModel</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ChromLengthUploadModel(bed_file)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ComponentVersions</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ComponentVersions(bbconf_version, bedhost_version, geniml_version,</span>
@@ -191,8 +203,8 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     path, size, thumbnail_path, title)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $FileStats</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   FileStats(bed_comments, bed_compliance, data_format, file_assay,</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     file_genome, file_organism, file_size, geo, geo_status,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   FileStats(bed_comments, bed_compliance, cell_line, data_format,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     file_assay, file_genome, file_organism, file_size, geo, geo_status,</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     mean_region_width, number_of_regions)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $GEOStatistics</span>
@@ -246,7 +258,7 @@
 <span class="r-out co"><span class="r-pr">#&gt;</span>     bedset_metadata, bedset_search_terms)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $ValidationError</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ValidationError(loc, msg, type)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ValidationError(ctx, input, loc, msg, type)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
@@ -259,11 +271,11 @@
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Andres Wokaty, Levi Waldron.</p>
+  <p></p><p>Developed by Andres Wokaty, Levi Waldron, NCI.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

@@ -18,7 +18,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -86,11 +86,11 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 168208 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 663721 BED files available.</span>
 <span class="r-in"><span><span class="fu">operations</span><span class="op">(</span><span class="va">bedbase</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $lending_page__get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> lending_page__get </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Lending Page </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $landing_page__get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> landing_page__get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Landing Page </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
@@ -102,13 +102,23 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedbase_db_stats_v1_assays_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedbase_db_stats_v1_assays_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_assays_list_v1_assays_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_assays_list_v1_assays_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get available assays </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns statistics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns available assays</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $analyze_reference_genome_v1_bed_analyze_genome_post</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> analyze_reference_genome_v1_bed_analyze_genome_post </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Analyze reference genome for bed file </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Provide length of the chromosomes for a reference genome, and return</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   reference genome validation results for a bed file</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   bed_file (object)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $embed_bed_file_v1_bed_embed_post</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> embed_bed_file_v1_bed_embed_post </span>
@@ -191,8 +201,8 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $embed_bed_file_v1_bed_umap_post</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> embed_bed_file_v1_bed_umap_post </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $umap_bed_file_v1_bed_umap_post</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> umap_bed_file_v1_bed_umap_post </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get embeddings for a bed file. </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Create embedding for bed file</span>
@@ -263,18 +273,6 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bed_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>     BED digest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bed_pephub_v1_bed__bed_id__metadata_raw_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_bed_pephub_v1_bed__bed_id__metadata_raw_get </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Get raw metadata for a single BED record </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns raw metadata for a single BED record. This metadata is stored</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   in PEPHub. And is not verified.Example bed_id:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   bbad85f21962bb8d972444f7f9a3a932</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   bed_id (string)</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>     BED digest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_bed_stats_v1_bed__bed_id__metadata_stats_get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_bed_stats_v1_bed__bed_id__metadata_stats_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get stats for a single BED record </span>
@@ -297,6 +295,17 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>     BED digest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bed_og_image_v1_bed__bed_id__og_image_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_bed_og_image_v1_bed__bed_id__og_image_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Get Open Graph preview image for a BED record </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns a 1200x630 PNG card with stats for link previews. Example</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   bed_id: bbad85f21962bb8d972444f7f9a3a932</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   bed_id (string)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     BED digest</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get </span>
@@ -327,8 +336,8 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bed_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   universe_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_tokens_v1_bed__bed_id__tokens__universe_id__info_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_tokens_v1_bed__bed_id__tokens__universe_id__info_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_tokens_info_v1_bed__bed_id__tokens__universe_id__info_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_tokens_info_v1_bed__bed_id__tokens__universe_id__info_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get link to tokenized bed file </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Return link to tokenized bed file Example: bed:</span>
@@ -362,7 +371,7 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   filters and search.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   query (string)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   query ()</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
@@ -387,8 +396,8 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   full (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedset_metadata_v1_bedset__bedset_id__metadata_plots_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedset_plots_handler_v1_bedset__bedset_id__metadata_plots_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedset_plots_handler_v1_bedset__bedset_id__metadata_plots_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get plots for single bedset record </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Example bed_id: gse218680</span>
@@ -396,8 +405,8 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   bedset_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedset_metadata_v1_bedset__bedset_id__metadata_stats_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedset_stats_handler_v1_bedset__bedset_id__metadata_stats_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedset_stats_handler_v1_bedset__bedset_id__metadata_stats_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get stats for a single BEDSET record </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   Example bed_id: gse218680</span>
@@ -455,6 +464,47 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bed_exports_v1_exports_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_bed_exports_v1_exports_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Index of published bulk metadata exports (newest first) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Return the index of bulk metadata export artifacts published to S3,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   newest first. ``file_path`` is rewritten to the absolute HTTPS CDN</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   URL. Consumers should resolve the current snapshot through this</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   endpoint rather than constructing or hardcoding a filename, since</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   artifacts are dated and immutable.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Limit (1-10000), default 1000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_analysis_files_v1_files_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_analysis_files_v1_files_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Index of standalone analysis files (newest first) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Return the index of standalone analysis files (openSignalMatrix,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   models, other analysis inputs) stored in S3, newest first. These</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   files are global; they are not tied to any bed file or bedset.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``file_path`` is rewritten to the absolute HTTPS CDN URL.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   file_type ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Filter by file type</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   genome ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Filter by genome/assembly</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   tag ()</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Filter by a single tag</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   limit (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>     Limit (1-10000), default 1000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   offset (integer)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $redirect_to_download_v1_files__file_path__get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> redirect_to_download_v1_files__file_path__get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Redirect To Download </span>
@@ -463,13 +513,82 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 <span class="r-out co"><span class="r-pr">#&gt;</span>   file_path (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   test_request (boolean)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> $get_bedbase_db_stats_v1_genomes_get</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> get_bedbase_db_stats_v1_genomes_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_genomes_list_v1_genomes_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_genomes_list_v1_genomes_get </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Get available genomes </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns statistics</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Returns available genomes</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $list_export_drs_objects_v1_objects_exports_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> list_export_drs_objects_v1_objects_exports_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List published bulk-metadata exports as DRS objects (newest first) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Enumerate every published bulk-metadata export artifact as a GA4GH</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   DRS object, newest first.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   The DRS object-id of an export is its bare filename (the basename of</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   the ``bed_snapshots.file_path`` S3 key), e.g.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``bedbase_metadata_2026_08_03.parquet``. Resolve a single object at</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``GET /v1/objects/exports/{object_id}``.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_export_drs_object_metadata_v1_objects_exports__object_id__get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_export_drs_object_metadata_v1_objects_exports__object_id__get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Get DRS object metadata for a bulk-metadata export </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Return GA4GH DRS metadata for a single published bulk-metadata</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   export.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``object_id`` is the export's bare filename (the basename of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``bed_snapshots.file_path`` S3 key), e.g.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``bedbase_metadata_2026_08_03.parquet``. The id round-trips: the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   resolved ``bed_snapshots`` row is the newest whose ``file_path``</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   basename equals ``object_id``.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   object_id (string)</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $list_analysis_file_drs_objects_v1_objects_files_get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> list_analysis_file_drs_objects_v1_objects_files_get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> List standalone analysis files as DRS objects (newest first) </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Enumerate every standalone analysis file as a GA4GH DRS object,</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   newest first.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   The DRS object-id of an analysis file is its bare filename (the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   basename of the ``analysis_files.file_path`` S3 key). Resolve a</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   single object at ``GET /v1/objects/files/{object_id}``.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> $get_analysis_file_drs_object_metadata_v1_objects_files__object_id__get</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> get_analysis_file_drs_object_metadata_v1_objects_files__object_id__get </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Get DRS object metadata for a standalone analysis file </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Description:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Return GA4GH DRS metadata for a single standalone analysis file.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``object_id`` is the file's bare filename (the basename of the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ``analysis_files.file_path`` S3 key). The id round-trips: the</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   resolved ``analysis_files`` row is the newest whose ``file_path``</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   basename equals ``object_id``.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   Declared ``def`` (not ``async def``) so the blocking database query</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   runs in a threadpool instead of stalling the event loop.</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> Parameters:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   object_id (string)</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> $get_drs_object_metadata_v1_objects__object_id__get</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> get_drs_object_metadata_v1_objects__object_id__get </span>
@@ -537,11 +656,11 @@ bedhost API and their corresponding parameters."><!-- mathjax --><script src="ht
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Andres Wokaty, Levi Waldron.</p>
+  <p></p><p>Developed by Andres Wokaty, Levi Waldron, NCI.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>

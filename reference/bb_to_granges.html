@@ -21,7 +21,7 @@ column names."><!-- mathjax --><script src="https://cdnjs.cloudflare.com/ajax/li
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.2.6</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
       </span>
     </div>
 
@@ -96,40 +96,40 @@ construct GRanges objects</p></dd>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 168208 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 663721 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu"><a href="bb_example.html">bb_example</a></span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu">bb_to_granges</span><span class="op">(</span><span class="va">bedbase</span>, <span class="va">ex_bed</span><span class="op">$</span><span class="va">id</span><span class="op">)</span></span></span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'getOption("repos")' replaces Bioconductor standard repositories, see</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> 'help("repositories", package = "BiocManager")' for details.</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span> Replacement repositories:</span>
 <span class="r-msg co"><span class="r-pr">#&gt;</span>     CRAN: https://p3m.dev/cran/__linux__/noble/latest</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 70927 ranges and 5 metadata columns:</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           seqnames            ranges strand |        name     score signalValue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;Rle&gt;         &lt;IRanges&gt;  &lt;Rle&gt; | &lt;character&gt; &lt;numeric&gt;   &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]     chr1     629140-629310      * |        id-1        73          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]     chr1     629871-630319      * |        id-2      1000          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]     chr1     630455-630776      * |        id-3       142          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]     chr1     631356-631894      * |        id-4        99          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]     chr1     632296-632511      * |        id-5        76          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ...      ...               ...    ... .         ...       ...         ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70923]     chrY 21369025-21369109      * |    id-70923        16          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70924]     chrY 26670426-26670581      * |    id-70924        22          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70925]     chrY 26670669-26671652      * |    id-70925        67          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70926]     chrY 56721700-56721802      * |    id-70926        21          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70927]     chrY 56734849-56734902      * |    id-70927      1000          -1</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>              pValue    qValue</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;numeric&gt; &lt;numeric&gt;</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]        -1   7.27765</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]        -1 100.00000</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]        -1  14.18620</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]        -1   9.94867</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]        -1   7.59817</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       ...       ...       ...</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70923]        -1   1.58040</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70924]        -1   2.24428</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70925]        -1   6.67810</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70926]        -1   2.13412</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   [70927]        -1 100.00000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> GRanges object with 29104 ranges and 3 metadata columns:</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           seqnames              ranges strand |            name     score</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>              &lt;Rle&gt;           &lt;IRanges&gt;  &lt;Rle&gt; |     &lt;character&gt; &lt;numeric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]     chr1       778582-778929      * | Stringent(qval)    778797</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]     chr1       827207-827302      * |         Relaxed    827301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]     chr1       827419-827742      * | Stringent(qval)    827720</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]     chr1       904667-904855      * | Stringent(qval)    904812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]     chr1       923746-923944      * | Stringent(qval)    923922</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ...      ...                 ...    ... .             ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29100]     chrX 155216250-155216526      * | Stringent(qval) 155216459</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29101]     chrX 155612500-155612630      * |         Relaxed 155612585</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29102]     chrX 155612883-155613051      * |         Relaxed 155613039</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29103]     chrX 155767493-155767771      * |         Relaxed 155767753</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29104]     chrX 155881161-155881411      * | Stringent(qval) 155881357</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>                  V6</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>           &lt;numeric&gt;</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [1]    778612</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [2]    827207</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [3]    827505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [4]    904704</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       [5]    923747</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>       ...       ...</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29100] 155216280</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29101] 155612570</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29102] 155612942</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29103] 155767502</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   [29104] 155881197</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   -------</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   seqinfo: 711 sequences (1 circular) from hg38 genome</span>
 <span class="r-in"><span></span></span>
@@ -143,11 +143,11 @@ construct GRanges objects</p></dd>
 
 
       <footer><div class="copyright">
-  <p></p><p>Developed by Andres Wokaty, Levi Waldron.</p>
+  <p></p><p>Developed by Andres Wokaty, Levi Waldron, NCI.</p>
 </div>
 
 <div class="pkgdown">
-  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p></p><p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
       </footer></div>
