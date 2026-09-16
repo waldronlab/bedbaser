@@ -9,7 +9,7 @@
     contains = "Service"
 )
 
-.BEDBASE_API_REFERENCE_VERSION <- "0.12.7"
+.BEDBASE_API_REFERENCE_VERSION <- "0.13.0"
 
 #' @rdname BEDbase
 #'
@@ -66,7 +66,7 @@ BEDbase <- function(cache_path, quietly = FALSE) {
                 authenticate = FALSE,
                 package = "bedbaser",
                 api_url = character(),
-                api_reference_url = "https://api.bedbase.org/openapi.json",
+                api_reference_url = "https://api.bedbase.org/v1/openapi.json",
             )
         )
     )
@@ -398,19 +398,8 @@ bb_list_bedsets <- function(bedbase, query = "", limit = 1000, offset = 0) {
     )
     recs <- httr::content(rsp)
     results <- tibble::tibble()
-    by <- c(
-        "id", "name", "md5sum", "submission_date", "last_update_date",
-        "description", "author", "source"
-    )
     if (recs$count) {
-        results <- dplyr::bind_rows(recs$results) |>
-            tidyr::unnest(bed_ids) |>
-            dplyr::group_by(
-                id, name, md5sum, submission_date, last_update_date,
-                description, author, source
-            ) |>
-            tidyr::nest(.key = "bed_ids") |>
-            dplyr::relocate(bed_ids, .before = "author")
+        results <- dplyr::bind_rows(recs$results)
     }
     results
 }
