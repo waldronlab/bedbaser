@@ -58,23 +58,21 @@ test_that("bb_list_bedsets returns same number for query 'alzheimer'", {
         limit = 5000,
         test_request = .is_test_request()
     ))
-    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
-    bedsets_from_raw <- dplyr::bind_rows(bedsets_names_bed_ids_list) |>
-        tidyr::unnest(cols = c(bed_ids))
+    bedsets_names_ids_list <- lapply(bedsets_raw$results, `[`, c("id"))
+    bedsets_from_raw <- dplyr::bind_rows(bedsets_names_ids_list)
     bedset_ids <- bedsets_from_raw$id |> unique()
     bedsets <- bb_list_bedsets(bedbase, query = "alzheimer", limit = 5000)
     expect_equal(bedset_ids, bedsets$id)
 })
 
-test_that("bb_list_bedsets returns limited number of bed ids", {
+test_that("bb_list_bedsets returns limited number of ids", {
     bedsets_raw <- httr::content(bedbase$list_bedsets_v1_bedset_list_get(
         query = "",
         limit = 1,
         test_request = .is_test_request()
     ))
-    bedsets_names_bed_ids_list <- lapply(bedsets_raw$results, `[`, c("id", "bed_ids"))
-    bedsets_from_raw <- dplyr::bind_rows(bedsets_names_bed_ids_list) |>
-        tidyr::unnest(cols = c(bed_ids))
+    bedsets_names_id_list <- lapply(bedsets_raw$results, `[`, c("id"))
+    bedsets_from_raw <- dplyr::bind_rows(bedsets_names_id_list)
     bedset_ids <- bedsets_from_raw$id |> unique()
     bedsets <- bb_list_bedsets(bedbase, query = "", limit = 1)
     expect_equal(bedset_ids, bedsets$id)
