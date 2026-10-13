@@ -1,6 +1,6 @@
 Package: bedbaser
 Title: A BEDbase client
-Version: 1.5.1
+Version: 1.5.2
 Authors@R: c(
     person("Andres", "Wokaty", , "andres.wokaty@sph.cuny.edu", role = c("aut", "cre"),
            comment = c(ORCID = "0009-0008-0900-8793")),
