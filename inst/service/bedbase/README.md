@@ -17,7 +17,7 @@ Install OpenAPI Down Convert and api-spec-converter with `npm`:
 
 Download openapi.json from https://api.bedbase.org:
 
-    curl -L -O https://api.bedbase.org/openapi.json
+    curl -L -O https://api.bedbase.org/v1/openapi.json
     
 Convert openapi.json from OpenAPI 3.1 to 3.0:
 
