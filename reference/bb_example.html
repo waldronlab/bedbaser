@@ -19,7 +19,7 @@ of bedbaser with an example BED file and BEDset in BEDbase."><!-- mathjax --><sc
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">bedbaser</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.1</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="">1.4.2</span>
       </span>
     </div>
 
@@ -129,17 +129,17 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bedset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse143444"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse143444"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "b4cafb76881d37557188ed9a94dadec8"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-06-01T23:17:43.912215Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-06-01T23:17:43.912220Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse182013"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse182013"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "4683d9158ce21837dbcb8463d966b97f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-05-25T00:47:56.482820Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-05-25T00:47:56.482824Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ statistics      :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ mean:List of 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 605</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 106960</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 121</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 1092</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
@@ -156,10 +156,10 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ distributions          : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ sd  :List of 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 1114</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 13207</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 62.9</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 184</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
@@ -178,20 +178,20 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ distributions   : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots           :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ region_commonality: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE143444](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE143444)\nTargets of transduced "| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE182013](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE182013)\nPluripotency-Independe"| __truncated__</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ summary         : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "2196877e3a0ae4deee82288530545535"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "3164fb3bc9ccb4707eb012225684f9ae"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "4123d5de02b0052bd934e3953a1a5975"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "821e841251afde3af98ef04d23e047d0"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "9066f777adc47ac421b0e7bd67348781"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "b3cd288704999014f3d315608b69917d"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "d9011cf99007037dcbd934ffbbc399bb"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "f51e115f3bd20678510963970d0806cd"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "359c060d1a511742ccd43ec7d18b5ebf"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "40f605c04e7cfe8c8d9e980908252079"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "5acacc3004d5cbf51bf09385cf194566"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "65948451a09c27bbef1ec3bd8751da24"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "8ee9a3f1f021822ef8840e7fb27d8291"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "91ec7a09d6c6ef1ac703d58dc66ab08b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "a9c75381c2b62ae719c37cebb5a6f765"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "efcb48efaeee58037914c8b6d3b5db21"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ bedfile_count   : int 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "Atsushi, Suzuki"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse143444"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "Yosef, Buganim"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse182013"</span>
 </code></pre></div>
     </div>
   </div>
