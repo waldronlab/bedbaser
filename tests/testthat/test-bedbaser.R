@@ -186,3 +186,8 @@ test_that("bb_save saves bed files to a path", {
         expect_true(file.exists(file.path(path, paste0(id, ".bed.gz"))))
     }
 })
+
+test_that("show prints a summary", {
+    expect_output(show(bedbase), "BEDbase client")
+    expect_output(show(bedbase), "api.bedbase.org")
+})
