@@ -7,7 +7,7 @@
 \alias{setCache}
 \title{An R client for BEDbase}
 \usage{
-BEDbase(cache_path, quietly = FALSE)
+BEDbase(cache_path, quietly = FALSE, host = "api.bedbase.org")
 
 \S4method{show}{BEDbase}(object)
 
@@ -20,7 +20,9 @@ setCache(x, cache_path, quietly = TRUE)
 
 \item{quietly}{logical(1) (default \code{TRUE}) display messages}
 
-\item{object}{BEDbase() object}
+\item{host}{character(1) (default \code{"api.bedbase.org"}) API host,
+e.g., a development or test server. Prefix with \code{http://} for a
+server without TLS.}
 
 \item{x}{BEDbase() object}
 

@@ -40,6 +40,9 @@
 #'
 #' @param cache_path character(1) cache
 #' @param quietly logical(1) (default \code{FALSE}) display messages
+#' @param host character(1) (default \code{"api.bedbase.org"}) API host,
+#' e.g., a development or test server. Prefix with \code{http://} for a
+#' server without TLS.
 #'
 #' @return BEDbase object
 #'
@@ -49,7 +52,10 @@
 #' bb_metadata(bedbase, ex_bed$id)
 #'
 #' @export
-BEDbase <- function(cache_path, quietly = FALSE) {
+BEDbase <- function(cache_path, quietly = FALSE, host = "api.bedbase.org") {
+    stopifnot(is.character(host), length(host) == 1L, nzchar(host))
+    scheme <- if (startsWith(host, "http://")) "http" else "https"
+    host <- sub("^https?://", "", host)
     if (missing(cache_path)) {
         cache_path <- tools::R_user_dir("bedbaser", which = "cache")
     }
@@ -61,12 +67,13 @@ BEDbase <- function(cache_path, quietly = FALSE) {
             bedsets = BiocFileCache::BiocFileCache(bedsets_path, ask = FALSE),
             AnVIL::Service(
                 service = "bedbase",
-                host = "api.bedbase.org",
+                host = host,
                 api_reference_version = .BEDBASE_API_REFERENCE_VERSION,
                 authenticate = FALSE,
                 package = "bedbaser",
                 api_url = character(),
-                api_reference_url = "https://api.bedbase.org/v1/openapi.json",
+                schemes = scheme,
+                api_reference_url = paste0(scheme, "://", host, "/v1/openapi.json")
             )
         )
     )
