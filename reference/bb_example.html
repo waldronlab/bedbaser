@@ -83,7 +83,7 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
     <div id="ref-examples">
     <h2>Examples</h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-msg co"><span class="r-pr">#&gt;</span> 663721 BED files available.</span>
+<span class="r-msg co"><span class="r-pr">#&gt;</span> 665778 BED files available.</span>
 <span class="r-in"><span><span class="va">ex_bed</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bed"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bed</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 21</span>
@@ -129,69 +129,161 @@ of bedbaser with an example BED file and BEDset in BEDbase.</p>
 <span class="r-in"><span><span class="va">ex_bedset</span> <span class="op">&lt;-</span> <span class="fu">bb_example</span><span class="op">(</span><span class="va">bedbase</span>, <span class="st">"bedset"</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="fu"><a href="https://rdrr.io/r/utils/str.html" class="external-link">str</a></span><span class="op">(</span><span class="va">ex_bedset</span><span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> List of 14</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "gse182013"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "gse182013"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "4683d9158ce21837dbcb8463d966b97f"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-05-25T00:47:56.482820Z"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-05-25T00:47:56.482824Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ id              : chr "encode_batch_1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ name            : chr "encode_batch_1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ md5sum          : chr "462eaea7176647244639b3c991b2a315"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ submission_date : chr "2025-04-25T01:45:58.252912Z"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ last_update_date: chr "2025-04-25T01:45:58.252916Z"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ statistics      :List of 2</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ mean:List of 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 106960</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 1092</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 147624</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.505</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 33829</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 352</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 7287</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 0.0491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 61340</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 0.354</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.344</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 58875</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 4825</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 0.0798</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 5052</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.0947</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 5509</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 0.0358</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 4736</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 0.0418</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ distributions          : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ sd  :List of 19</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 13207</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 184</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ number_of_regions      : num 131857</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ gc_content             : num 0.0671</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ median_tss_dist        : num 29802</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ mean_region_width      : num 247</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_frequency         : num 7941</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ exon_percentage        : num 0.0269</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_frequency       : num 59158</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intron_percentage      : num 0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_percentage  : num 0.132</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ intergenic_frequency   : num 58988</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_frequency : num 3475</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promotercore_percentage: num 0.0895</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_frequency      : num 3235</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ fiveutr_percentage     : num 0.147</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_frequency     : num 6369</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ threeutr_percentage    : num 0.0241</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_frequency : num 4000</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ promoterprox_percentage: num 0.026</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   .. ..$ distributions          : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ distributions   : NULL</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ plots           :List of 1</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ region_commonality: NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Data from [GEO GSE182013](https://www.ncbi.nlm.nih.gov/geo/query/acc.cgi?acc=GSE182013)\nPluripotency-Independe"| __truncated__</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ description     : chr "Encode project for hg38 genome filtered on files size &lt; 20 mb"</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>  $ summary         : NULL</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "359c060d1a511742ccd43ec7d18b5ebf"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "40f605c04e7cfe8c8d9e980908252079"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "5acacc3004d5cbf51bf09385cf194566"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "65948451a09c27bbef1ec3bd8751da24"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "8ee9a3f1f021822ef8840e7fb27d8291"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "91ec7a09d6c6ef1ac703d58dc66ab08b"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "a9c75381c2b62ae719c37cebb5a6f765"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "efcb48efaeee58037914c8b6d3b5db21"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bedfile_count   : int 8</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : chr "Yosef, Buganim"</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : chr "gse182013"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bed_ids         :List of 994</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "000f4769cb6875314ea496302f8b0116"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "004749fdf8933f6de8399fa1f2ae3bcb"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "004bc471a80de4aaefe7c5d848491da5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0065059bb8c3d1e3c842cb67aca480b7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "007603c2bc504cc08b013530d81bb39b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0089ba0766bb475bef45cc0325c8471a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "009c9b4d82765bd487eb3a28713d62e2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "00cf0a376a51298f66d7e49fd7b56d62"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "00db6e5b06c8fde0faebb7b361c2a8fe"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "00e15bf26ead13933e83ef3124b6b4b4"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "010cc74377b4f381078affbc726360df"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "010fbbf4aa5bfdb07ba2bfd9265ee1cf"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "011e13c165d768480e152716f678bf12"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "018cfa2c47249f966c1cf0a8145aa6b2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "01b391da54e2a9ffe723de432b7d53dd"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "01d49bf4ee24dac74f81015fe57ce34c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "01f37848395d17f08a3fceef18ee6f5d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "025632a0aad9b01543f6415c471995bd"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0316154c3ad1e49506aefbecfad80922"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0346740a76ba8f28efb99fa284ff92fc"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0346ea63de762b852f16cf312db5c8db"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "034a76460b5e111b73978aab17b4913d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0373dabcc9d4f422814add26faa6822a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "037bd8e2c9d0c82cea0389d5b163ce34"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "03effe9100b67896e826a2051091eb1c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0432a954dbf060387eb7fa6997ce322f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "04aa524ee65b59408b057dafee1e7c53"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "04add9757b6bd272e3db56deb6779882"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "04f7f0768d763ddc4b70757b80251a70"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "04f9af9930577865775a6d49331828ab"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "053d6f31429e1ebbe7c243a5f321b119"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "054279c87e07890bb15a9462fceb7672"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "055b118d342902fdb2d340940e2fbcd8"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "057bcd00a0c85a8a4a5693bed2754dea"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "059151bdf0c3580b2f533e65f434acff"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "05a56337d9ea39e542468294b95efeac"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "05e9657e1c8f5657f52fcb2e14f1a834"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "067613bf1f99f296b67978cf50882975"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "068998436ac80518e6a633dfcfb098df"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "06dc4b5281b3653c2fa3cf918a5af787"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "06ea933c8ea33e97e84782c350c84235"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "073ed8df4352a8b7f45cd0956c3dcda9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0774b0a67de3e3d49ed55a9d7dc7fcf6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "07816a5bf20dc754f1e18bcdb5dec6ec"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "07a773aefadf4c2528ea945e1a58b2dd"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "07dfbc9f730333a1dfd5425ac9c6c775"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0831c46bfd934745d5a1cceb06f201b8"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "087bda10709bff52aff6b2d33feee75f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "08e816aee75ae181fdd04fda5d4e59e1"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "08ec2b2ed890795b6ae193df5ac093fa"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "090e819f95f28fd218d712f6ccc3cb2a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "09309155aa1fedc2c486592afc0ae35e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "096d920bb3db0fe348fe1f86c9d881a4"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "099297708b5203a4552a326438dd0a32"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "09f45c3dd98ccfe7dd4605475b1fd5aa"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0a2e57e7cf76d3eec0b33077c927f2f6"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0a51645ef3a24ba8cbea3ec43adf7b2a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0a96793ce91b7aaddc3618c74ddb4359"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0ac99158ab5a2983cb9ced7cb58f6712"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0ae33233043e705bb141b70b4c4b88aa"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0b85b43047b6d876a8994e99151b83ae"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0bb1f9da4e4586d8f4c416e6f73b4fc2"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0c23e990b2e146004cbf4584c97e99c3"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0c566454f35ee39c0adec7146af9a510"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0ca628a095a1607149e9e19c2e8cd90d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0caeb7f90602a6e331d5e7ca328f0c96"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0cded12d0618d0454837aee383e1cd69"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0d033d245b38a27a128495521800043d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0da67b9ea1c2d4c9bafe05d9ebd040ac"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0e03fa0d5a4d2d94ddd9c5af8e490220"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0e8b5813fdf5b406bc873ace022f023d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0eae82771627a0212f1557a69d594288"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0eb4cf8dadb0db5cecb1c8475be99fe9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0ec52382b31f94e479024b5f5c29ba87"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0ef2957a32cfb0aaa78dd0ac6a53170b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0efe5691e23c8c90eab2823902b8c228"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0f48a8559f47ed628e88dfdf72483d29"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0f5d1e8a1d0ef5dfadc65e15845bfd7a"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0f7ae2a396a3a0a74511ac466fce24b9"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0f80de6688f65d05dee3562c0c3561ad"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0f8d5d0c659a820b3fe3142d77ab4067"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "0fb5ec8bd98dc2b0e89d74f9c768ef7f"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "10145a8813b39dd69e0af7c7efede836"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "102bfd56f57fe278f82b33853028413b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1114b74ba44305960b9a5e5479a2ec0d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "112228491e00d5944e44ba66e2b75a17"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1123a065483eb1a4417a41c6bae9b7c0"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "114deae9598ef8f2bd3e3da7fddf4a5c"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1177e84293d19b7634e2bd369b91901d"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "11a8d774d24e4893c18965fe2b66f1ed"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "11b8862a94595b889ddf710a6063af1e"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "11faca2afe4f4d85b72bb345b0dd3359"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "12018363b3589c26d3c438d5384a0440"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "120e717dd0a86d3f002ad401a000acc7"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "122d7a5f0d61727c9573b7d557889587"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "126d5e7e0651d8da3590bab21fbdf082"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1271a20deffd80c509f06b2af96aa4f5"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "12ed7f81370576c2d65a389a4992f39b"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   ..$ : chr "1310bba871be999e04172411d696dbaf"</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   .. [list output truncated]</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ bedfile_count   : int 994</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ author          : NULL</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>  $ source          : NULL</span>
 </code></pre></div>
     </div>
   </div>

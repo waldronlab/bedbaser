@@ -110,7 +110,7 @@ will choose the default location.</p>
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/waldronlab/bedbaser" class="external-link">bedbaser</a></span><span class="op">)</span></span>
 <span></span>
 <span><span class="va">bedbase</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/BEDbase.html">BEDbase</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/tempfile.html" class="external-link">tempdir</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<pre><code><span><span class="co">## 663721 BED files available.</span></span></code></pre>
+<pre><code><span><span class="co">## 665778 BED files available.</span></span></code></pre>
 <p><em><a href="https://bioconductor.org/packages/3.23/bedbaser" class="external-link">bedbaser</a></em>
 can use the same cache as <a href="https://docs.bedbase.org/geniml/" class="external-link">geniml</a>’s BBClient by setting
 the <code>cache_path</code> to the same location. It will create the
@@ -170,16 +170,16 @@ resource.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 1,000 × 9</span></span></span>
 <span><span class="co">##    id    name  md5sum submission_date last_update_date description bedfile_count</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> gse1… gse1… 10962… 2025-05-28T18:… 2025-05-28T18:1… <span style="color: #949494;">"</span>Data from…            14</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> gse1… gse1… 27567… 2025-05-28T18:… 2025-05-28T18:2… <span style="color: #949494;">"</span>Data from…             4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> gse2… gse2… 41fe2… 2025-05-29T01:… 2025-05-29T01:3… <span style="color: #949494;">"</span>Data from…             4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> gse1… gse1… 994e2… 2025-05-29T03:… 2025-05-29T03:0… <span style="color: #949494;">"</span>Data from…             9</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> gse2… gse2… dd1ef… 2025-05-28T18:… 2025-05-28T18:1… <span style="color: #949494;">"</span>Data from…             6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> gse2… gse2… 331cc… 2025-05-28T18:… 2025-05-28T18:2… <span style="color: #949494;">"</span>Data from…             6</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> gse2… gse2… 91635… 2026-02-09T18:… 2026-02-09T18:4… <span style="color: #949494;">"</span>Data from…             8</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> gse2… gse2… f6fa6… 2026-02-09T18:… 2026-02-09T18:5… <span style="color: #949494;">"</span>Data from…             8</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> gse1… gse1… 69874… 2025-05-28T18:… 2025-05-28T18:1… <span style="color: #949494;">"</span>Data from…             4</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;">10</span> gse2… gse2… 0ff5d… 2026-02-07T10:… 2026-02-07T10:0… <span style="color: #949494;">"</span>Data from…             6</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> enco… enco… 462ea… 2025-04-25T01:… 2025-04-25T01:4… <span style="color: #949494;">"</span>Encode pr…           994</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> enco… enco… f6f15… 2025-04-24T23:… 2025-04-24T23:3… <span style="color: #949494;">"</span>Encode pr…           997</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> enco… enco… cf9f5… 2025-04-27T03:… 2025-04-27T03:1… <span style="color: #949494;">"</span>Encode pr…          <span style="text-decoration: underline;">1</span>989</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> enco… enco… 50cba… 2025-04-30T05:… 2025-04-30T05:3… <span style="color: #949494;">"</span>Encode pr…          <span style="text-decoration: underline;">1</span>985</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> enco… enco… 6054b… 2025-04-28T22:… 2025-04-28T22:2… <span style="color: #949494;">"</span>Encode pr…          <span style="text-decoration: underline;">1</span>980</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> enco… enco… 59f42… 2025-04-29T06:… 2025-04-29T06:2… <span style="color: #949494;">"</span>Encode pr…          <span style="text-decoration: underline;">1</span>985</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 7</span> enco… enco… 1cd93… 2025-05-02T20:… 2025-05-02T20:5… <span style="color: #949494;">"</span>Encode pr…          <span style="text-decoration: underline;">3</span>592</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 8</span> enco… enco… 5474e… 2026-04-11T14:… 2026-04-11T14:4… <span style="color: #949494;">"</span>All encod…         <span style="text-decoration: underline;">35</span>707</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 9</span> enco… enco… 6794e… 2026-04-11T15:… 2026-04-11T15:2… <span style="color: #949494;">"</span>All encod…         <span style="text-decoration: underline;">32</span>844</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;">10</span> enco… enco… e6af8… 2026-04-11T10:… 2026-04-11T10:4… <span style="color: #949494;">"</span>All encod…         <span style="text-decoration: underline;">34</span>244</span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 990 more rows</span></span></span>
 <span><span class="co">## <span style="color: #949494;"># ℹ 2 more variables: author &lt;chr&gt;, source &lt;chr&gt;</span></span></span></code></pre>
 </div>
@@ -248,12 +248,12 @@ returns all BED files scored against a keyword query.</p>
 <pre><code><span><span class="co">## <span style="color: #949494;"># A tibble: 10 × 43</span></span></span>
 <span><span class="co">##    id              payload.id payload.name payload.description payload.cell_line</span></span>
 <span><span class="co">##    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> c1ec0ee9b824b3… c1ec0ee9b… VCaP_H3K4me… <span style="color: #949494;">"</span>Chromatin IP agai… <span style="color: #949494;">"</span>Vertebral Cance…</span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> f0f66be64b879d… f0f66be64… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 6247ec77ee9a4f… 6247ec77e… PAX 139      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> 0815d601135466… 0815d6011… PAX 217      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
-<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> d1d29207cdb6a6… d1d29207c… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 1</span> f0f66be64b879d… f0f66be64… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 2</span> c1ec0ee9b824b3… c1ec0ee9b… VCaP_H3K4me… <span style="color: #949494;">"</span>Chromatin IP agai… <span style="color: #949494;">"</span>Vertebral Cance…</span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 3</span> 6247ec77ee9a4f… 6247ec77e… PAX 139      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 4</span> 5fbba3a301e929… 5fbba3a30… WT_T47D_HiC  <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>T47D-MTVL<span style="color: #949494;">"</span>      </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 5</span> d1d29207cdb6a6… d1d29207c… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
+<span><span class="co">## <span style="color: #BCBCBC;"> 6</span> 0815d601135466… 0815d6011… PAX 217      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 7</span> 4e870164bcc0a4… 4e870164b… HeLa_1k_1D_… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>HeLa<span style="color: #949494;">"</span>           </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 8</span> 6a508f798160d9… 6a508f798… PAX 265      <span style="color: #949494;">""</span>                  <span style="color: #949494;">""</span>               </span></span>
 <span><span class="co">## <span style="color: #BCBCBC;"> 9</span> 57291034c3664d… 57291034c… 786-O H3K27… <span style="color: #949494;">""</span>                  <span style="color: #949494;">"</span>786-O<span style="color: #949494;">"</span>          </span></span>
@@ -661,8 +661,8 @@ for the GRanges object.</p>
 <span><span class="co">##   [7] vctrs_0.7.3                 memoise_2.0.1              </span></span>
 <span><span class="co">##   [9] Rsamtools_2.28.0            RCurl_1.98-1.20            </span></span>
 <span><span class="co">##  [11] htmltools_0.5.9             S4Arrays_1.12.1            </span></span>
-<span><span class="co">##  [13] BiocBaseUtils_1.14.2        lambda.r_1.2.4             </span></span>
-<span><span class="co">##  [15] curl_8.0.0                  SparseArray_1.12.3         </span></span>
+<span><span class="co">##  [13] BiocBaseUtils_1.14.2        lambda.r_1.2.6             </span></span>
+<span><span class="co">##  [15] curl_8.1.0                  SparseArray_1.12.3         </span></span>
 <span><span class="co">##  [17] sass_0.4.10                 bslib_0.12.0               </span></span>
 <span><span class="co">##  [19] htmlwidgets_1.6.4           keyring_1.4.1              </span></span>
 <span><span class="co">##  [21] desc_1.4.3                  httr2_1.3.0                </span></span>
@@ -693,7 +693,7 @@ for the GRanges object.</p>
 <span><span class="co">##  [71] miniUI_0.1.2                knitr_1.52                 </span></span>
 <span><span class="co">##  [73] bookdown_0.48               SummarizedExperiment_1.42.0</span></span>
 <span><span class="co">##  [75] snpStats_1.62.0             futile.logger_1.4.9        </span></span>
-<span><span class="co">##  [77] xfun_0.61                   matrixStats_1.5.0          </span></span>
+<span><span class="co">##  [77] xfun_0.62                   matrixStats_1.5.0          </span></span>
 <span><span class="co">##  [79] DT_0.34.0                   stringi_1.8.9              </span></span>
 <span><span class="co">##  [81] UCSC.utils_1.8.0            yaml_2.3.12                </span></span>
 <span><span class="co">##  [83] evaluate_1.0.5              codetools_0.2-20           </span></span>
