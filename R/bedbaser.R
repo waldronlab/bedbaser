@@ -81,6 +81,24 @@ BEDbase <- function(cache_path, quietly = FALSE) {
 
 #' @rdname BEDbase
 #'
+#' @param object BEDbase() object
+#'
+#' @importFrom methods show
+#' @export
+setMethod("show", "BEDbase", function(object) {
+    cat(
+        "BEDbase client\n",
+        "  host: ", object@host, "\n",
+        "  API spec version: ", object@api$info$version, "\n",
+        "  cache: ", dirname(BiocFileCache::bfccache(object@bedfiles)), "\n",
+        "See ?BEDbase for the bb_* functions, or use ",
+        "<object>$<tab> for API endpoints.\n",
+        sep = ""
+    )
+})
+
+#' @rdname BEDbase
+#'
 #' @param x BEDbase() object
 #' @param cache_type character(1) bedfiles or bedsets
 #'

@@ -2,11 +2,14 @@
 % Please edit documentation in R/bedbaser.R
 \name{BEDbase}
 \alias{BEDbase}
+\alias{show,BEDbase-method}
 \alias{getCache}
 \alias{setCache}
 \title{An R client for BEDbase}
 \usage{
 BEDbase(cache_path, quietly = FALSE)
+
+\S4method{show}{BEDbase}(object)
 
 getCache(x, cache_type = c("bedfiles", "bedsets"))
 
@@ -16,6 +19,8 @@ setCache(x, cache_path, quietly = TRUE)
 \item{cache_path}{character(1)}
 
 \item{quietly}{logical(1) (default \code{TRUE}) display messages}
+
+\item{object}{BEDbase() object}
 
 \item{x}{BEDbase() object}
 
