@@ -40,3 +40,8 @@ If `test_request` is TRUE, the request will not be counted in BEDbase
 statistics.
 
     bash add_test_requests
+
+Duplicate `head` operations must also be removed to ensure rapiclient
+uses the correct operation:
+
+    bash remove_duplicate_heads
