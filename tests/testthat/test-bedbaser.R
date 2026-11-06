@@ -191,3 +191,10 @@ test_that("show prints a summary", {
     expect_output(show(bedbase), "BEDbase client")
     expect_output(show(bedbase), "api.bedbase.org")
 })
+
+test_that("BEDbase host argument is used", {
+    expect_equal(bedbase@host, "api.bedbase.org")
+    with_scheme <- BEDbase(tempdir(), quietly = TRUE, host = "https://api.bedbase.org")
+    expect_equal(with_scheme@host, "api.bedbase.org")
+    expect_error(BEDbase(tempdir(), quietly = TRUE, host = ""))
+})
