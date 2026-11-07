@@ -9,7 +9,8 @@ bb_list_beds(
   genome = NULL,
   bed_compliance = NULL,
   limit = 1000,
-  offset = 0
+  offset = 0,
+  after = NULL
 )
 }
 \arguments{
@@ -22,7 +23,11 @@ e.g., 'bed6+4'}
 
 \item{limit}{integer(1) (default \code{1000}) maximum records}
 
-\item{offset}{integer(1) (default \code{0}) page token of records}
+\item{offset}{integer(1) (default \code{0}) page token of records, at most
+10000}
+
+\item{after}{character(1) (default \code{NULL}) id of the last record on
+the previous page}
 }
 \value{
 \link[tibble:tibble]{tibble} of BED records
@@ -32,8 +37,15 @@ List BED files available through
 \href{https://api.bedbase.org}{bedhost}. By default uses the bedhost default
 of 1000 records and an initial offset of 0.
 }
+\details{
+Pages can be requested with \code{offset} or \code{after}. bedhost limits
+\code{offset} to 10000. To page further, pass the id of the last record on the
+previous page as \code{after}; bedhost then returns the records with a greater
+id, ordered by id. bedhost ignores \code{offset} when \code{after} is set.
+}
 \examples{
 bedbase <- BEDbase()
-bb_list_beds(bedbase)
+beds <- bb_list_beds(bedbase, limit = 10)
+bb_list_beds(bedbase, limit = 10, after = beds$id[nrow(beds)])
 
 }
