@@ -1,0 +1,17 @@
+# requires jq
+# run with
+# bash remove_duplicate_heads
+#
+# Remove HEAD operations that reuse the operationId of the GET operation on
+# the same path. rapiclient names functions by operationId, so duplicates
+# make bedbase$<operationId>() depend on the order of operations in the file.
+# HEAD operations with their own operationId are kept.
+
+jq --indent 2 '
+  .paths |= map_values(
+    if (.get and .head and .head.operationId == .get.operationId)
+    then del(.head)
+    else .
+    end
+  )
+' api.yaml > tmp.yaml && mv tmp.yaml api.yaml

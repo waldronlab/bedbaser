@@ -3,11 +3,25 @@
   "info": {
     "description": "BED file/sets statistics and image server API",
     "title": "bedhost",
-    "version": "0.13.0"
+    "version": "0.15.0"
   },
   "paths": {
     "/": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          }
+        },
+        "operationId": "landing_page__get",
+        "summary": "Landing Page"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -40,10 +54,48 @@
         "description": "Display the index UI page",
         "operationId": "index_v1_get",
         "summary": "API intro page"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          }
+        },
+        "tags": [
+          "home"
+        ],
+        "description": "Display the index UI page",
+        "operationId": "index_v1_get",
+        "summary": "API intro page"
       }
     },
     "/v1/assays": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BaseListResponse"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns available assays",
+        "operationId": "get_assays_list_v1_assays_get",
+        "summary": "Get available assays"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -167,6 +219,26 @@
         "description": "Get metadata for an example BED record.",
         "operationId": "get_example_bed_record_v1_bed_example_get",
         "summary": "Get example BED record metadata"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedMetadataAll"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Get metadata for an example BED record.",
+        "operationId": "get_example_bed_record_v1_bed_example_get",
+        "summary": "Get example BED record metadata"
       }
     },
     "/v1/bed/list": {
@@ -187,10 +259,19 @@
           },
           {
             "default": 0,
+            "description": "Offset (0-10000), default 0. Offset paging gets slower the deeper you go, so it is capped. To go further, use after=<last id> or download the bulk snapshot from /v1/exports.",
             "in": "query",
+            "maximum": 10000,
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
+          },
+          {
+            "description": "Return records with id greater than this. Keyset paging; ignores offset. Pass the last id of the previous page to get the next one.",
+            "in": "query",
+            "name": "after",
+            "required": false
           },
           {
             "description": "filter by genome of the bed file. e.g. 'hg38'",
@@ -224,13 +305,113 @@
         "tags": [
           "bed"
         ],
-        "description": "Returns list of BED files in the database with optional filters.",
+        "description": "To enumerate everything, page with `after=<last id>` or download the\nmonthly Parquet snapshot from `/v1/exports`.\n\nReturns list of BED files in the database with optional filters. Results\nare ordered by id. `count` (the total number of matching records) is only\nfilled in on the first page (`offset=0` and no `after`); it is `null` on\nevery other page.",
+        "operationId": "list_beds_v1_bed_list_get",
+        "summary": "Paged list of all BED records"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (0-10000), default 0. Offset paging gets slower the deeper you go, so it is capped. To go further, use after=<last id> or download the bulk snapshot from /v1/exports.",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "description": "Return records with id greater than this. Keyset paging; ignores offset. Pass the last id of the previous page to get the next one.",
+            "in": "query",
+            "name": "after",
+            "required": false
+          },
+          {
+            "description": "filter by genome of the bed file. e.g. 'hg38'",
+            "in": "query",
+            "name": "genome",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "description": "filter by bed type. e.g. 'bed6+4'",
+            "in": "query",
+            "name": "bed_compliance",
+            "required": false,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "To enumerate everything, page with `after=<last id>` or download the\nmonthly Parquet snapshot from `/v1/exports`.\n\nReturns list of BED files in the database with optional filters. Results\nare ordered by id. `count` (the total number of matching records) is only\nfilled in on the first page (`offset=0` and no `after`); it is `null` on\nevery other page.",
         "operationId": "list_beds_v1_bed_list_get",
         "summary": "Paged list of all BED records"
       }
     },
     "/v1/bed/missing_plots": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "plot_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BaseListResponse"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Get missing plots for a bed file\n\nexample ->  plot_id: gccontent",
+        "operationId": "missing_plots_v1_bed_missing_plots_get",
+        "summary": "Get missing plots for a bed file."
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -275,14 +456,19 @@
         "parameters": [
           {
             "default": 10,
+            "description": "Limit (1-100), default 10",
             "in": "query",
+            "maximum": 100,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -291,6 +477,7 @@
             "format": "binary",
             "in": "formData",
             "name": "file",
+            "required": true,
             "type": "string"
           }
         ],
@@ -340,14 +527,81 @@
           },
           {
             "default": 10,
+            "description": "Limit (1-100), default 10",
             "in": "query",
+            "maximum": 100,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListSearchResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed",
+          "search"
+        ],
+        "operationId": "exact_search_v1_bed_search_exact_get",
+        "summary": "Search for exact match of metadata in bed files"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "genome",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "assay",
+            "required": false
+          },
+          {
+            "default": 10,
+            "description": "Limit (1-100), default 10",
+            "in": "query",
+            "maximum": 100,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -399,14 +653,19 @@
           },
           {
             "default": 10,
+            "description": "Limit (1-100), default 10",
             "in": "query",
+            "maximum": 100,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -417,6 +676,69 @@
             "name": "test_request",
             "required": false,
             "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListSearchResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed",
+          "search"
+        ],
+        "description": "Search for a BedFile by a text query.\n\nBy default, it searches in the 'hg38' genome. To search in a different genome, specify the `genome` parameter. eg. mm10\nExample: query=\"cancer\"",
+        "operationId": "text_to_bed_search_v1_bed_search_text_get",
+        "summary": "Search for a BedFile"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "genome",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "assay",
+            "required": false
+          },
+          {
+            "default": 10,
+            "description": "Limit (1-100), default 10",
+            "in": "query",
+            "maximum": 100,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
           }
         ],
         "responses": {
@@ -455,6 +777,7 @@
             "format": "binary",
             "in": "formData",
             "name": "file",
+            "required": true,
             "type": "string"
           }
         ],
@@ -479,9 +802,9 @@
         "tags": [
           "bed"
         ],
-        "description": "Create embedding for bed file",
+        "description": "Compute UMAP coordinates for bed file",
         "operationId": "umap_bed_file_v1_bed_umap_post",
-        "summary": "Get embeddings for a bed file."
+        "summary": "Get UMAP coordinates for a bed file."
       }
     },
     "/v1/bed/{bed_id}/embedding": {
@@ -521,10 +844,80 @@
         "description": "Returns embeddings for a single BED record.",
         "operationId": "get_bed_embedding_v1_bed__bed_id__embedding_get",
         "summary": "Get embeddings for a single BED record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedEmbeddingResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns embeddings for a single BED record.",
+        "operationId": "get_bed_embedding_v1_bed__bed_id__embedding_get",
+        "summary": "Get embeddings for a single BED record"
       }
     },
     "/v1/bed/{bed_id}/genome-stats": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bed_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/RefGenValidReturnModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Return reference genome validation results for a bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302",
+        "operationId": "get_ref_gen_results_v1_bed__bed_id__genome_stats_get",
+        "summary": "Get reference genome validation results"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -609,10 +1002,91 @@
         "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
         "operationId": "get_bed_metadata_v1_bed__bed_id__metadata_get",
         "summary": "Get metadata for a single BED record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "default": false,
+            "description": "Return full record with stats, plots, files and metadata",
+            "in": "query",
+            "name": "full",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedMetadataAll"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_metadata_v1_bed__bed_id__metadata_get",
+        "summary": "Get metadata for a single BED record"
       }
     },
     "/v1/bed/{bed_id}/metadata/classification": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedClassification"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_classification_v1_bed__bed_id__metadata_classification_get",
+        "summary": "Get classification of single BED file"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -687,10 +1161,84 @@
         "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
         "operationId": "get_bed_files_v1_bed__bed_id__metadata_files_get",
         "summary": "Get metadata for a single BED record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedFiles"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_files_v1_bed__bed_id__metadata_files_get",
+        "summary": "Get metadata for a single BED record"
       }
     },
     "/v1/bed/{bed_id}/metadata/plots": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedPlots"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_plots_v1_bed__bed_id__metadata_plots_get",
+        "summary": "Get plots for a single BED record"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -765,6 +1313,43 @@
         "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
         "operationId": "get_bed_stats_v1_bed__bed_id__metadata_stats_get",
         "summary": "Get stats for a single BED record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedStatsModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_stats_v1_bed__bed_id__metadata_stats_get",
+        "summary": "Get stats for a single BED record"
       }
     },
     "/v1/bed/{bed_id}/neighbours": {
@@ -785,14 +1370,75 @@
           },
           {
             "default": 10,
+            "description": "Limit (1-100), default 10",
             "in": "query",
+            "maximum": 100,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedListSearchResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns most similar BED files in the database. Example\n bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_neighbours_v1_bed__bed_id__neighbours_get",
+        "summary": "Get nearest neighbours for a single BED record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "default": 10,
+            "description": "Limit (1-100), default 10",
+            "in": "query",
+            "maximum": 100,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -855,6 +1501,41 @@
         "description": "Returns a 1200x630 PNG card with stats for link previews. Example bed_id: bbad85f21962bb8d972444f7f9a3a932",
         "operationId": "get_bed_og_image_v1_bed__bed_id__og_image_get",
         "summary": "Get Open Graph preview image for a BED record"
+      },
+      "head": {
+        "produces": [
+          "image/png",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response"
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns a 1200x630 PNG card with stats for link previews. Example bed_id: bbad85f21962bb8d972444f7f9a3a932",
+        "operationId": "get_bed_og_image_v1_bed__bed_id__og_image_get",
+        "summary": "Get Open Graph preview image for a BED record"
       }
     },
     "/v1/bed/{bed_id}/regions/{chr_num}": {
@@ -883,13 +1564,71 @@
             "type": "string"
           },
           {
-            "description": "query range: start coordinate",
+            "description": "Query range: start coordinate (0-based)",
             "in": "query",
             "name": "start",
             "required": false
           },
           {
-            "description": "query range: start coordinate",
+            "description": "Query range: end coordinate",
+            "in": "query",
+            "name": "end",
+            "required": false
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "string"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Returns the queried regions with provided ID and optional query parameters",
+        "operationId": "get_regions_for_bedfile_v1_bed__bed_id__regions__chr_num__get",
+        "summary": "Get regions from a BED file that overlap a query region."
+      },
+      "head": {
+        "produces": [
+          "text/plain",
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "BED digest",
+            "in": "path",
+            "maxLength": 32,
+            "minLength": 32,
+            "name": "bed_id",
+            "pattern": "^\\w+$",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Chromosome number",
+            "in": "path",
+            "name": "chr_num",
+            "pattern": "^\\S+$",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "description": "Query range: start coordinate (0-based)",
+            "in": "query",
+            "name": "start",
+            "required": false
+          },
+          {
+            "description": "Query range: end coordinate",
             "in": "query",
             "name": "end",
             "required": false
@@ -956,10 +1695,88 @@
         "description": "Return univers of bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe: 58dee1672b7e581c8e1312bd4ca6b3c7",
         "operationId": "get_tokens_v1_bed__bed_id__tokens__universe_id__get",
         "summary": "Get tokenized of bed file"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bed_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "universe_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/TokenizedBedResponse"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Return univers of bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe: 58dee1672b7e581c8e1312bd4ca6b3c7",
+        "operationId": "get_tokens_v1_bed__bed_id__tokens__universe_id__get",
+        "summary": "Get tokenized of bed file"
       }
     },
     "/v1/bed/{bed_id}/tokens/{universe_id}/info": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bed_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "universe_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/TokenizedPathResponse"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bed"
+        ],
+        "description": "Return link to tokenized bed file\nExample: bed: 0dcdf8986a72a3d85805bbc9493a1302 | universe: 58dee1672b7e581c8e1312bd4ca6b3c7",
+        "operationId": "get_tokens_info_v1_bed__bed_id__tokens__universe_id__info_get",
+        "summary": "Get link to tokenized bed file"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1056,6 +1873,25 @@
         ],
         "operationId": "get_example_bedset_record_v1_bedset_example_get",
         "summary": "Get metadata for an example BEDset record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetMetadata"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "operationId": "get_example_bedset_record_v1_bedset_example_get",
+        "summary": "Get metadata for an example BEDset record"
       }
     },
     "/v1/bedset/list": {
@@ -1071,14 +1907,19 @@
           },
           {
             "default": 1000,
+            "description": "Limit (1-10000), default 1000",
             "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
             "name": "limit",
             "required": false,
             "type": "integer"
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -1109,13 +1950,98 @@
           "bedset",
           "search"
         ],
-        "description": "Returns a list of BEDset records in the database with optional filters and search.",
+        "description": "To enumerate everything, download the monthly Parquet snapshot from\n`/v1/exports` (the `bedsets` file).\n\nReturns a list of BEDset records in the database with optional filters and\nsearch. Results are ordered by id, so paging with `offset` is stable.",
+        "operationId": "list_bedsets_v1_bedset_list_get",
+        "summary": "Paged list of all BEDset records"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "query",
+            "name": "query",
+            "required": false
+          },
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetListResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset",
+          "search"
+        ],
+        "description": "To enumerate everything, download the monthly Parquet snapshot from\n`/v1/exports` (the `bedsets` file).\n\nReturns a list of BEDset records in the database with optional filters and\nsearch. Results are ordered by id, so paging with `offset` is stable.",
         "operationId": "list_bedsets_v1_bedset_list_get",
         "summary": "Paged list of all BEDset records"
       }
     },
     "/v1/bedset/{bedset_id}/bedfiles": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bedset_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetBedFiles"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Example\n bed_id: gse218680",
+        "operationId": "get_bedfiles_in_bedset_v1_bedset__bedset_id__bedfiles_get",
+        "summary": "Get Bedfiles In Bedset"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1196,10 +2122,83 @@
         "description": "Example\n bed_id: gse218680",
         "operationId": "get_bedset_metadata_v1_bedset__bedset_id__metadata_get",
         "summary": "Get all metadata for a single BEDset record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bedset_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "default": true,
+            "in": "query",
+            "name": "full",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetMetadata"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Example\n bed_id: gse218680",
+        "operationId": "get_bedset_metadata_v1_bedset__bedset_id__metadata_get",
+        "summary": "Get all metadata for a single BEDset record"
       }
     },
     "/v1/bedset/{bedset_id}/metadata/plots": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bedset_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetPlots"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Example\n bed_id: gse218680",
+        "operationId": "get_bedset_plots_handler_v1_bedset__bedset_id__metadata_plots_get",
+        "summary": "Get plots for single bedset record"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1266,10 +2265,74 @@
         "description": "Example\n bed_id: gse218680",
         "operationId": "get_bedset_stats_handler_v1_bedset__bedset_id__metadata_stats_get",
         "summary": "Get stats for a single BEDSET record"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bedset_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSetStats"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Example\n bed_id: gse218680",
+        "operationId": "get_bedset_stats_handler_v1_bedset__bedset_id__metadata_stats_get",
+        "summary": "Get stats for a single BEDSET record"
       }
     },
     "/v1/bedset/{bedset_id}/pep": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "bedset_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "bedset"
+        ],
+        "description": "Example\n bed_id: gse218680",
+        "operationId": "get_bedset_pep_v1_bedset__bedset_id__pep_get",
+        "summary": "Download PEP project for a single BEDset record"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1399,10 +2462,64 @@
         "description": "Returns detailed statistics",
         "operationId": "get_detailed_stats_v1_detailed_stats_get",
         "summary": "Get detailed statistics for BEDbase platform, including number of files for each genome"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "default": false,
+            "in": "query",
+            "name": "concise",
+            "required": false,
+            "type": "boolean"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/FileStats"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns detailed statistics",
+        "operationId": "get_detailed_stats_v1_detailed_stats_get",
+        "summary": "Get detailed statistics for BEDbase platform, including number of files for each genome"
       }
     },
     "/v1/detailed-usage": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/UsageStats"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns detailed usage statistics",
+        "operationId": "get_detailed_usage_v1_detailed_usage_get",
+        "summary": "Get detailed usage statistics for BEDbase platform"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1442,6 +2559,25 @@
         ],
         "operationId": "changelog_v1_docs_changelog_get",
         "summary": "Release notes"
+      },
+      "head": {
+        "produces": [
+          "text/html"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "type": "string"
+            }
+          }
+        },
+        "tags": [
+          "home"
+        ],
+        "operationId": "changelog_v1_docs_changelog_get",
+        "summary": "Release notes"
       }
     },
     "/v1/exports": {
@@ -1462,7 +2598,55 @@
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BedSnapshotListResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Return the index of bulk metadata export artifacts published to S3, newest\nfirst. ``file_path`` is rewritten to the absolute HTTPS CDN URL. Consumers\nshould resolve the current snapshot through this endpoint rather than\nconstructing or hardcoding a filename, since artifacts are dated and\nimmutable.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "get_bed_exports_v1_exports_get",
+        "summary": "Index of published bulk metadata exports (newest first)"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -1526,7 +2710,73 @@
           },
           {
             "default": 0,
+            "description": "Offset (>= 0)",
             "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/AnalysisFileListResult"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Return the index of standalone analysis files (openSignalMatrix, models,\nother analysis inputs) stored in S3, newest first. These files are global;\nthey are not tied to any bed file or bedset. ``file_path`` is rewritten to\nthe absolute HTTPS CDN URL.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "get_analysis_files_v1_files_get",
+        "summary": "Index of standalone analysis files (newest first)"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "description": "Filter by file type",
+            "in": "query",
+            "name": "file_type",
+            "required": false
+          },
+          {
+            "description": "Filter by genome/assembly",
+            "in": "query",
+            "name": "genome",
+            "required": false
+          },
+          {
+            "description": "Filter by a single tag",
+            "in": "query",
+            "name": "tag",
+            "required": false
+          },
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
             "name": "offset",
             "required": false,
             "type": "integer"
@@ -1591,6 +2841,36 @@
         ],
         "operationId": "redirect_to_download_v1_files__file_path__get",
         "summary": "Redirect To Download"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "file_path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {}
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "operationId": "redirect_to_download_v1_files__file_path__get",
+        "summary": "Redirect To Download"
       }
     },
     "/v1/genomes": {
@@ -1613,10 +2893,54 @@
         "description": "Returns available genomes",
         "operationId": "get_genomes_list_v1_genomes_get",
         "summary": "Get available genomes"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/BaseListResponse"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns available genomes",
+        "operationId": "get_genomes_list_v1_genomes_get",
+        "summary": "Get available genomes"
       }
     },
     "/v1/objects/exports": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/DRSModel"
+              },
+              "title": "Response List Export Drs Objects V1 Objects Exports Get",
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Enumerate every published bulk-metadata export artifact as a GA4GH DRS\nobject, newest first.\n\nThe DRS object-id of an export is its bare filename (the basename of the\n``bed_snapshots.file_path`` S3 key), e.g.\n``bedbase_metadata_2026_08_03.parquet``. Resolve a single object at\n``GET /v1/objects/exports/{object_id}``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "list_export_drs_objects_v1_objects_exports_get",
+        "summary": "List published bulk-metadata exports as DRS objects (newest first)"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1674,10 +2998,67 @@
         "description": "Return GA4GH DRS metadata for a single published bulk-metadata export.\n\n``object_id`` is the export's bare filename (the basename of the\n``bed_snapshots.file_path`` S3 key), e.g.\n``bedbase_metadata_2026_08_03.parquet``. The id round-trips: the resolved\n``bed_snapshots`` row is the newest whose ``file_path`` basename equals\n``object_id``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
         "operationId": "get_export_drs_object_metadata_v1_objects_exports__object_id__get",
         "summary": "Get DRS object metadata for a bulk-metadata export"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/DRSModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Return GA4GH DRS metadata for a single published bulk-metadata export.\n\n``object_id`` is the export's bare filename (the basename of the\n``bed_snapshots.file_path`` S3 key), e.g.\n``bedbase_metadata_2026_08_03.parquet``. The id round-trips: the resolved\n``bed_snapshots`` row is the newest whose ``file_path`` basename equals\n``object_id``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "get_export_drs_object_metadata_v1_objects_exports__object_id__get",
+        "summary": "Get DRS object metadata for a bulk-metadata export"
       }
     },
     "/v1/objects/files": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "items": {
+                "$ref": "#/definitions/DRSModel"
+              },
+              "title": "Response List Analysis File Drs Objects V1 Objects Files Get",
+              "type": "array"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Enumerate every standalone analysis file as a GA4GH DRS object, newest\nfirst.\n\nThe DRS object-id of an analysis file is its bare filename (the basename of\nthe ``analysis_files.file_path`` S3 key). Resolve a single object at\n``GET /v1/objects/files/{object_id}``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "list_analysis_file_drs_objects_v1_objects_files_get",
+        "summary": "List standalone analysis files as DRS objects (newest first)"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1735,10 +3116,76 @@
         "description": "Return GA4GH DRS metadata for a single standalone analysis file.\n\n``object_id`` is the file's bare filename (the basename of the\n``analysis_files.file_path`` S3 key). The id round-trips: the resolved\n``analysis_files`` row is the newest whose ``file_path`` basename equals\n``object_id``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
         "operationId": "get_analysis_file_drs_object_metadata_v1_objects_files__object_id__get",
         "summary": "Get DRS object metadata for a standalone analysis file"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/DRSModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Return GA4GH DRS metadata for a single standalone analysis file.\n\n``object_id`` is the file's bare filename (the basename of the\n``analysis_files.file_path`` S3 key). The id round-trips: the resolved\n``analysis_files`` row is the newest whose ``file_path`` basename equals\n``object_id``.\n\nDeclared ``def`` (not ``async def``) so the blocking database query runs in a\nthreadpool instead of stalling the event loop.",
+        "operationId": "get_analysis_file_drs_object_metadata_v1_objects_files__object_id__get",
+        "summary": "Get DRS object metadata for a standalone analysis file"
       }
     },
     "/v1/objects/{object_id}": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/DRSModel"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Returns metadata about a DrsObject.",
+        "operationId": "get_drs_object_metadata_v1_objects__object_id__get",
+        "summary": "Get DRS object metadata"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1812,10 +3259,91 @@
         "description": "Returns a URL that can be used to fetch the bytes of a DrsObject.",
         "operationId": "get_object_bytes_url_v1_objects__object_id__access__access_id__get",
         "summary": "Get URL where you can retrieve files"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "access_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "title": "Response Get Object Bytes Url V1 Objects  Object Id  Access  Access Id  Get",
+              "type": "string"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Returns a URL that can be used to fetch the bytes of a DrsObject.",
+        "operationId": "get_object_bytes_url_v1_objects__object_id__access__access_id__get",
+        "summary": "Get URL where you can retrieve files"
       }
     },
     "/v1/objects/{object_id}/access/{access_id}/bytes": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "access_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "format": "binary",
+              "title": "Response Get Object Bytes V1 Objects  Object Id  Access  Access Id  Bytes Get",
+              "type": "string"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Returns the bytes of a DrsObject.",
+        "operationId": "get_object_bytes_v1_objects__object_id__access__access_id__bytes_get",
+        "summary": "Download actual file"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1898,10 +3426,71 @@
         "description": "Returns the bytes of a thumbnail of a DrsObject",
         "operationId": "get_object_thumbnail_v1_objects__object_id__access__access_id__thumbnail_get",
         "summary": "Download thumbnail file"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "object_id",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "path",
+            "name": "access_id",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "format": "binary",
+              "title": "Response Get Object Thumbnail V1 Objects  Object Id  Access  Access Id  Thumbnail Get",
+              "type": "string"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "objects"
+        ],
+        "description": "Returns the bytes of a thumbnail of a DrsObject",
+        "operationId": "get_object_thumbnail_v1_objects__object_id__access__access_id__thumbnail_get",
+        "summary": "Download thumbnail file"
       }
     },
     "/v1/service-info": {
       "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/ServiceInfoResponse"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns information about this service, such as versions, name, etc.",
+        "operationId": "service_info_v1_service_info_get",
+        "summary": "GA4GH service info"
+      },
+      "head": {
         "produces": [
           "application/json"
         ],
@@ -1942,6 +3531,166 @@
         "description": "Returns statistics",
         "operationId": "get_bedbase_db_stats_v1_stats_get",
         "summary": "Get summary statistics for BEDbase platform"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/StatsReturn"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns statistics",
+        "operationId": "get_bedbase_db_stats_v1_stats_get",
+        "summary": "Get summary statistics for BEDbase platform"
+      }
+    },
+    "/v1/usage": {
+      "get": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "enum": [
+              "files",
+              "bed_meta",
+              "bedset_meta",
+              "bed_search",
+              "bedset_search"
+            ],
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": false
+          },
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/UsageResponse"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns per-key usage counts for a single event type\n(files | bed_meta | bedset_meta | bed_search | bedset_search), grouped by key\nand summed over the time-bucketed rows whose window overlaps the requested\n[date_from, date_to] range. Both date bounds are optional; limit/offset\npaginate the keys by count (default limit 1000, max 10000).",
+        "operationId": "get_usage_v1_usage_get",
+        "summary": "Get per-key usage counts for one event type, optionally by date range"
+      },
+      "head": {
+        "produces": [
+          "application/json"
+        ],
+        "parameters": [
+          {
+            "enum": [
+              "files",
+              "bed_meta",
+              "bedset_meta",
+              "bed_search",
+              "bedset_search"
+            ],
+            "in": "query",
+            "name": "type",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "in": "query",
+            "name": "date_from",
+            "required": false
+          },
+          {
+            "in": "query",
+            "name": "date_to",
+            "required": false
+          },
+          {
+            "default": 1000,
+            "description": "Limit (1-10000), default 1000",
+            "in": "query",
+            "maximum": 10000,
+            "minimum": 1,
+            "name": "limit",
+            "required": false,
+            "type": "integer"
+          },
+          {
+            "default": 0,
+            "description": "Offset (>= 0)",
+            "in": "query",
+            "minimum": 0,
+            "name": "offset",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "schema": {
+              "$ref": "#/definitions/UsageResponse"
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "schema": {
+              "$ref": "#/definitions/HTTPValidationError"
+            }
+          }
+        },
+        "tags": [
+          "base"
+        ],
+        "description": "Returns per-key usage counts for a single event type\n(files | bed_meta | bedset_meta | bed_search | bedset_search), grouped by key\nand summed over the time-bucketed rows whose window overlaps the requested\n[date_from, date_to] range. Both date bounds are optional; limit/offset\npaginate the keys by count (default limit 1000, max 10000).",
+        "operationId": "get_usage_v1_usage_get",
+        "summary": "Get per-key usage counts for one event type, optionally by date range"
       }
     }
   },
@@ -2153,8 +3902,7 @@
     "BedListResult": {
       "properties": {
         "count": {
-          "title": "Count",
-          "type": "integer"
+          "title": "Count"
         },
         "limit": {
           "title": "Limit",
@@ -2173,7 +3921,6 @@
         }
       },
       "required": [
-        "count",
         "limit",
         "offset",
         "results"
@@ -2741,6 +4488,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "file"
+      ],
       "title": "Body_bed_to_bed_search_v1_bed_search_bed_post",
       "type": "object"
     },
@@ -2766,6 +4516,9 @@
           "type": "string"
         }
       },
+      "required": [
+        "file"
+      ],
       "title": "Body_umap_bed_file_v1_bed_umap_post",
       "type": "object"
     },
@@ -2773,7 +4526,15 @@
       "properties": {
         "bed_file": {
           "additionalProperties": {
+            "minimum": 0,
             "type": "integer"
+          },
+          "description": "Map of chromosome name to length (1-10000 entries, lengths >= 0)",
+          "maxProperties": 10000,
+          "minProperties": 1,
+          "propertyNames": {
+            "maxLength": 256,
+            "minLength": 1
           },
           "title": "Bed File",
           "type": "object"
@@ -3418,6 +5179,66 @@
         }
       },
       "title": "UniverseMetadata",
+      "type": "object"
+    },
+    "UsageItem": {
+      "description": "A single per-key usage count.",
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "key": {
+          "title": "Key",
+          "type": "string"
+        }
+      },
+      "required": [
+        "key",
+        "count"
+      ],
+      "title": "UsageItem",
+      "type": "object"
+    },
+    "UsageResponse": {
+      "description": "Per-key usage counts for a single event type, optionally restricted to a\ndate range. Returned by BedBaseAgent.get_usage.",
+      "properties": {
+        "count": {
+          "title": "Count",
+          "type": "integer"
+        },
+        "date_from": {
+          "title": "Date From"
+        },
+        "date_to": {
+          "title": "Date To"
+        },
+        "event_type": {
+          "title": "Event Type",
+          "type": "string"
+        },
+        "limit": {
+          "title": "Limit"
+        },
+        "offset": {
+          "default": 0,
+          "title": "Offset",
+          "type": "integer"
+        },
+        "results": {
+          "items": {
+            "$ref": "#/definitions/UsageItem"
+          },
+          "title": "Results",
+          "type": "array"
+        }
+      },
+      "required": [
+        "event_type",
+        "count",
+        "results"
+      ],
+      "title": "UsageResponse",
       "type": "object"
     },
     "UsageStats": {
