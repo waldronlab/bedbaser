@@ -1,3 +1,7 @@
+# version 1.4.3
+
+- Update bedbase to 0.15.0
+
 # version 1.3.5
 
 - Incorporated test_request parameter
