@@ -10,6 +10,53 @@
     getOption("bedbaser.test_request", default = default)
 }
 
+#' Get the JSON content of a response or abort
+#'
+#' @description Parse the body of a bedhost response only if it is JSON.
+#' Abort with the HTTP status and bedhost's error detail if the request
+#' failed, and abort if the body is not JSON instead of letting
+#' \code{httr::content()} choose a parser that needs another package, such as
+#' xml2 for an HTML error page.
+#'
+#' @param rsp httr response
+#' @param hints character() (default \code{character()}) messages named by
+#' query parameter, added when bedhost rejects that parameter
+#' @param call environment (default \code{rlang::caller_env()}) function call
+#' to report in an error
+#'
+#' @return list() parsed content
+#'
+#' @noRd
+.get_json_content <- function(rsp, hints = character(),
+                              call = rlang::caller_env()) {
+    is_json <- identical(httr::http_type(rsp), "application/json")
+    if (httr::http_error(rsp)) {
+        msg <- httr::http_status(rsp)$message
+        if (is_json) {
+            detail <- httr::content(rsp)$detail
+            if (is.character(detail)) {
+                msg <- c(msg, x = detail)
+            } else {
+                for (d in detail) {
+                    param <- d$loc[[length(d$loc)]]
+                    msg <- c(msg, x = paste0("`", param, "`: ", d$msg))
+                    if (param %in% names(hints)) {
+                        msg <- c(msg, i = hints[[param]])
+                    }
+                }
+            }
+        }
+        rlang::abort(msg, call = call)
+    }
+    if (!is_json) {
+        rlang::abort(paste(
+            "Expected a JSON response from bedhost, received",
+            httr::http_type(rsp)
+        ), call = call)
+    }
+    httr::content(rsp)
+}
+
 #' Get file name from URL for a file
 #'
 #' @param a_url character(1) URL

@@ -359,6 +359,11 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #' [bedhost](https://api.bedbase.org). By default uses the bedhost default
 #' of 1000 records and an initial offset of 0.
 #'
+#' @details Pages can be requested with `offset` or `after`. bedhost limits
+#' `offset` to 10000. To page further, pass the id of the last record on the
+#' previous page as `after`; bedhost then returns the records with a greater
+#' id, ordered by id. bedhost ignores `offset` when `after` is set.
+#'
 #' @rdname bb_list_beds
 #'
 #' @param bedbase BEDbase() object
@@ -366,24 +371,37 @@ bb_metadata <- function(bedbase, id, full = FALSE) {
 #' @param bed_compliance character(1) (default \code{NULL}) bed compliance,
 #' e.g., 'bed6+4'
 #' @param limit integer(1) (default \code{1000}) maximum records
-#' @param offset integer(1) (default \code{0}) page token of records
+#' @param offset integer(1) (default \code{0}) page token of records, at most
+#' 10000
+#' @param after character(1) (default \code{NULL}) id of the last record on
+#' the previous page
 #'
 #' @return [tibble][tibble::tibble] of BED records
 #'
 #' @examples
 #' bedbase <- BEDbase()
-#' bb_list_beds(bedbase)
+#' beds <- bb_list_beds(bedbase, limit = 10)
+#' bb_list_beds(bedbase, limit = 10, after = beds$id[nrow(beds)])
 #'
 #' @export
 bb_list_beds <- function(bedbase, genome = NULL, bed_compliance = NULL,
-    limit = 1000, offset = 0) {
+    limit = 1000, offset = 0, after = NULL) {
+    if (!is.null(after) && !missing(offset)) {
+        rlang::warn("`offset` is ignored when `after` is set.")
+    }
     rsp <- bedbase$list_beds_v1_bed_list_get(
         genome = genome, bed_compliance = bed_compliance,
-        limit = limit, offset = offset
+        limit = limit, offset = offset, after = after
     )
-    recs <- httr::content(rsp)
+    recs <- .get_json_content(
+        rsp,
+        hints = c(offset = paste(
+            "To page past the `offset` limit, pass the id of the last",
+            "record on the previous page as `after`."
+        ))
+    )
     results <- tibble::tibble()
-    if (recs$count) {
+    if (length(recs$results)) {
         results <- do.call(
             dplyr::bind_rows,
             lapply(recs$results, function(x) {

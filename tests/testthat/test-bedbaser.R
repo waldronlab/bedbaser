@@ -52,6 +52,91 @@ test_that("bb_list_beds returns same number of results for the mm39 genome", {
     expect_true(all(mm39_beds$genome_alias == "mm39"))
 })
 
+test_that("bb_list_beds returns the next page given after", {
+    first_page <- bb_list_beds(bedbase, limit = 5)
+    last_id <- first_page$id[nrow(first_page)]
+    next_page <- bb_list_beds(bedbase, limit = 5, after = last_id)
+    expect_equal(nrow(next_page), 5)
+    expect_true(all(next_page$id > last_id))
+    expect_equal(next_page$id, sort(next_page$id))
+})
+
+test_that("bb_list_beds warns when given both offset and after", {
+    first_page <- bb_list_beds(bedbase, limit = 1)
+    expect_warning(
+        bb_list_beds(bedbase, limit = 1, offset = 5, after = first_page$id),
+        "`offset` is ignored"
+    )
+})
+
+test_that("bb_list_beds returns records when count is null on a later page", {
+    beds_raw <- httr::content(bedbase$list_beds_v1_bed_list_get(
+        limit = 5,
+        offset = 5
+    ))
+    expect_null(beds_raw$count)
+    beds <- bb_list_beds(bedbase, limit = 5, offset = 5)
+    expect_equal(nrow(beds), 5)
+})
+
+test_that("bb_list_beds suggests after when offset is over the limit", {
+    expect_error(bb_list_beds(bedbase, offset = 10001), "`after`")
+})
+
+# Return an object that bb_list_beds() can use in place of BEDbase() and that
+# returns a fixed response without contacting bedhost
+.mock_bedbase <- function(body, status_code = 200L,
+                          content_type = "application/json") {
+    rsp <- structure(
+        list(
+            url = "https://api.bedbase.org/v1/bed/list",
+            status_code = status_code,
+            headers = list(`Content-Type` = content_type),
+            content = charToRaw(body)
+        ),
+        class = "response"
+    )
+    list(list_beds_v1_bed_list_get = function(...) rsp)
+}
+
+test_that("bb_list_beds handles a null count (mocked)", {
+    mock <- .mock_bedbase(paste0(
+        '{"count": null, "limit": 2, "offset": 0, "results": [',
+        '{"id": "a", "name": "first"}, {"id": "b", "name": "second"}]}'
+    ))
+    beds <- bb_list_beds(mock, limit = 2, after = "0")
+    expect_equal(beds$id, c("a", "b"))
+    mock <- .mock_bedbase(
+        '{"count": null, "limit": 2, "offset": 0, "results": []}'
+    )
+    expect_equal(nrow(bb_list_beds(mock, after = "z")), 0)
+})
+
+test_that("bb_list_beds suggests after on an offset error (mocked)", {
+    mock <- .mock_bedbase(
+        paste0(
+            '{"detail": [{"type": "less_than_equal", ',
+            '"loc": ["query", "offset"], ',
+            '"msg": "Input should be less than or equal to 10000", ',
+            '"input": "10001", "ctx": {"le": 10000}}]}'
+        ),
+        status_code = 422L
+    )
+    expect_error(bb_list_beds(mock, offset = 10001), "less than or equal")
+    expect_error(bb_list_beds(mock, offset = 10001), "`after`")
+})
+
+test_that("bb_list_beds errors clearly on a response that is not JSON (mocked)", {
+    mock <- .mock_bedbase(
+        "<html><body>Bad Gateway</body></html>",
+        status_code = 502L,
+        content_type = "text/html"
+    )
+    expect_error(bb_list_beds(mock), "Bad Gateway")
+    mock <- .mock_bedbase("<html></html>", content_type = "text/html")
+    expect_error(bb_list_beds(mock), "Expected a JSON response")
+})
+
 test_that("bb_list_bedsets returns same number for query 'alzheimer'", {
     bedsets_raw <- httr::content(bedbase$list_bedsets_v1_bedset_list_get(
         query = "alzheimer",
@@ -110,7 +195,8 @@ test_that("bb_bed_text_search returns results scored against the query", {
 })
 
 test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
-    beds <- bb_list_beds(bedbase, bed_compliance = "bed3+0")
+    beds <- bb_list_beds(bedbase, bed_compliance = "bed3+0", limit = 1,
+        after = "0")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
     expect_equal("bed3+0", md$bed_compliance)
@@ -119,7 +205,8 @@ test_that("bb_to_granges returns a GRanges object given a 3+0 bed file", {
 })
 
 test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", {
-    beds <- bb_list_beds(bedbase, bed_compliance = "bed6+4")
+    beds <- bb_list_beds(bedbase, bed_compliance = "bed6+4", limit = 1,
+        after = "0")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
     expect_equal("bed6+4", md$bed_compliance)
@@ -136,7 +223,8 @@ test_that("bb_to_granges returns a GRanges object given narrowpeak (6+4) file", 
 })
 
 test_that("bb_to_granges returns GRanges object given bed4+2 with genome", {
-    beds <- bb_list_beds(bedbase, bed_compliance = "bed4+2")
+    beds <- bb_list_beds(bedbase, bed_compliance = "bed4+2", limit = 1,
+        after = "0")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
     expect_equal("bed4+2", md$bed_compliance)
@@ -151,7 +239,8 @@ test_that("bb_to_granges returns GRanges object given bed4+2 with genome", {
 })
 
 test_that("bb_to_granges allows passing extra_cols", {
-    beds <- bb_list_beds(bedbase, bed_compliance = "bed6+5")
+    beds <- bb_list_beds(bedbase, bed_compliance = "bed6+5", limit = 1,
+        after = "0")
     id <- beds$id[1]
     md <- bb_metadata(bedbase, id, TRUE)
     expect_equal("bed6+5", md$bed_compliance)
