@@ -1,11 +1,21 @@
-# version 1.5.3
+# version 1.6.0
 
-- Update bedbase to 0.15.0
+## SIGNIFICANT USER-VISIBLE CHANGES
+
+- Update bedbase to 0.15.0 (#32, @jwokaty)
+
+## NEW FEATURES
+
+- Add a `host` argument to `BEDbase()` for using another API server, such
+  as a development or test server (#5, @nsheff)
+- Add a `show()` method for `BEDbase` objects (#31, @lwaldron)
 - Add `after` to `bb_list_beds()` for paging by the id of the last record
-- Fix `bb_list_beds()` failing on later pages, where bedhost no longer
-  returns `count`
-- `bb_list_beds()` reports bedhost errors, such as an `offset` over 10000,
-  instead of failing or requiring xml2 to parse the response
+  (#34, @jwokaty)
+
+## BUG FIXES AND MINOR IMPROVEMENTS
+
+- Fix `bb_list_beds()` failing on later pages, and report bedhost errors
+  clearly instead of failing or requiring xml2 (#34, @jwokaty)
 
 # version 1.3.5
 
